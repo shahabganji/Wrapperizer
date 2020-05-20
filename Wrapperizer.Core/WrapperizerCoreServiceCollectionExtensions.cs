@@ -4,29 +4,31 @@ using Funx.Extensions;
 using MediatR;
 using MediatR.Registration;
 using Microsoft.Extensions.DependencyInjection;
+using Wrapperizer.Core;
 using Wrapperizer.Core.Abstraction;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using static Microsoft.Extensions.DependencyInjection.ServiceLifetime;
 
-namespace Wrapperizer.Core
+// ReSharper disable once CheckNamespace
+namespace Wrapperizer
 {
     public static class WrapperizerCoreServiceCollectionExtensions
     {
-        public static WrapperizerCoreServiceCollection RegisterHandlers(
+        public static IWrapperizerBuilder AddHandlers(
             this IWrapperizerBuilder builder)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            return builder.RegisterHandlers(assemblies);
+            return builder.AddHandlers(assemblies);
         }
 
-        public static WrapperizerCoreServiceCollection RegisterHandlers(
+        public static IWrapperizerBuilder AddHandlers(
             this IWrapperizerBuilder builder,
             params Assembly[] assemblies)
-            => RegisterHandlers(builder, null, assemblies);
+            => AddHandlers(builder, Transient, assemblies);
 
-        public static WrapperizerCoreServiceCollection RegisterHandlers(
+        public static IWrapperizerBuilder AddHandlers(
             this IWrapperizerBuilder builder,
-            Action<MediatRServiceConfiguration> configuration = null,
+            ServiceLifetime serviceLifetime = Transient,
             params Assembly[] assemblies)
         {
             if (!assemblies.SafeAny())
@@ -35,68 +37,38 @@ namespace Wrapperizer.Core
 
             var mediatRServiceConfiguration =
                 new MediatRServiceConfiguration()
-                    .Using<Mediator>()
-                    .AsScoped();
-            configuration?.Invoke(mediatRServiceConfiguration);
-            
+                    .Using<Mediator>();
+
             ServiceRegistrar.AddRequiredServices(builder.ServiceCollection, mediatRServiceConfiguration);
             ServiceRegistrar.AddMediatRClasses(builder.ServiceCollection, assemblies);
 
-            var wrapperizerServiceCollection =
-                new WrapperizerCoreServiceCollection(builder.ServiceCollection, mediatRServiceConfiguration);
-            return wrapperizerServiceCollection;
+            builder.ServiceCollection.Add(new ServiceDescriptor(typeof(IMediator),
+                mediatRServiceConfiguration.MediatorImplementationType, mediatRServiceConfiguration.Lifetime));
+
+            builder.AddDomainEventManager<DomainEventCommandQueryManager>(serviceLifetime);
+            builder.AddCommandQueryManger<DomainEventCommandQueryManager>(serviceLifetime);
+
+            return builder;
         }
 
-        public static WrapperizerCoreServiceCollection WithDomainEventManager(
-            this WrapperizerCoreServiceCollection wrapperizerCore)
+        public static IWrapperizerBuilder AddCommandQueryManger<T>(this IWrapperizerBuilder builder, ServiceLifetime serviceLifetime)
+            where T : ICommandQueryManager
         {
-            switch (wrapperizerCore.MediatRServiceConfiguration.Lifetime)
-            {
-                case Singleton:
-                    wrapperizerCore.ServiceCollection
-                        .AddSingleton<IDomainEventManager, DomainEventCommandQueryManager>();
-                    break;
-                case Scoped:
-                    wrapperizerCore.ServiceCollection.AddScoped<IDomainEventManager, DomainEventCommandQueryManager>();
-                    break;
-                case Transient:
-                    wrapperizerCore.ServiceCollection
-                        .AddTransient<IDomainEventManager, DomainEventCommandQueryManager>();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            builder.ServiceCollection.Add(
+                new ServiceDescriptor(typeof(ICommandQueryManager),
+                    typeof(DomainEventCommandQueryManager), serviceLifetime));
 
-            return wrapperizerCore;
+            return builder;
         }
 
-        public static WrapperizerCoreServiceCollection WithCommandQueryManager(
-            this WrapperizerCoreServiceCollection wrapperizerCore)
+        public static IWrapperizerBuilder AddDomainEventManager<T>(
+            this IWrapperizerBuilder builder, ServiceLifetime serviceLifetime = Transient)
+            where T : IDomainEventManager
         {
-            switch (wrapperizerCore.MediatRServiceConfiguration.Lifetime)
-            {
-                case Singleton:
-                    wrapperizerCore.ServiceCollection
-                        .AddSingleton<ICommandQueryManager, DomainEventCommandQueryManager>();
-                    break;
-                case Scoped:
-                    wrapperizerCore.ServiceCollection.AddScoped<ICommandQueryManager, DomainEventCommandQueryManager>();
-                    break;
-                case Transient:
-                    wrapperizerCore.ServiceCollection
-                        .AddTransient<ICommandQueryManager, DomainEventCommandQueryManager>();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return wrapperizerCore;
+            builder.ServiceCollection.Add(
+                new ServiceDescriptor(typeof(IDomainEventManager),
+                    typeof(DomainEventCommandQueryManager), serviceLifetime));
+            return builder;
         }
-
-        public static void WithManagers(
-            this WrapperizerCoreServiceCollection wrapperizerCore)
-            =>
-                wrapperizerCore.WithDomainEventManager()
-                    .WithCommandQueryManager();
     }
 }
