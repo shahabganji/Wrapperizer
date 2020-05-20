@@ -29,7 +29,7 @@ namespace Wrapperizer.Sample.Api
         {
             services.AddControllers();
 
-            
+            services.AddWrapperizer().AddHandlers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

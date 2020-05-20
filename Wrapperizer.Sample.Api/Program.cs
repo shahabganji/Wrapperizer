@@ -21,13 +21,13 @@ namespace Wrapperizer.Sample.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices(configureDelegate: ((context, collection) =>
-                {
-                    collection.AddWrapperizer()
-                        .AddHandlers(ServiceLifetime.Scoped)
-                        .AddCrudRepositories()
-                        .AddTransactionalUnitOfWork<DomainEventAwareDbContext>();
-                }))
+                // .ConfigureServices(configureDelegate: ((context, collection) =>
+                // {
+                //     collection.AddWrapperizer()
+                //         .AddHandlers(ServiceLifetime.Scoped)
+                //         .AddCrudRepositories()
+                //         .AddTransactionalUnitOfWork<DomainEventAwareDbContext>();
+                // }))
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }
