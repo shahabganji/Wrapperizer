@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using Funx.Extensions;
 using MediatR;
@@ -15,35 +16,25 @@ namespace Wrapperizer
     public static class WrapperizerCoreServiceCollectionExtensions
     {
         public static IWrapperizerBuilder AddHandlers(
-            this IWrapperizerBuilder builder)
-        {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            return builder.AddHandlers(assemblies);
-        }
-
-        public static IWrapperizerBuilder AddHandlers(
-            this IWrapperizerBuilder builder,
-            params Assembly[] assemblies)
-            => AddHandlers(builder, Transient, assemblies);
-
-        public static IWrapperizerBuilder AddHandlers(
             this IWrapperizerBuilder builder,
             ServiceLifetime serviceLifetime = Transient,
             params Assembly[] assemblies)
         {
-            if (!assemblies.SafeAny())
-                throw new ArgumentException(
-                    "No assemblies found to scan. Supply at least one assembly to scan for handlers.");
-
-            var mediatRServiceConfiguration =
-                new MediatRServiceConfiguration()
-                    .Using<Mediator>();
-
-            ServiceRegistrar.AddRequiredServices(builder.ServiceCollection, mediatRServiceConfiguration);
-            ServiceRegistrar.AddMediatRClasses(builder.ServiceCollection, assemblies);
-
-            builder.ServiceCollection.Add(new ServiceDescriptor(typeof(IMediator),
-                mediatRServiceConfiguration.MediatorImplementationType, mediatRServiceConfiguration.Lifetime));
+            if( !assemblies.SafeAny() )
+                assemblies =  AppDomain.CurrentDomain.GetAssemblies();
+            
+            builder.ServiceCollection.AddMediatR(assemblies, configuration =>
+            {
+                configuration = serviceLifetime switch
+                {
+                    Singleton => configuration.AsSingleton(),
+                    Scoped => configuration.AsScoped(),
+                    _ => configuration.AsTransient()
+                };
+            });
+            
+            // ServiceRegistrar.AddRequiredServices(builder.ServiceCollection, mediatRServiceConfiguration);
+            // ServiceRegistrar.AddMediatRClasses(builder.ServiceCollection, assemblies);
 
             builder.AddDomainEventManager<DomainEventCommandQueryManager>(serviceLifetime);
             builder.AddCommandQueryManger<DomainEventCommandQueryManager>(serviceLifetime);
