@@ -1,3 +1,5 @@
+using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Wrapperizer.Core.Abstraction;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
@@ -10,8 +12,12 @@ namespace Wrapperizer
     public static class WrapperizerRepositoryServiceCollectionExtensions
     {
         public static IWrapperizerBuilder AddCrudRepositories
-            (this IWrapperizerBuilder wrapperizerServiceCollection)
+        (this IWrapperizerBuilder wrapperizerServiceCollection,
+            Action<IServiceProvider, DbContextOptionsBuilder> optionsAction)
         {
+            wrapperizerServiceCollection.ServiceCollection
+                .AddDbContext<DbContext>(optionsAction ?? throw new ArgumentNullException(nameof(optionsAction)));
+
             wrapperizerServiceCollection.ServiceCollection.AddScoped(
                 typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>));
             return wrapperizerServiceCollection;
