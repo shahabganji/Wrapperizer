@@ -11,12 +11,13 @@ namespace Wrapperizer
 {
     public static class WrapperizerRepositoryServiceCollectionExtensions
     {
-        public static IWrapperizerBuilder AddCrudRepositories
+        public static IWrapperizerBuilder AddCrudRepositories<TU>
         (this IWrapperizerBuilder wrapperizerServiceCollection,
             Action<IServiceProvider, DbContextOptionsBuilder> optionsAction)
+            where TU : DbContext
         {
             wrapperizerServiceCollection.ServiceCollection
-                .AddDbContext<DbContext>(optionsAction ?? throw new ArgumentNullException(nameof(optionsAction)));
+                .AddDbContext<DbContext, TU>(optionsAction ?? throw new ArgumentNullException(nameof(optionsAction)));
 
             wrapperizerServiceCollection.ServiceCollection.AddScoped(
                 typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>));

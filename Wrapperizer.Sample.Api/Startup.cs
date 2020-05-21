@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Funx.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Wrapperizer.Core.Abstraction;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Repositories;
 
@@ -30,7 +33,13 @@ namespace Wrapperizer.Sample.Api
         {
             services.AddControllers();
 
-            services.AddWrapperizer().AddHandlers();
+            services.AddEntityFrameworkInMemoryDatabase();
+            services.AddWrapperizer().AddHandlers()
+                .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
+                {
+                    options.UseInMemoryDatabase("WeatherForecast");
+                    options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
+                });
             
             services.AddScoped(
                 typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>));
@@ -51,6 +60,26 @@ namespace Wrapperizer.Sample.Api
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            SeedDatabase(app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ICrudRepository<WeatherForecast>>());
+
+        }
+
+        private static void SeedDatabase(ICrudRepository<WeatherForecast> repository)
+        {
+            var rng = new Random();
+            new[]
+            {
+                "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            }.ForEach((summary,index) =>
+            {
+                repository.Add(new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = rng.Next(-20, 55),
+                    Summary = summary
+                });
+            });
         }
     }
 }

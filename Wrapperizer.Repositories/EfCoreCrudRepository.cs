@@ -19,8 +19,8 @@ namespace Wrapperizer.Repositories
 
         public EfCoreCrudRepository(DbContext dbContext)
         {
-            _dbSet = _dbContext.Set<T>();
             _dbContext = dbContext;
+            _dbSet = _dbContext.Set<T>();
         }
 
         private IQueryable<T> GetAllIncludes(params Expression<Func<T, object>>[] includeProperties)
