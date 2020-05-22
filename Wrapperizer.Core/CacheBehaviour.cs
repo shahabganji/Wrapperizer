@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Funx.Extensions;
 using MediatR;
 
-namespace Wrapperizer.Sample.Api
+namespace Wrapperizer.Core
 {
     public sealed class CacheBehaviour<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
@@ -16,11 +16,11 @@ namespace Wrapperizer.Sample.Api
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-             return ResponseDictionary
+            return ResponseDictionary
                 .Lookup(typeof(TRequest))
                 .MatchAsync(
                     AddToCache(next),
-                    item => Task.FromResult<TResponse>(item));
+                    Task.FromResult<TResponse>);
         }
 
         private static Func<Task<TResponse>> AddToCache(RequestHandlerDelegate<TResponse> next) =>

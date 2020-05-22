@@ -34,15 +34,18 @@ namespace Wrapperizer.Sample.Api
             services.AddControllers();
 
             services.AddEntityFrameworkInMemoryDatabase();
-            services.AddWrapperizer().AddHandlers()
+            
+            // add caching inside te AddHandlers method as actionConfiguration methods
+            services.AddWrapperizer().AddHandlers(configure:
+                    cfg =>
+                    {
+                        cfg.AddCaching();
+                    })
                 .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 {
                     options.UseInMemoryDatabase("WeatherForecast");
                     options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                 });
-            
-            services.AddScoped(
-                typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,11 +13,33 @@ using static Microsoft.Extensions.DependencyInjection.ServiceLifetime;
 // ReSharper disable once CheckNamespace
 namespace Wrapperizer
 {
+
+    public sealed class WrapperizerCoreServiceCollection
+    {
+        internal WrapperizerCoreServiceCollection(IServiceCollection serviceCollection)
+        {
+            ServiceCollection = serviceCollection;
+        }
+
+        internal  IServiceCollection ServiceCollection { get; }
+    }
+
+    public sealed class HandlersConfiguration
+    {
+        public HandlersConfiguration(ServiceLifetime lifetime)
+        {
+            Lifetime = lifetime;
+        }
+
+        public ServiceLifetime Lifetime { get; }
+    }
+    
     public static class WrapperizerCoreServiceCollectionExtensions
     {
         public static IWrapperizerBuilder AddHandlers(
             this IWrapperizerBuilder builder,
             ServiceLifetime serviceLifetime = Transient,
+            Action<WrapperizerCoreServiceCollection> configure = null,
             params Assembly[] assemblies)
         {
             if( !assemblies.SafeAny() )
@@ -32,14 +54,21 @@ namespace Wrapperizer
                     _ => configuration.AsTransient()
                 };
             });
-            
-            // ServiceRegistrar.AddRequiredServices(builder.ServiceCollection, mediatRServiceConfiguration);
-            // ServiceRegistrar.AddMediatRClasses(builder.ServiceCollection, assemblies);
+
+            var wrapperizerCoreServiceCollection = new WrapperizerCoreServiceCollection(builder.ServiceCollection);
+            configure?.Invoke(wrapperizerCoreServiceCollection);
 
             builder.AddDomainEventManager<DomainEventCommandQueryManager>(serviceLifetime);
             builder.AddCommandQueryManger<DomainEventCommandQueryManager>(serviceLifetime);
 
             return builder;
+        }
+
+        public static WrapperizerCoreServiceCollection AddCaching(this WrapperizerCoreServiceCollection wsc)
+        {
+            wsc.ServiceCollection.AddScoped(
+                typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>));
+            return wsc;
         }
 
         public static IWrapperizerBuilder AddCommandQueryManger<T>(this IWrapperizerBuilder builder, ServiceLifetime serviceLifetime)
