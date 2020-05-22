@@ -66,8 +66,15 @@ namespace Wrapperizer
 
         public static WrapperizerCoreServiceCollection AddCaching(this WrapperizerCoreServiceCollection wsc)
         {
+            //validation
             wsc.ServiceCollection.AddScoped(
-                typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>));
+                typeof(IPipelineBehavior<,>),
+                typeof(ValidationBehaviour<,>));
+            
+            // caching
+            wsc.ServiceCollection.AddScoped(
+                typeof(IPipelineBehavior<,>),
+                typeof(CacheBehaviour<,>));
             return wsc;
         }
 

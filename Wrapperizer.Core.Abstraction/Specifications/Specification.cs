@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using Wrapperizer.Core.Abstraction.Specifications.Internal;
+using static Wrapperizer.Core.Abstraction.DomainError;
 
 namespace Wrapperizer.Core.Abstraction.Specifications
 {
@@ -8,6 +9,8 @@ namespace Wrapperizer.Core.Abstraction.Specifications
     {
         public static readonly Specification<T> All = new IdentitySpecification<T>();
 
+        public abstract Expression<Func<T, bool>> ToExpression();
+        public virtual DomainError Error => Empty;
         public bool IsSatisfiedBy(T entity)
             => this.ToExpression().Compile().Invoke(entity);
 
@@ -33,7 +36,6 @@ namespace Wrapperizer.Core.Abstraction.Specifications
         public Specification<T> Xor(Specification<T> specification)
             => new XorSpecification<T>(this, specification);
 
-        public abstract Expression<Func<T, bool>> ToExpression();
 
         public static implicit operator Expression<Func<T, bool>>(Specification<T> specification)
             => specification.ToExpression();

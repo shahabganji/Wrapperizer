@@ -14,8 +14,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Core.Abstraction;
+using Wrapperizer.Core.Abstraction.Specifications;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Repositories;
+using Wrapperizer.Sample.Api.Queries;
 
 namespace Wrapperizer.Sample.Api
 {
@@ -46,6 +48,8 @@ namespace Wrapperizer.Sample.Api
                     options.UseInMemoryDatabase("WeatherForecast");
                     options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                 });
+
+            services.AddTransient<Specification<GetWeatherForecast>, NotPastSpecification>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
