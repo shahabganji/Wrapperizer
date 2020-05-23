@@ -27,7 +27,10 @@ namespace Wrapperizer.Sample.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-             await _commandQueryManager.Send(new GetWeatherForecast());
+            await _commandQueryManager.Send(new GetWeatherForecast
+             {
+                 DateTime = DateTime.Now.AddDays(1)
+             });
              return _resultAdapter.Result;
         }
     }
