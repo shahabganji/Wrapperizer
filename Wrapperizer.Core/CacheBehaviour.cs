@@ -4,31 +4,44 @@ using System.Threading;
 using System.Threading.Tasks;
 using Funx.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Wrapperizer.Core.Abstraction;
 
 namespace Wrapperizer.Core
 {
     public sealed class CacheBehaviour<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
     {
-        private static readonly Dictionary<Type, TResponse> ResponseDictionary
-            = new Dictionary<Type, TResponse>();
+        private readonly IActionResultAdapter _resultAdapter;
 
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+        private static readonly Dictionary<Type, IActionResult> ResponseDictionary
+            = new Dictionary<Type, IActionResult>();
+
+        public CacheBehaviour(IActionResultAdapter resultAdapter)
+        {
+            _resultAdapter = resultAdapter;
+        }
+        
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-            return ResponseDictionary
+            var result = await ResponseDictionary
                 .Lookup(typeof(TRequest))
                 .MatchAsync(
                     AddToCache(next),
-                    Task.FromResult<TResponse>);
+                    cachedValue => Task.FromResult<IActionResult>(new OkObjectResult(cachedValue)));
+
+            _resultAdapter.Result = result;
+            return default;
+            // todo: now what to do with the global adapter????
         }
 
-        private static Func<Task<TResponse>> AddToCache(RequestHandlerDelegate<TResponse> next) =>
+        private Func<Task<IActionResult>> AddToCache(RequestHandlerDelegate<TResponse> next) =>
             async () =>
             {
                 var response = await next();
-                ResponseDictionary.TryAdd(typeof(TRequest) , response);
-                return response;
+                ResponseDictionary.TryAdd(typeof(TRequest) , _resultAdapter.Result);
+                return _resultAdapter.Result;
             };
     }
 }

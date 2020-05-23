@@ -37,11 +37,12 @@ namespace Wrapperizer.Sample.Api
 
             services.AddEntityFrameworkInMemoryDatabase();
             
-            // add caching inside te AddHandlers method as actionConfiguration methods
             services.AddWrapperizer().AddHandlers(configure:
-                    cfg =>
+                    collection =>
                     {
-                        cfg.AddCaching();
+                        collection
+                            .AddGlobalValidation()
+                            .AddGlobalCaching();
                     })
                 .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 {

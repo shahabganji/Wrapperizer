@@ -42,6 +42,8 @@ namespace Wrapperizer
             Action<WrapperizerCoreServiceCollection> configure = null,
             params Assembly[] assemblies)
         {
+            builder.ServiceCollection.AddScoped<IActionResultAdapter, ActionResultAdapter>();
+            
             if( !assemblies.SafeAny() )
                 assemblies =  AppDomain.CurrentDomain.GetAssemblies();
             
@@ -64,17 +66,19 @@ namespace Wrapperizer
             return builder;
         }
 
-        public static WrapperizerCoreServiceCollection AddCaching(this WrapperizerCoreServiceCollection wsc)
+        public static WrapperizerCoreServiceCollection AddGlobalCaching(this WrapperizerCoreServiceCollection wsc)
         {
-            //validation
-            wsc.ServiceCollection.AddScoped(
-                typeof(IPipelineBehavior<,>),
-                typeof(ValidationBehaviour<,>));
-            
-            // caching
             wsc.ServiceCollection.AddScoped(
                 typeof(IPipelineBehavior<,>),
                 typeof(CacheBehaviour<,>));
+            return wsc;
+        }
+        
+        public static WrapperizerCoreServiceCollection AddGlobalValidation(this WrapperizerCoreServiceCollection wsc)
+        {
+            wsc.ServiceCollection.AddScoped(
+                typeof(IPipelineBehavior<,>),
+                typeof(ValidationBehaviour<,>));
             return wsc;
         }
 

@@ -13,11 +13,22 @@ namespace Wrapperizer.Sample.Api.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly ICommandQueryManager _commandQueryManager;
-        public WeatherForecastController(ICommandQueryManager commandQueryManager) 
-            => _commandQueryManager = commandQueryManager;
+        private readonly IActionResultAdapter _resultAdapter;
+
+        public WeatherForecastController(
+            ICommandQueryManager commandQueryManager,
+            IActionResultAdapter resultAdapter
+            )
+        {
+            _commandQueryManager = commandQueryManager;
+            _resultAdapter = resultAdapter;
+        }
 
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get()
-            => await _commandQueryManager.Send(new GetWeatherForecast());
+        public async Task<IActionResult> Get()
+        {
+             await _commandQueryManager.Send(new GetWeatherForecast());
+             return _resultAdapter.Result;
+        }
     }
 }
