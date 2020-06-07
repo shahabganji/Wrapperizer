@@ -1,4 +1,3 @@
-using System;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Wrapperizer.Extensions.Cqrs.Caching.Behaviors;

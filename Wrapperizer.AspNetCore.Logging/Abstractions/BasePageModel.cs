@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.AspNetCore.Logging.Models;
-using Wrapperizer.Extensions.Serilog;
 
 namespace Wrapperizer.AspNetCore.Logging.Abstractions
 {

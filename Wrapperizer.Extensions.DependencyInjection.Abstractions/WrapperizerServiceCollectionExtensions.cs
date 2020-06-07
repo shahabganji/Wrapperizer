@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Wrapperizer.Extensions.DependencyInjection.Abstractions

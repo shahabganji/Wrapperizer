@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.AspNetCore.Logging.Models;
-using Wrapperizer.Extensions.Serilog;
 
 namespace Wrapperizer.AspNetCore.Logging.Filters
 {
