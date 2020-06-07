@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Wrapperizer.Extensions.Caching\Wrapperizer.Extensions.Caching.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj" />

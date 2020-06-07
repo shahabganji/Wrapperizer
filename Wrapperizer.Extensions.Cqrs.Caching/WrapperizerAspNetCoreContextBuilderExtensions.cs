@@ -1,7 +1,7 @@
 using System;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Wrapperizer.Extensions.Caching.Behaviors;
+using Wrapperizer.Extensions.Cqrs.Caching.Behaviors;
 
 // ReSharper disable once CheckNamespace
 namespace Wrapperizer

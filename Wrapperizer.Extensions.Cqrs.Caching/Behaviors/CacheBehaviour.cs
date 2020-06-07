@@ -1,12 +1,11 @@
 using System;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Wrapperizer.Extensions.Caching.Behaviors
+namespace Wrapperizer.Extensions.Cqrs.Caching.Behaviors
 {
     public sealed class CacheBehaviour<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse> where TResponse : class

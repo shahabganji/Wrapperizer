@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Depe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Api", "Wrapperizer.Sample.Api\Wrapperizer.Sample.Api.csproj", "{9CC8AF7F-069F-43AD-A71F-388D1416E88F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Caching", "Wrapperizer.Extensions.Caching\Wrapperizer.Extensions.Caching.csproj", "{05EF4EDF-A356-4C59-9886-D6B1E47E1552}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs.Caching", "Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj", "{05EF4EDF-A356-4C59-9886-D6B1E47E1552}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs.EfCore", "Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj", "{2C7A01D3-B17F-404E-8B59-9ECC544D413A}"
 EndProject
