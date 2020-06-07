@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Wrapperizer.Core.Abstraction;
-using Wrapperizer.Core.Abstraction.Specifications;
+using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Specifications;
 
 namespace Wrapperizer.Sample.Api.Queries
 {
@@ -16,8 +15,6 @@ namespace Wrapperizer.Sample.Api.Queries
 
     public class NotPastSpecification : Specification<GetWeatherForecast>
     {
-        public override DomainError Error => new PastDateError();
-
         public override Expression<Func<GetWeatherForecast, bool>> ToExpression()
         {
             return g => g.DateTime >= DateTime.Now;

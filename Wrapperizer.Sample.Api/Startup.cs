@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Wrapperizer.Core.Abstraction;
-using Wrapperizer.Core.Abstraction.Specifications;
+using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Specifications;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Sample.Api.Queries;
 
@@ -29,14 +29,19 @@ namespace Wrapperizer.Sample.Api
             services.AddControllers();
 
             services.AddEntityFrameworkInMemoryDatabase();
-            
-            services.AddWrapperizer().AddHandlers(configure:
-                    collection =>
-                    {
-                        collection
-                            .AddGlobalValidation()
-                            .AddGlobalCaching();
-                    })
+
+            services.AddDistributedMemoryCache();
+            // services.AddStackExchangeRedisCache(options =>
+            // {
+            //     options.Configuration = "localhost";
+            //     options.InstanceName = "Wrapperizer.Api";
+            // });
+
+            services.AddWrapperizer()
+                .AddHandlers(configure: context => context
+                        .AddGlobalValidation()
+                        .AddDistributedCaching()
+                )
                 .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 {
                     options.UseInMemoryDatabase("WeatherForecast");
@@ -62,8 +67,8 @@ namespace Wrapperizer.Sample.Api
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            SeedDatabase(app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ICrudRepository<WeatherForecast>>());
-
+            SeedDatabase(app.ApplicationServices.CreateScope().ServiceProvider
+                .GetRequiredService<ICrudRepository<WeatherForecast>>());
         }
 
         private static void SeedDatabase(ICrudRepository<WeatherForecast> repository)
@@ -72,7 +77,7 @@ namespace Wrapperizer.Sample.Api
             new[]
             {
                 "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            }.ForEach((summary,index) =>
+            }.ForEach((summary, index) =>
             {
                 repository.Add(new WeatherForecast
                 {

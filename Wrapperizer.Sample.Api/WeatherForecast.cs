@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Wrapperizer.Core.Abstraction;
+using Wrapperizer.Abstraction;
 
 namespace Wrapperizer.Sample.Api
 {

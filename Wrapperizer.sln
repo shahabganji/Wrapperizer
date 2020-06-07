@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Core.Abstraction", "Wrapperizer.Core.Abstraction\Wrapperizer.Core.Abstraction.csproj", "{582511C3-0D1D-470D-92C9-062F8BAFF654}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Abstraction", "Wrapperizer.Abstraction\Wrapperizer.Abstraction.csproj", "{582511C3-0D1D-470D-92C9-062F8BAFF654}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}"
 EndProject
@@ -8,13 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EE221115-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{CD851388-2B35-41E2-93A5-FE6ACC665CEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Core", "Wrapperizer.Core\Wrapperizer.Core.csproj", "{37EA11A3-C2CB-4E3C-A948-CA5BACB98372}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs", "Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj", "{37EA11A3-C2CB-4E3C-A948-CA5BACB98372}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Repositories", "Wrapperizer.Repositories\Wrapperizer.Repositories.csproj", "{1432E1A7-788B-43BB-B16B-48B801236D56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Repositories.EfCore", "Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj", "{1432E1A7-788B-43BB-B16B-48B801236D56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Abstractions", "Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj", "{05589ACA-5D9F-419A-9E53-639373F439F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Api", "Wrapperizer.Sample.Api\Wrapperizer.Sample.Api.csproj", "{9CC8AF7F-069F-43AD-A71F-388D1416E88F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Caching", "Wrapperizer.Extensions.Caching\Wrapperizer.Extensions.Caching.csproj", "{05EF4EDF-A356-4C59-9886-D6B1E47E1552}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{9CC8AF7F-069F-43AD-A71F-388D1416E88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC8AF7F-069F-43AD-A71F-388D1416E88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC8AF7F-069F-43AD-A71F-388D1416E88F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05EF4EDF-A356-4C59-9886-D6B1E47E1552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05EF4EDF-A356-4C59-9886-D6B1E47E1552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05EF4EDF-A356-4C59-9886-D6B1E47E1552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05EF4EDF-A356-4C59-9886-D6B1E47E1552}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{582511C3-0D1D-470D-92C9-062F8BAFF654} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
@@ -49,5 +55,6 @@ Global
 		{1432E1A7-788B-43BB-B16B-48B801236D56} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{05589ACA-5D9F-419A-9E53-639373F439F9} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{9CC8AF7F-069F-43AD-A71F-388D1416E88F} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
+		{05EF4EDF-A356-4C59-9886-D6B1E47E1552} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 	EndGlobalSection
 EndGlobal

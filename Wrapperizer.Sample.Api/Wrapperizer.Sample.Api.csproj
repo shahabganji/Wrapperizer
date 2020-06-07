@@ -5,12 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Wrapperizer.Core\Wrapperizer.Core.csproj" />
-      <ProjectReference Include="..\Wrapperizer.Repositories\Wrapperizer.Repositories.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Caching\Wrapperizer.Extensions.Caching.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.4" />
     </ItemGroup>
     
 
