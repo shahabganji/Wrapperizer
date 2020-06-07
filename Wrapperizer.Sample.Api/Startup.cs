@@ -1,13 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Funx.Extensions;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Wrapperizer.Core.Abstraction;
 using Wrapperizer.Core.Abstraction.Specifications;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
-using Wrapperizer.Repositories;
 using Wrapperizer.Sample.Api.Queries;
 
 namespace Wrapperizer.Sample.Api

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Wrapperizer.Repositories;
 
 namespace Wrapperizer.Sample.Api
 {

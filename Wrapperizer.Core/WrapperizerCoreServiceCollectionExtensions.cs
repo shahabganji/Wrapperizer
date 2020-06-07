@@ -1,9 +1,7 @@
 using System;
-using System.Diagnostics;
 using System.Reflection;
 using Funx.Extensions;
 using MediatR;
-using MediatR.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Wrapperizer.Core;
 using Wrapperizer.Core.Abstraction;
@@ -47,14 +45,12 @@ namespace Wrapperizer
             if( !assemblies.SafeAny() )
                 assemblies =  AppDomain.CurrentDomain.GetAssemblies();
             
-            builder.ServiceCollection.AddMediatR(assemblies, configuration =>
+            builder.ServiceCollection.AddMediatR(assemblies, 
+                configuration => configuration = serviceLifetime switch
             {
-                configuration = serviceLifetime switch
-                {
-                    Singleton => configuration.AsSingleton(),
-                    Scoped => configuration.AsScoped(),
-                    _ => configuration.AsTransient()
-                };
+                Singleton => configuration.AsSingleton(),
+                Scoped => configuration.AsScoped(),
+                _ => configuration.AsTransient()
             });
 
             var wrapperizerCoreServiceCollection = new WrapperizerCoreServiceCollection(builder.ServiceCollection);

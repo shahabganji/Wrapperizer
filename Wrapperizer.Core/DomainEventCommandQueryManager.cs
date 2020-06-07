@@ -13,11 +13,8 @@ namespace Wrapperizer.Core
             _mediator = mediator;
         }
 
-        public async  Task Dispatch(IDomainEvent @event)
-        {
-            await _mediator.Publish(@event)
-                .ConfigureAwait(false);
-        }
+        public Task Dispatch(IDomainEvent @event) 
+            => _mediator.Publish(@event);
 
         public async Task Dispatch(params IDomainEvent[] events)
         {
@@ -27,10 +24,13 @@ namespace Wrapperizer.Core
             }
         }
 
-        public async Task Send(ICommand command) => await _mediator.Send(command).ConfigureAwait(false);
+        public Task Send(ICommand command)
+            => _mediator.Send(command);
 
-        public async Task<TResponse> Send<TResponse>(ICommand<TResponse> command) => await _mediator.Send(command).ConfigureAwait(false);
+        public Task<TResponse> Send<TResponse>(ICommand<TResponse> command) 
+            => _mediator.Send(command);
 
-        public async Task<TResponse> Send<TResponse>(IQuery<TResponse> command) => await _mediator.Send(command).ConfigureAwait(false);
+        public  Task<TResponse> Send<TResponse>(IQuery<TResponse> command)
+            =>  _mediator.Send(command);
     }
 }

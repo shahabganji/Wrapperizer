@@ -6,6 +6,6 @@ namespace Wrapperizer.Core.Abstraction
     {
         Task Send(ICommand command);
         Task<TResponse> Send<TResponse>(ICommand<TResponse> command);
-        Task<TResponse> Send<TResponse>(IQuery<TResponse> command);
+        Task<TResponse> Send<TResponse>(IQuery<TResponse> query);
     }
 }

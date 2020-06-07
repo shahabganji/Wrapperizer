@@ -29,11 +29,11 @@ namespace Wrapperizer.Core
                 .Lookup(typeof(TRequest))
                 .MatchAsync(
                     AddToCache(next),
-                    cachedValue => Task.FromResult<IActionResult>(new OkObjectResult(cachedValue)));
+                    cachedValue => cachedValue);
 
             _resultAdapter.Result = result;
             return default;
-            // todo: now what to do with the global adapter????
+            
         }
 
         private Func<Task<IActionResult>> AddToCache(RequestHandlerDelegate<TResponse> next) =>
