@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Cqrs;
+using Wrapperizer.Abstraction.Domain;
+using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Abstraction.Specifications;
 
 namespace Wrapperizer.Sample.Api.Queries

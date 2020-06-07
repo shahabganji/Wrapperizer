@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Extensions.Cqrs.Events
 {

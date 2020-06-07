@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 using Wrapperizer.Extensions.Repositories.EfCore.Extensions;
 

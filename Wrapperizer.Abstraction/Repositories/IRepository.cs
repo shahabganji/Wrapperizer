@@ -1,4 +1,4 @@
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Repositories
 {
     public interface IRepository<T>
     {

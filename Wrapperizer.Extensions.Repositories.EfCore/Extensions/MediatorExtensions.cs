@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Extensions.Repositories.EfCore.Extensions
 {

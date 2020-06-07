@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
     public interface IEntity
     {

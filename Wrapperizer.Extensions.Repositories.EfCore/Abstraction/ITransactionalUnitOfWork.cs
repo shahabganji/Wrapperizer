@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Repositories;
 
 namespace Wrapperizer.Extensions.Repositories.EfCore.Abstraction
 {

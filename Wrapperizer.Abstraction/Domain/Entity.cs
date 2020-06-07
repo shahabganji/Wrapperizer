@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
     public abstract class Entity<T> : IEntity
         // this should be done on struct, ValueTypes, and not classes, ReferenceTypes

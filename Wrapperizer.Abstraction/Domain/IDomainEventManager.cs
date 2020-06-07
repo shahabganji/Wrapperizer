@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
     public interface IDomainEventManager
     {

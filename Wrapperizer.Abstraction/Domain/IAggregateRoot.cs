@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
     public interface IAggregateRoot : IValidatableObject
     {

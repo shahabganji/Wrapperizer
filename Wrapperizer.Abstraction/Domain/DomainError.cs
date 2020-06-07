@@ -1,4 +1,4 @@
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
     public abstract class DomainError
     {

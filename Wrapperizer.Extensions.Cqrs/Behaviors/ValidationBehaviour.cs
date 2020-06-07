@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Cqrs.Events;
 using Wrapperizer.Extensions.Cqrs.Exceptions;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Sample.Api.Queries;
 
 namespace Wrapperizer.Sample.Api.Controllers

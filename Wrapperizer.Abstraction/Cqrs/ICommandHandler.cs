@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Cqrs
 {
     public interface ICommandHandler : IRequestHandler<ICommand>
     {

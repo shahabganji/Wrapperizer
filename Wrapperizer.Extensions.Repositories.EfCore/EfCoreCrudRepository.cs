@@ -6,7 +6,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Funx;
 using Microsoft.EntityFrameworkCore;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Domain;
+using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Abstraction.Specifications;
 
 namespace Wrapperizer.Extensions.Repositories.EfCore

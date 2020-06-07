@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Extensions.Cqrs.EfCore.Extensions;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 

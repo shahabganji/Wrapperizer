@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Funx;
+using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Abstraction.Specifications;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Repositories
+
 {
     public interface ICrudRepository<T> where T : class, IAggregateRoot
     {

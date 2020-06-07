@@ -1,7 +1,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Domain;
+using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Extensions.Repositories.EfCore;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;

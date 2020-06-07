@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Cqrs
 {
     public interface ICommandQueryManager
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
 // This base class comes from Jimmy Bogard, but with support of inheritance
 // http://grabbagoft.blogspot.com/2007/06/generic-value-object-equality.html

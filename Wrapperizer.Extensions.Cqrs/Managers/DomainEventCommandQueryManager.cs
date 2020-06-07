@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MediatR;
-using Wrapperizer.Abstraction;
+using Wrapperizer.Abstraction.Cqrs;
+using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Extensions.Cqrs.Managers
 {

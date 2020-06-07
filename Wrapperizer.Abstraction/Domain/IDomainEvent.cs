@@ -1,7 +1,7 @@
 using System;
 using MediatR;
 
-namespace Wrapperizer.Abstraction
+namespace Wrapperizer.Abstraction.Domain
 {
     public interface IDomainEvent : INotification
     {
