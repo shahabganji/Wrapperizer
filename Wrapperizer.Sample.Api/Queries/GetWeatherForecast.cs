@@ -9,7 +9,6 @@ using Wrapperizer.Core.Abstraction.Specifications;
 
 namespace Wrapperizer.Sample.Api.Queries
 {
-
     public sealed class PastDateError : DomainError
     {
         public override string Message => "The specified date is past.";
@@ -24,30 +23,23 @@ namespace Wrapperizer.Sample.Api.Queries
             return g => g.DateTime >= DateTime.Now;
         }
     }
+
     public sealed class GetWeatherForecast : IQuery<IReadOnlyCollection<WeatherForecast>>
     {
         public DateTime DateTime { get; set; }
-        public sealed class GetWeatherForecastHandler : IQueryHandler<GetWeatherForecast, IReadOnlyCollection<WeatherForecast>>
+
+        public sealed class
+            GetWeatherForecastHandler : IQueryHandler<GetWeatherForecast, IReadOnlyCollection<WeatherForecast>>
         {
             private readonly ICrudRepository<WeatherForecast> _repository;
 
             public GetWeatherForecastHandler(
-                ICrudRepository<WeatherForecast> repository, IActionResultAdapter actionResultAdapter)
-            {
+                ICrudRepository<WeatherForecast> repository) =>
                 _repository = repository;
-                ActionResultAdapter = actionResultAdapter;
-            }
-            
-            public IActionResultAdapter ActionResultAdapter { get; }
-            public async Task<IReadOnlyCollection<WeatherForecast>> Handle(
+
+            public Task<IReadOnlyCollection<WeatherForecast>> Handle(
                 GetWeatherForecast request, CancellationToken cancellationToken)
-            {
-                var x =  await _repository.FindBy(_ => true);
-                
-                this.ActionResultAdapter.Result = new OkObjectResult(x);
-                
-                return x;
-            }
+                => _repository.FindBy(_ => true);
         }
     }
 }

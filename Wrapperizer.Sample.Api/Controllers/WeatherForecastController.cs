@@ -11,25 +11,18 @@ namespace Wrapperizer.Sample.Api.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly ICommandQueryManager _commandQueryManager;
-        private readonly IActionResultAdapter _resultAdapter;
 
         public WeatherForecastController(
-            ICommandQueryManager commandQueryManager,
-            IActionResultAdapter resultAdapter
-            )
+            ICommandQueryManager commandQueryManager)
         {
             _commandQueryManager = commandQueryManager;
-            _resultAdapter = resultAdapter;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            await _commandQueryManager.Send(new GetWeatherForecast
-             {
-                 DateTime = DateTime.Now.AddDays(1)
-             });
-             return _resultAdapter.Result;
-        }
+        public async Task<object> Get()
+            => await _commandQueryManager.Send(new GetWeatherForecast
+            {
+                DateTime = DateTime.Now.AddDays(1)
+            });
     }
 }

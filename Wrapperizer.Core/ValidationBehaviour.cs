@@ -15,15 +15,11 @@ namespace Wrapperizer.Core
         : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly IEnumerable<Specification<TRequest>> _specifications;
-        private readonly IActionResultAdapter _resultAdapter;
 
         public ValidationBehaviour(
-            IEnumerable<Specification<TRequest>> specifications,
-            IActionResultAdapter resultAdapter
-            )
+            IEnumerable<Specification<TRequest>> specifications)
         {
             _specifications = specifications;
-            _resultAdapter = resultAdapter;
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
@@ -48,7 +44,6 @@ namespace Wrapperizer.Core
 
             if (validationResults.Any())
             {
-                _resultAdapter.Result = new BadRequestObjectResult(validationResults);
                 return Task.FromResult<TResponse>(default);
             }
             

@@ -10,38 +10,29 @@ using Wrapperizer.Core.Abstraction;
 namespace Wrapperizer.Core
 {
     public sealed class CacheBehaviour<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, TResponse>
+        : IPipelineBehavior<TRequest, TResponse> where TResponse : class
     {
-        private readonly IActionResultAdapter _resultAdapter;
+        private static readonly Dictionary<Type, object> ResponseDictionary
+            = new Dictionary<Type, object>();
 
-        private static readonly Dictionary<Type, IActionResult> ResponseDictionary
-            = new Dictionary<Type, IActionResult>();
-
-        public CacheBehaviour(IActionResultAdapter resultAdapter)
-        {
-            _resultAdapter = resultAdapter;
-        }
-        
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
             var result = await ResponseDictionary
                 .Lookup(typeof(TRequest))
                 .MatchAsync(
-                    AddToCache(next),
-                    cachedValue => cachedValue);
+                    AddToCacheAsync(next),
+                    cachedValue => cachedValue as TResponse);
 
-            _resultAdapter.Result = result;
-            return default;
-            
+            return result;
         }
 
-        private Func<Task<IActionResult>> AddToCache(RequestHandlerDelegate<TResponse> next) =>
-            async () =>
+        private Func<Task<TResponse>> AddToCacheAsync(RequestHandlerDelegate<TResponse> next)
+            => async () =>
             {
                 var response = await next();
-                ResponseDictionary.TryAdd(typeof(TRequest) , _resultAdapter.Result);
-                return _resultAdapter.Result;
+                ResponseDictionary.TryAdd(typeof(TRequest), response);
+                return response;
             };
     }
 }

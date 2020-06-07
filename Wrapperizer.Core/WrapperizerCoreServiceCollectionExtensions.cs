@@ -40,8 +40,6 @@ namespace Wrapperizer
             Action<WrapperizerCoreServiceCollection> configure = null,
             params Assembly[] assemblies)
         {
-            builder.ServiceCollection.AddScoped<IActionResultAdapter, ActionResultAdapter>();
-            
             if( !assemblies.SafeAny() )
                 assemblies =  AppDomain.CurrentDomain.GetAssemblies();
             
