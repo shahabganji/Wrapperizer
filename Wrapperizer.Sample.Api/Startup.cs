@@ -38,9 +38,10 @@ namespace Wrapperizer.Sample.Api
             // });
 
             services.AddWrapperizer()
-                .AddHandlers(configure: context => context
-                        .AddGlobalValidation()
+                .AddHandlers(context => context
                         .AddDistributedCaching()
+                        .AddGlobalValidation()
+                        .AddTransactionalCommands()
                 )
                 .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 {

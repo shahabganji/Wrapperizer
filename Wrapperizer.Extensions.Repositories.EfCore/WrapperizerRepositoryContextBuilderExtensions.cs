@@ -22,41 +22,51 @@ namespace Wrapperizer
             wrapperizerServiceCollection.ServiceCollection
                 .AddDbContext<DbContext, TU>(optionsAction ?? throw new ArgumentNullException(nameof(optionsAction)));
 
-            _ = serviceLifetime switch
-            {
-                ServiceLifetime.Singleton => wrapperizerServiceCollection.ServiceCollection.AddSingleton(
-                    typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>)),
-                ServiceLifetime.Scoped => wrapperizerServiceCollection.ServiceCollection.AddScoped(
-                    typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>)),
-                _ => wrapperizerServiceCollection.ServiceCollection.AddTransient(
-                    typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>))
-            };
+            wrapperizerServiceCollection.ServiceCollection.Add(
+                new ServiceDescriptor(typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>),
+                    wrapperizerServiceCollection.ServiceLifetime));
+
+            // _ = serviceLifetime switch
+            // {
+            //     ServiceLifetime.Singleton => wrapperizerServiceCollection.ServiceCollection.AddSingleton(
+            //         typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>)),
+            //     ServiceLifetime.Scoped => wrapperizerServiceCollection.ServiceCollection.AddScoped(
+            //         typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>)),
+            //     _ => wrapperizerServiceCollection.ServiceCollection.AddTransient(
+            //         typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>))
+            // };
 
             return wrapperizerServiceCollection;
         }
 
-        public static IWrapperizerBuilder AddUnitOfWork<T>(
-            this IWrapperizerBuilder wrapperizerBuilder)
+        public static IWrapperizerBuilder AddUnitOfWork<T>(this IWrapperizerBuilder wrapperizerBuilder)
             where T : IUnitOfWork
         {
-            wrapperizerBuilder.ServiceCollection
-                .AddScoped(typeof(IUnitOfWork), typeof(T));
+            wrapperizerBuilder.ServiceCollection.Add(
+                new ServiceDescriptor(
+                    typeof(IUnitOfWork), typeof(T),
+                    wrapperizerBuilder.ServiceLifetime));
+
             return wrapperizerBuilder;
         }
 
-        public static IWrapperizerBuilder AddTransactionalUnitOfWork<T>(
-            this IWrapperizerBuilder wrapperizerBuilder, ServiceLifetime serviceLifeTime = ServiceLifetime.Scoped)
+        public static IWrapperizerBuilder AddTransactionalUnitOfWork<T>(this IWrapperizerBuilder wrapperizerBuilder)
             where T : ITransactionalUnitOfWork
         {
-            _ = serviceLifeTime switch
-            {
-                ServiceLifetime.Singleton => wrapperizerBuilder.ServiceCollection.AddSingleton(
-                    typeof(ITransactionalUnitOfWork), typeof(T)),
-                ServiceLifetime.Scoped => wrapperizerBuilder.ServiceCollection.AddScoped(
-                    typeof(ITransactionalUnitOfWork), typeof(T)),
-                _ => wrapperizerBuilder.ServiceCollection.AddTransient(
-                    typeof(ITransactionalUnitOfWork), typeof(T))
-            };
+            wrapperizerBuilder.ServiceCollection.Add(
+                new ServiceDescriptor(
+                    typeof(ITransactionalUnitOfWork), typeof(T),
+                    wrapperizerBuilder.ServiceLifetime));
+
+            // _ = serviceLifeTime switch
+            // {
+            //     ServiceLifetime.Singleton => wrapperizerBuilder.ServiceCollection.AddSingleton(
+            //         ),
+            //     ServiceLifetime.Scoped => wrapperizerBuilder.ServiceCollection.AddScoped(
+            //         typeof(ITransactionalUnitOfWork), typeof(T)),
+            //     _ => wrapperizerBuilder.ServiceCollection.AddTransient(
+            //         typeof(ITransactionalUnitOfWork), typeof(T))
+            // };
 
             return wrapperizerBuilder;
         }
