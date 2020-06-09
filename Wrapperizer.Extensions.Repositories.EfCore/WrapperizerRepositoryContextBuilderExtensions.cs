@@ -23,49 +23,31 @@ namespace Wrapperizer
 
             wrapperizerServiceCollection.ServiceCollection.Add(
                 new ServiceDescriptor(typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>),
-                    wrapperizerServiceCollection.ServiceLifetime));
-
-            // _ = serviceLifetime switch
-            // {
-            //     ServiceLifetime.Singleton => wrapperizerServiceCollection.ServiceCollection.AddSingleton(
-            //         typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>)),
-            //     ServiceLifetime.Scoped => wrapperizerServiceCollection.ServiceCollection.AddScoped(
-            //         typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>)),
-            //     _ => wrapperizerServiceCollection.ServiceCollection.AddTransient(
-            //         typeof(ICrudRepository<>), typeof(EfCoreCrudRepository<>))
-            // };
+                    serviceLifetime));
 
             return wrapperizerServiceCollection;
         }
 
-        public static IWrapperizerBuilder AddUnitOfWork<T>(this IWrapperizerBuilder wrapperizerBuilder)
+        public static IWrapperizerBuilder AddUnitOfWork<T>(this IWrapperizerBuilder wrapperizerBuilder,
+            ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
             where T : IUnitOfWork
         {
             wrapperizerBuilder.ServiceCollection.Add(
                 new ServiceDescriptor(
                     typeof(IUnitOfWork), typeof(T),
-                    wrapperizerBuilder.ServiceLifetime));
+                    serviceLifetime));
 
             return wrapperizerBuilder;
         }
 
-        public static IWrapperizerBuilder AddTransactionalUnitOfWork<T>(this IWrapperizerBuilder wrapperizerBuilder)
+        public static IWrapperizerBuilder AddTransactionalUnitOfWork<T>(this IWrapperizerBuilder wrapperizerBuilder,
+            ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
             where T : ITransactionalUnitOfWork
         {
             wrapperizerBuilder.ServiceCollection.Add(
                 new ServiceDescriptor(
                     typeof(ITransactionalUnitOfWork), typeof(T),
-                    wrapperizerBuilder.ServiceLifetime));
-
-            // _ = serviceLifeTime switch
-            // {
-            //     ServiceLifetime.Singleton => wrapperizerBuilder.ServiceCollection.AddSingleton(
-            //         ),
-            //     ServiceLifetime.Scoped => wrapperizerBuilder.ServiceCollection.AddScoped(
-            //         typeof(ITransactionalUnitOfWork), typeof(T)),
-            //     _ => wrapperizerBuilder.ServiceCollection.AddTransient(
-            //         typeof(ITransactionalUnitOfWork), typeof(T))
-            // };
+                    serviceLifetime));
 
             return wrapperizerBuilder;
         }

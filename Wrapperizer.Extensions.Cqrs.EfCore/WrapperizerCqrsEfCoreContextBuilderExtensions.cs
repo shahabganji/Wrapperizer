@@ -8,12 +8,12 @@ namespace Wrapperizer
     public static class WrapperizerCqrsEfCoreContextBuilderExtensions
     {
         public static WrapperizerCqrsContextBuilder AddTransactionalCommands(
-            this WrapperizerCqrsContextBuilder context
-        )
+            this WrapperizerCqrsContextBuilder context)
         {
-            context.ServiceCollection.AddScoped(
-                typeof(IPipelineBehavior<,>),
-                typeof(TransactionBehaviour<,>));
+            context.ServiceCollection.Add(
+                new ServiceDescriptor(
+                    typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>),
+                    context.ServiceLifetime));
             return context;
         }
     }

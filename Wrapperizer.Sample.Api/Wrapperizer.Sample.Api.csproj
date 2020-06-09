@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj" />
     </ItemGroup>

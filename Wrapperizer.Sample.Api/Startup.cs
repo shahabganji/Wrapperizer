@@ -1,5 +1,6 @@
 using System;
 using Funx.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +43,7 @@ namespace Wrapperizer.Sample.Api
                 .AddHandlers(context => context
                         .AddDistributedCaching()
                         .AddGlobalValidation()
-                        // .AddTransactionalCommands()
+                    // .AddTransactionalCommands()
                 )
                 .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 {
@@ -50,7 +51,6 @@ namespace Wrapperizer.Sample.Api
                     options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                 });
 
-            services.AddTransient<Specification<GetWeatherForecast>, NotPastSpecification>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +60,8 @@ namespace Wrapperizer.Sample.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseWrapperizerApiExceptionHandler();
 
             app.UseHttpsRedirection();
 

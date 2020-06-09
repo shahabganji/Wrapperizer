@@ -10,18 +10,6 @@ using Wrapperizer.Abstraction.Specifications;
 
 namespace Wrapperizer.Sample.Api.Queries
 {
-    public sealed class PastDateError : DomainError
-    {
-        public override string Message => "The specified date is past.";
-    }
-
-    public class NotPastSpecification : Specification<GetWeatherForecast>
-    {
-        public override Expression<Func<GetWeatherForecast, bool>> ToExpression()
-        {
-            return g => g.DateTime >= DateTime.Now;
-        }
-    }
 
     public sealed class GetWeatherForecast : IQuery<IReadOnlyCollection<WeatherForecast>>
     {

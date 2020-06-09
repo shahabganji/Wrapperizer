@@ -8,12 +8,12 @@ namespace Wrapperizer
     public static class WrapperizerAspNetCoreContextBuilderExtensions
     {
         public static WrapperizerCqrsContextBuilder AddDistributedCaching(
-            this WrapperizerCqrsContextBuilder context
-        )
+            this WrapperizerCqrsContextBuilder context)
         {
-            context.ServiceCollection.AddScoped(
-                typeof(IPipelineBehavior<,>),
-                typeof(CacheBehaviour<,>));
+            context.ServiceCollection.Add(
+                new ServiceDescriptor(
+                    typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>)
+                    , context.ServiceLifetime));
             return context;
         }
     }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Wrapperizer.Extensions.Cqrs.Exceptions;
 
 namespace Wrapperizer.AspNetCore.Logging.Middleware
 {
@@ -27,16 +30,35 @@ namespace Wrapperizer.AspNetCore.Logging.Middleware
             {
                 await _next(context);
             }
+            catch (InvalidRequestException requestException)
+            {
+                await HandleInvalidRequestExceptionAsync(context, requestException);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex);
             }
         }
 
+        private Task HandleInvalidRequestExceptionAsync(HttpContext context, InvalidRequestException exception)
+        {
+            var result = JsonSerializer.Serialize(exception.ValidationResults , new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return context.Response.WriteAsync(result);
+        }
+
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
+            
             var error = new ApiError
             {
+                TraceIdentifier = context.TraceIdentifier,
+                
                 Id = Guid.NewGuid().ToString(),
                 Status = (short)HttpStatusCode.InternalServerError,
                 Title = "Some kind of error occurred in the API.  Please use the id and contact our " +

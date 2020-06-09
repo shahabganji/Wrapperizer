@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using static Microsoft.Extensions.DependencyInjection.ServiceLifetime;
 
 // ReSharper disable once CheckNamespace
 namespace Wrapperizer
