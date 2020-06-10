@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Wrapperizer.Abstraction.Domain
 {
-    public interface IAggregateRoot : IValidatableObject
+    public interface IAggregateRoot
     {
     }
 }

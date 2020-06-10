@@ -2,12 +2,16 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
+using Serilog;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
+using Wrapperizer.Extensions.Repositories.EfCore;
+using Wrapperizer.Sample.Infra.Persistence;
 using static HealthChecks.UI.Client.UIResponseWriter;
 
 namespace Wrapperizer.Sample.Api
@@ -43,12 +47,19 @@ namespace Wrapperizer.Sample.Api
                 options.InstanceName = "Wrapperizer.Api";
             });
 
+            services.AddDbContext<UniversityDbContext>((provider,builder) =>
+            {
+                builder.UseInMemoryDatabase("sample_uni");
+            });
+           
             services.AddWrapperizer()
                 .AddHandlers(context => context
                         .AddDistributedCaching()
                         .AddGlobalValidation()
-                    // .AddTransactionalCommands()
+                        .AddTransactionalCommands()
                 )
+                .AddUnitOfWork<UniversityDbContext>()
+                .AddTransactionalUnitOfWork<UniversityDbContext>()
                 // .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 // {
                 //     options.UseInMemoryDatabase("WeatherForecast");
