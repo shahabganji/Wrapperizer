@@ -1,18 +1,14 @@
 using System;
-using Funx.Extensions;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Wrapperizer.Abstraction.Domain;
-using Wrapperizer.Abstraction.Repositories;
-using Wrapperizer.Abstraction.Specifications;
+using RabbitMQ.Client;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
-using Wrapperizer.Sample.Api.Queries;
+using static HealthChecks.UI.Client.UIResponseWriter;
 
 namespace Wrapperizer.Sample.Api
 {
@@ -28,16 +24,24 @@ namespace Wrapperizer.Sample.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHealthChecks()
+                .AddCheck("api", _ => HealthCheckResult.Healthy())
+                .AddRedis("localhost", "redis")
+                .AddMongoDb("mongodb://127.0.0.1:27017" , "orderdb","mongodb")
+                .AddSqlServer("Server=localhost; Database=fotokar; UID= sa; PWD=P@assw0rd")
+                .AddRabbitMQ(new Uri("amqp://guest:guest@localhost:5672/wrapperizer"),new SslOption(), "rabbitmq");
+            
             services.AddControllers();
 
             services.AddEntityFrameworkInMemoryDatabase();
 
-            services.AddDistributedMemoryCache();
-            // services.AddStackExchangeRedisCache(options =>
-            // {
-            //     options.Configuration = "localhost";
-            //     options.InstanceName = "Wrapperizer.Api";
-            // });
+            // services.AddDistributedMemoryCache();
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.InstanceName = "Wrapperizer.Api";
+            });
 
             services.AddWrapperizer()
                 .AddHandlers(context => context
@@ -45,15 +49,15 @@ namespace Wrapperizer.Sample.Api
                         .AddGlobalValidation()
                     // .AddTransactionalCommands()
                 )
-                .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
-                {
-                    options.UseInMemoryDatabase("WeatherForecast");
-                    options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
-                });
+                // .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
+                // {
+                //     options.UseInMemoryDatabase("WeatherForecast");
+                //     options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
+                // })
+                ;
 
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -69,27 +73,17 @@ namespace Wrapperizer.Sample.Api
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            SeedDatabase(app.ApplicationServices.CreateScope().ServiceProvider
-                .GetRequiredService<ICrudRepository<WeatherForecast>>());
-        }
-
-        private static void SeedDatabase(ICrudRepository<WeatherForecast> repository)
-        {
-            var rng = new Random();
-            new[]
+            app.UseEndpoints(endpoints =>
             {
-                "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            }.ForEach((summary, index) =>
-            {
-                repository.Add(new WeatherForecast
+                endpoints.MapHealthChecks("/healthz", new HealthCheckOptions
                 {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = summary
+                    Predicate = _ => true,
+                    ResponseWriter = WriteHealthCheckUIResponse 
                 });
+                
+                endpoints.MapControllers();
             });
+            
         }
     }
 }

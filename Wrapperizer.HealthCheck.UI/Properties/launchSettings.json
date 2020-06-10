@@ -4,15 +4,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:16422",
-      "sslPort": 44321
+      "applicationUrl": "http://localhost:46360",
+      "sslPort": 44374
     }
   },
   "profiles": {
-    "Wrapperizer.Sample.Api": {
+    "Wrapperizer.HealthCheck.UI": {
       "commandName": "Project",
-      "launchBrowser": false,
-      "applicationUrl": "https://localhost:9001;http://localhost:9000",
+      "launchBrowser": true,
+      "launchUrl": "healthchecks-ui",
+      "applicationUrl": "https://localhost:8001;http://localhost:8000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

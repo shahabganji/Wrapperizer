@@ -7,7 +7,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj" />
-        <ProjectReference Include="..\Wrapperizer.Extensions.Serilog\Wrapperizer.Extensions.Serilog.csproj" />
     </ItemGroup>
 
     <ItemGroup>
