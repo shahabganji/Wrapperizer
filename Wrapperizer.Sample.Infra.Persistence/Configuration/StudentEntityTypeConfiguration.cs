@@ -32,20 +32,20 @@ namespace Wrapperizer.Sample.Infra.Persistence.Configuration
 
             builder.OwnsOne(p => p.NationalCode, x =>
             {
-                x.Property("_nationalCode")
+                x.Property<string>("_nationalCode")
                     .UsePropertyAccessMode(PropertyAccessMode.Field)
                     .HasColumnName("NationalCode")
                     .IsRequired();
             });
             
-            builder.Property("_status")
+            builder.Property<int>("_registrationStatus")
                 .IsRequired()
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
-                .HasColumnName("_status");
+                .HasColumnName("RegistrationStatus");
 
-            builder.HasOne(p => p.Status)
+            builder.HasOne(p => p.RegistrationStatus)
                 .WithMany()
-                .HasForeignKey("_status")
+                .HasForeignKey("_registrationStatus")
                 .IsRequired();
         }
     }
