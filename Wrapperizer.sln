@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "persistence", "persistence"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Infra.Persistence", "Wrapperizer.Sample.Infra.Persistence\Wrapperizer.Sample.Infra.Persistence.csproj", "{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Configurations", "Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj", "{06A9AE70-9157-4EEC-BCEF-E8588E836420}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06A9AE70-9157-4EEC-BCEF-E8588E836420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A9AE70-9157-4EEC-BCEF-E8588E836420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A9AE70-9157-4EEC-BCEF-E8588E836420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A9AE70-9157-4EEC-BCEF-E8588E836420}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{582511C3-0D1D-470D-92C9-062F8BAFF654} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
@@ -110,5 +116,6 @@ Global
 		{04EA4B03-29DD-4086-ACDB-7039F25BF997} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{5ABA8CFF-81A2-4DBC-A568-2A263AB14326} = {04EA4B03-29DD-4086-ACDB-7039F25BF997}
 		{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2} = {5ABA8CFF-81A2-4DBC-A568-2A263AB14326}
+		{06A9AE70-9157-4EEC-BCEF-E8588E836420} = {04EA4B03-29DD-4086-ACDB-7039F25BF997}
 	EndGlobalSection
 EndGlobal
