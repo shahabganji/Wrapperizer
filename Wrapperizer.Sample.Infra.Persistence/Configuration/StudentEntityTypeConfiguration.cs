@@ -20,16 +20,17 @@ namespace Wrapperizer.Sample.Infra.Persistence.Configuration
             
             builder.Property(p => p.FirstName)
                 .IsUnicode()
+                .HasMaxLength(100)
                 .IsRequired();
             
             builder.Property(p => p.LastName)
                 .IsUnicode()
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(p => p.DateOfBirth)
                 .IsRequired();
-
-
+            
             builder.OwnsOne(p => p.NationalCode, x =>
             {
                 x.Property<string>("_nationalCode")
@@ -37,7 +38,7 @@ namespace Wrapperizer.Sample.Infra.Persistence.Configuration
                     .HasColumnName("NationalCode")
                     .IsRequired();
             });
-            
+
             builder.Property<int>("_registrationStatus")
                 .IsRequired()
                 .UsePropertyAccessMode(PropertyAccessMode.Field)

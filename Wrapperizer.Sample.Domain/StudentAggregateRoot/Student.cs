@@ -27,6 +27,8 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
             private set => _registrationStatus = value.Id;
         }
 
+        private Student(){}
+        
         public Student(string firstName, string lastName, string nationalCode, DateTimeOffset dateOfBirth)
             : base(Guid.NewGuid())
         {
