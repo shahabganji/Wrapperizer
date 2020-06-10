@@ -4,7 +4,7 @@ using Wrapperizer.Sample.Domain.Common;
 using Wrapperizer.Sample.Domain.Events;
 using static Wrapperizer.Abstraction.Domain.Enumeration;
 using static Wrapperizer.Sample.Domain.Common.NationalCode;
-using static Wrapperizer.Sample.Domain.StudentAggregateRoot.StudentStatus;
+using static Wrapperizer.Sample.Domain.StudentAggregateRoot.RegistrationStatus;
 
 namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
 {
@@ -20,11 +20,11 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
 
         public DateTimeOffset DateOfBirth { get; private set; }
 
-        private int _status;
-        public StudentStatus Status
+        private int _registrationStatus;
+        public RegistrationStatus RegistrationStatus
         {
-            get => FromValue<StudentStatus>(_status);
-            private set => _status = value.Id;
+            get => FromValue<RegistrationStatus>(_registrationStatus);
+            private set => _registrationStatus = value.Id;
         }
 
         public Student(string firstName, string lastName, string nationalCode, DateTimeOffset dateOfBirth)
@@ -36,14 +36,14 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
             NationalCode = From(nationalCode);
             
             DateOfBirth = dateOfBirth;
-            Status = Registered;
+            RegistrationStatus = Requested;
 
             this.AddDomainEvent(new StudentRegistered(this));
         }
 
         public void ConfirmRegistration()
         {
-            Status = Confirmed;
+            RegistrationStatus = Confirmed;
             this.AddDomainEvent(new StudentRegistrationConfirmed(this.Id));
         }
     }

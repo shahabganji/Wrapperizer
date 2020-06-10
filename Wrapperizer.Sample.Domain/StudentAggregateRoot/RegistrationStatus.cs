@@ -2,13 +2,12 @@ using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
 {
-    public class StudentStatus : Enumeration
+    public class RegistrationStatus : Enumeration
     {
-        public static readonly StudentStatus Registered = new StudentStatus(1, nameof(Registered));
-        public static readonly StudentStatus
-            Confirmed = new StudentStatus(2, nameof(Confirmed));
+        public static readonly RegistrationStatus Requested = new RegistrationStatus(1, nameof(Requested));
+        public static readonly RegistrationStatus Confirmed = new RegistrationStatus(2, nameof(Confirmed));
 
-        public StudentStatus(int id, string name) : base(id, name)
+        public RegistrationStatus(int id, string name) : base(id, name)
         {
         }
         

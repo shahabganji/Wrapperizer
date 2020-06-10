@@ -4,7 +4,7 @@ using System.Reflection.Metadata;
 using Wrapperizer.Sample.Domain.Events;
 using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 using Xunit;
-using static Wrapperizer.Sample.Domain.StudentAggregateRoot.StudentStatus;
+using static Wrapperizer.Sample.Domain.StudentAggregateRoot.RegistrationStatus;
 
 namespace Wrapperizer.Sample.Domain.Test.AggregateRoots
 {
@@ -16,7 +16,7 @@ namespace Wrapperizer.Sample.Domain.Test.AggregateRoots
         {
             var student = new Student("test" , "full test" , "1234567890" , DateTimeOffset.Now);
             
-            Assert.Equal(student.Status , Registered);
+            Assert.Equal(student.RegistrationStatus , Requested);
         }
         
         [Fact]
@@ -33,11 +33,11 @@ namespace Wrapperizer.Sample.Domain.Test.AggregateRoots
         {
             var student = new Student("test" , "full test" , "1234567890" , DateTimeOffset.Now);
             
-            Assert.Equal(student.Status , Registered);
+            Assert.Equal(student.RegistrationStatus , Requested);
             
             student.ConfirmRegistration();
             
-            Assert.Equal(student.Status , Confirmed);
+            Assert.Equal(student.RegistrationStatus , Confirmed);
         }
         
     }
