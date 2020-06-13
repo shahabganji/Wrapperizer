@@ -4,12 +4,12 @@ using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 
 namespace Wrapperizer.Sample.Infra.Persistence.Configuration
 {
-    internal sealed class StudentStatusEntityTypeConfiguration
+    internal sealed class RegistrationStatusEntityTypeConfiguration
         : IEntityTypeConfiguration<RegistrationStatus>
     {
         public void Configure(EntityTypeBuilder<RegistrationStatus> builder)
         {
-            builder.ToTable("StudentStatus");
+            builder.ToTable("RegistrationStatus");
 
             builder.HasKey(p => p.Id);
 

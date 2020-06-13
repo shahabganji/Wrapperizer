@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Repositories.EfCore;
+using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 
 namespace Wrapperizer.Sample.Infra.Persistence
 {
@@ -34,5 +35,8 @@ namespace Wrapperizer.Sample.Infra.Persistence
                 optionsBuilder.UseInMemoryDatabase("wrapperizer-sample");
             }
         }
+
+        public DbSet<Student> Students { get; set; }
+        
     }
 }
