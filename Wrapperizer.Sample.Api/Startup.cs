@@ -10,9 +10,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
-using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
+using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Configurations;
 using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -50,11 +49,15 @@ namespace Wrapperizer.Sample.Api
                 });
             });
 
+            // var handlersAssembly = typeof(RegisterStudentHandler).Assembly; 
+
             services.AddWrapperizer()
                 .AddHandlers(context => context
                         .AddDistributedCaching()
                         .AddGlobalValidation()
-                        .AddTransactionalCommands())
+                        .AddTransactionalCommands()
+                // , assemblies:new []{handlersAssembly}
+                )
                 .AddUnitOfWork<UniversityDbContext>()
                 .AddTransactionalUnitOfWork<UniversityDbContext>()
                 // .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>

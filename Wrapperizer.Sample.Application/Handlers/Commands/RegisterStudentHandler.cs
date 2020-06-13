@@ -5,7 +5,7 @@ using MediatR;
 using Wrapperizer.Sample.Domain.Commands;
 using Wrapperizer.Sample.Domain.Repositories;
 
-namespace Wrapperizer.Sample.Application.Handlers
+namespace Wrapperizer.Sample.Application.Handlers.Commands
 {
     public sealed class RegisterStudentHandler : IRequestHandler<RegisterStudent, Guid>
     {

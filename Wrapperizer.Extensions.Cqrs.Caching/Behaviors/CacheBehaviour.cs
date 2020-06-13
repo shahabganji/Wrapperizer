@@ -24,22 +24,24 @@ namespace Wrapperizer.Extensions.Cqrs.Caching.Behaviors
         {
             if (request is ICommand<TResponse>)
                 return await next();
-            
-            var bytes = await _distributedCache.GetAsync(typeof(TRequest).Name, cancellationToken);
+
+            var key = JsonSerializer.Serialize(request);
+
+            var bytes = await _distributedCache.GetAsync(key, cancellationToken);
 
             return (bytes != null)
                 ? JsonSerializer.Deserialize<TResponse>(bytes)
-                : await CallAndCache(cancellationToken, next).ConfigureAwait(false);
+                : await CallAndCache(key,cancellationToken, next).ConfigureAwait(false);
         }
 
-        private async Task<TResponse> CallAndCache(CancellationToken cancellationToken,
+        private async Task<TResponse> CallAndCache(string key, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
             var response = await next().ConfigureAwait(false);
 
             var json = JsonSerializer.SerializeToUtf8Bytes<TResponse>(response);
 
-            await _distributedCache.SetAsync(typeof(TRequest).Name, json, cancellationToken)
+            await _distributedCache.SetAsync(key, json, cancellationToken)
                 .ConfigureAwait(false);
 
             return response;

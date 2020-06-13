@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Sample.Domain.Commands;
+using Wrapperizer.Sample.Domain.Queries;
 
 namespace Wrapperizer.Sample.Api.Controllers
 {
@@ -18,7 +19,8 @@ namespace Wrapperizer.Sample.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetStudentInfo(Guid studentId) => Ok();
+        public async Task<IActionResult> GetStudentInfo(Guid studentId) => 
+            Ok(await _manager.Send(new GetStudentInfo{StudentId = studentId}));
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterStudent([FromBody]RegisterStudent command)

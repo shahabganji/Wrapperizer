@@ -8,6 +8,8 @@ namespace Wrapperizer.Sample.Domain.Repositories
 {
     public interface IStudentRepository : IRepository<Student>
     {
+        Task<string> GetStudentFullName(Guid studentId);
+        
         Task<Guid> RegisterStudent(string firstname, string lastname, string nationalCode, DateTimeOffset birthdate,
             CancellationToken cancellationToken);
 

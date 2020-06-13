@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 using Wrapperizer.Sample.Domain.Repositories;
@@ -18,6 +20,9 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
             _dbContext = dbContext;
             UnitOfWork = unitOfWork;
         }
+
+        public async Task<string> GetStudentFullName(Guid studentId) => 
+            (await _dbContext.Students.SingleOrDefaultAsync(s => s.Id == studentId)).LastName;
 
         public async Task<Guid> RegisterStudent(string firstname, string lastname, string nationalCode,
             DateTimeOffset birthdate, CancellationToken cancellationToken)
