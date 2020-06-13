@@ -13,7 +13,6 @@ using RabbitMQ.Client;
 using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
-using Wrapperizer.Sample.Application;
 using Wrapperizer.Sample.Configurations;
 using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -50,9 +49,7 @@ namespace Wrapperizer.Sample.Api
                     options.EnableRetryOnFailure(3);
                 });
             });
-            
-            var handlerAssembly = typeof(RegisterStudentHandler).Assembly;
-            
+
             services.AddWrapperizer()
                 .AddHandlers(context => context
                         .AddDistributedCaching()

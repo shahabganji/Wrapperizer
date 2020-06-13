@@ -2,11 +2,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Sample.Domain.Commands;
 using Wrapperizer.Sample.Domain.Repositories;
 
-namespace Wrapperizer.Sample.Application
+namespace Wrapperizer.Sample.Application.Handlers
 {
     public sealed class RegisterStudentHandler : IRequestHandler<RegisterStudent, Guid>
     {
