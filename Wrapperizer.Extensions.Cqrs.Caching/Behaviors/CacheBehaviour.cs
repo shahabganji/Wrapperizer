@@ -3,12 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
+using Wrapperizer.Abstraction.Cqrs;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Wrapperizer.Extensions.Cqrs.Caching.Behaviors
 {
     public sealed class CacheBehaviour<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, TResponse> where TResponse : class
+        : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly IDistributedCache _distributedCache;
 
@@ -21,6 +22,9 @@ namespace Wrapperizer.Extensions.Cqrs.Caching.Behaviors
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
+            if (request is ICommand<TResponse>)
+                return await next();
+            
             var bytes = await _distributedCache.GetAsync(typeof(TRequest).Name, cancellationToken);
 
             return (bytes != null)
