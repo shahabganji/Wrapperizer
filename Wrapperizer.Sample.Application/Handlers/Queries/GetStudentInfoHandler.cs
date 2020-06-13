@@ -1,8 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Wrapperizer.Abstraction.Cqrs;
+using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Sample.Domain.Queries;
 using Wrapperizer.Sample.Domain.Repositories;
+using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 
 namespace Wrapperizer.Sample.Application.Handlers.Queries
 {
@@ -10,9 +12,10 @@ namespace Wrapperizer.Sample.Application.Handlers.Queries
     {
         private readonly IStudentRepository _repository;
 
-        public GetStudentInfoHandler(IStudentRepository repository)
+        // todo: this should be changed, only for test of DI 
+        public GetStudentInfoHandler(IRepository<Student> repository)
         {
-            _repository = repository;
+            _repository = repository as IStudentRepository;
         }
 
         public Task<string> Handle(GetStudentInfo request, CancellationToken cancellationToken)

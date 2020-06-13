@@ -55,13 +55,14 @@ namespace Wrapperizer.Sample.Api
 
             services.AddWrapperizer()
                 .AddHandlers(context => context
-                        .AddDistributedCaching()
-                        .AddGlobalValidation()
+                        // .AddDistributedCaching()
+                        // .AddGlobalValidation()
                         .AddTransactionalCommands()
                 , assemblies:new []{requestHandlersAssembly,notificationHandlerAssembly}
                 )
                 .AddUnitOfWork<UniversityDbContext>()
                 .AddTransactionalUnitOfWork<UniversityDbContext>()
+                .AddRepositories()
                 // .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
                 // {
                 //     options.UseInMemoryDatabase("WeatherForecast");
@@ -71,7 +72,7 @@ namespace Wrapperizer.Sample.Api
 
             services.AddUniversityMigrator();
 
-            services.AddScoped<IStudentRepository, StudentRepository>();
+            // services.AddScoped<IStudentRepository, StudentRepository>();
 
         }
         

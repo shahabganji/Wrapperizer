@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Funx.Extensions;
 using MediatR;
@@ -13,8 +15,19 @@ using static Microsoft.Extensions.DependencyInjection.ServiceLifetime;
 // ReSharper disable once CheckNamespace
 namespace Wrapperizer
 {
+    
     public static class WrapperizerCqrsContextBuilderExtensions
     {
+        private static Assembly[] GetListOfEntryAssemblyWithReferences()
+        {
+            var listOfAssemblies = new List<Assembly>();
+            var mainAsm = Assembly.GetEntryAssembly();
+            listOfAssemblies.Add(mainAsm);
+
+            listOfAssemblies.AddRange(mainAsm.GetReferencedAssemblies().Select(Assembly.Load));
+            return listOfAssemblies.ToArray();
+        }
+        
         public static IWrapperizerBuilder AddHandlers(
             this IWrapperizerBuilder builder,
             Action<WrapperizerCqrsContextBuilder> configure = null,
@@ -22,7 +35,7 @@ namespace Wrapperizer
             params Assembly[] assemblies)
         {
             if (!assemblies.SafeAny())
-                assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                assemblies = GetListOfEntryAssemblyWithReferences();
 
             var wrapperizerCoreServiceCollection =
                 new WrapperizerCqrsContextBuilder(builder.ServiceCollection, serviceLifetime);

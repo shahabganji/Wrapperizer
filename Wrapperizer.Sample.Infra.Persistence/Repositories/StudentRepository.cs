@@ -19,8 +19,14 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
             UnitOfWork = unitOfWork;
         }
 
-        public async Task<string> GetStudentFullName(Guid studentId) => 
-            (await _dbContext.Students.SingleOrDefaultAsync(s => s.Id == studentId)).LastName;
+        public async Task<string> GetStudentFullName(Guid studentId)
+        {
+            var x =  await _dbContext.Students.SingleOrDefaultAsync(s => s.Id == studentId);
+
+            await _dbContext.Entry(x).Reference(y => y.RegistrationStatus).LoadAsync(CancellationToken.None);
+
+            return x.LastName;
+        }
 
         public async Task<Guid> RegisterStudent(string firstname, string lastname, string nationalCode,
             DateTimeOffset birthdate, CancellationToken cancellationToken)
