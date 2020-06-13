@@ -57,8 +57,7 @@ namespace Wrapperizer.Sample.Api
                 .AddHandlers(context => context
                         .AddDistributedCaching()
                         .AddGlobalValidation()
-                        .AddTransactionalCommands()
-                , assemblies: new []{handlerAssembly})
+                        .AddTransactionalCommands())
                 .AddUnitOfWork<UniversityDbContext>()
                 .AddTransactionalUnitOfWork<UniversityDbContext>()
                 // .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
