@@ -3,8 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Wrapperizer.Sample.Infra.Persistence;
 
 namespace Wrapperizer.Sample.Infra.Persistence.Migrations
 {

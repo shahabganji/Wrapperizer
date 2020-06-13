@@ -11,10 +11,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
-using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Configurations;
 using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Infra.Persistence;
+using Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator;
 using Wrapperizer.Sample.Infra.Persistence.Repositories;
 using static HealthChecks.UI.Client.UIResponseWriter;
 using SqlServerConnection = Wrapperizer.Sample.Configurations.SqlServerConnection;
@@ -66,6 +66,8 @@ namespace Wrapperizer.Sample.Api
                 //     options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                 // })
                 ;
+
+            services.AddUniversityMigrator();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
 

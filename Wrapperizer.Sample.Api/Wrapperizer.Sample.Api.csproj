@@ -10,6 +10,7 @@
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Application\Wrapperizer.Sample.Application.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Infra.Persistence\Wrapperizer.Sample.Infra.Persistence.csproj" />
     </ItemGroup>
 

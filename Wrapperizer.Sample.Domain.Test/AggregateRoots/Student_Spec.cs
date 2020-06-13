@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection.Metadata;
 using Wrapperizer.Sample.Domain.Events;
 using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 using Xunit;

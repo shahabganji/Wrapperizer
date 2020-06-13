@@ -2,7 +2,6 @@
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Sample.Domain.Common;
 using Wrapperizer.Sample.Domain.Events;
-using static Wrapperizer.Abstraction.Domain.Enumeration;
 using static Wrapperizer.Sample.Domain.Common.NationalCode;
 using static Wrapperizer.Sample.Domain.StudentAggregateRoot.RegistrationStatus;
 

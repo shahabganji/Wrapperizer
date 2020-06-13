@@ -1,6 +1,5 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Repositories.EfCore;

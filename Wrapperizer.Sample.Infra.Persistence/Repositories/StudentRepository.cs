@@ -1,10 +1,8 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Wrapperizer.Abstraction.Repositories;
-using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 

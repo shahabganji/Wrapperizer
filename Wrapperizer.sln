@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Application", "Wrapperizer.Sample.Application\Wrapperizer.Sample.Application.csproj", "{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator", "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.csproj", "{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{582511C3-0D1D-470D-92C9-062F8BAFF654} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
@@ -125,5 +131,6 @@ Global
 		{06A9AE70-9157-4EEC-BCEF-E8588E836420} = {04EA4B03-29DD-4086-ACDB-7039F25BF997}
 		{FF6E3F9F-2F92-40EA-BE3D-B93DA36DE422} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD} = {FF6E3F9F-2F92-40EA-BE3D-B93DA36DE422}
+		{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8} = {5ABA8CFF-81A2-4DBC-A568-2A263AB14326}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,3 @@
-using System;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 
