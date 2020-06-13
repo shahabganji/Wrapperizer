@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
+using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Configurations;
 using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -49,14 +50,15 @@ namespace Wrapperizer.Sample.Api
                 });
             });
 
-            // var handlersAssembly = typeof(RegisterStudentHandler).Assembly; 
+            var requestHandlersAssembly = typeof(RegisterStudentHandler).Assembly;
+            var notificationHandlerAssembly = typeof(StudentRegisteredHandler).Assembly;
 
             services.AddWrapperizer()
                 .AddHandlers(context => context
                         .AddDistributedCaching()
                         .AddGlobalValidation()
                         .AddTransactionalCommands()
-                // , assemblies:new []{handlersAssembly}
+                , assemblies:new []{requestHandlersAssembly,notificationHandlerAssembly}
                 )
                 .AddUnitOfWork<UniversityDbContext>()
                 .AddTransactionalUnitOfWork<UniversityDbContext>()
