@@ -21,31 +21,34 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
         public DateTimeOffset DateOfBirth { get; private set; }
 
         private int _registrationStatus;
-        public RegistrationStatus RegistrationStatus
+
+        public RegistrationStatus RegistrationStatus { get; set; }
+        // {
+        //     get => FromValue<RegistrationStatus>(_registrationStatus);
+        //     private set => _registrationStatus = value.Id;
+        // }
+
+        private Student()
         {
-            get => FromValue<RegistrationStatus>(_registrationStatus);
-            private set => _registrationStatus = value.Id;
         }
 
-        private Student(){}
-        
         public Student(string firstName, string lastName, string nationalCode, DateTimeOffset dateOfBirth)
             : base(Guid.NewGuid())
         {
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             this.LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
-            
+
             NationalCode = From(nationalCode);
-            
+
             DateOfBirth = dateOfBirth;
-            RegistrationStatus = Requested;
+            _registrationStatus  = Requested.Id;
 
             this.AddDomainEvent(new StudentRegistered(this));
         }
 
         public void ConfirmRegistration()
         {
-            RegistrationStatus = Confirmed;
+            _registrationStatus  = Confirmed.Id;
             this.AddDomainEvent(new StudentRegistrationConfirmed(this.Id));
         }
     }

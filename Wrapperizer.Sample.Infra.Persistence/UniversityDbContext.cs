@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,8 @@ namespace Wrapperizer.Sample.Infra.Persistence
     public sealed class UniversityDbContext : DomainEventAwareDbContext
     {
         private const string DefaultSchema = "uni";
+        
+        public Guid Id = Guid.NewGuid();
         
         public UniversityDbContext(DbContextOptions options) : base(options)
         {

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Wrapperizer.Abstraction.Repositories;
+using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 

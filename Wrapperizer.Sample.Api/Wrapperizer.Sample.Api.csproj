@@ -8,6 +8,7 @@
       <ProjectReference Include="..\Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Application\Wrapperizer.Sample.Application.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Infra.Persistence\Wrapperizer.Sample.Infra.Persistence.csproj" />
     </ItemGroup>
@@ -21,6 +22,7 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.5" />
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.5" />
+      <PackageReference Include="NSwag.AspNetCore" Version="13.6.1" />
     </ItemGroup>
     
 

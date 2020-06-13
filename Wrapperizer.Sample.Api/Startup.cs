@@ -50,13 +50,15 @@ namespace Wrapperizer.Sample.Api
                     options.EnableRetryOnFailure(3);
                 });
             });
-           
+            
+            var handlerAssembly = typeof(RegisterStudentHandler).Assembly;
+            
             services.AddWrapperizer()
                 .AddHandlers(context => context
                         .AddDistributedCaching()
                         .AddGlobalValidation()
                         .AddTransactionalCommands()
-                )
+                , assemblies: new []{handlerAssembly})
                 .AddUnitOfWork<UniversityDbContext>()
                 .AddTransactionalUnitOfWork<UniversityDbContext>()
                 // .AddCrudRepositories<WeatherForecastDbContext>((provider, options) =>
