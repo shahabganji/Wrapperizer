@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Wrapperizer.Abstraction.Cqrs
 {
-    public interface ICommandHandler : IRequestHandler<ICommand>
+    public interface ICommandHandler<T> : IRequestHandler<T> where T : IRequest<Unit>
     {
     }
 

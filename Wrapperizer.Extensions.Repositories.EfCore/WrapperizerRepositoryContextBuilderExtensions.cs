@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Extensions.Repositories.EfCore;
@@ -33,7 +34,7 @@ namespace Wrapperizer
         {
             wrapperizerBuilder.ServiceCollection.Add(
                 new ServiceDescriptor(
-                    typeof(IUnitOfWork), typeof(T),
+                    typeof(IUnitOfWork),provider=> provider.GetRequiredService<T>(),
                     serviceLifetime));
 
             return wrapperizerBuilder;
@@ -43,9 +44,16 @@ namespace Wrapperizer
             ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
             where T : ITransactionalUnitOfWork
         {
+            
+            wrapperizerBuilder.ServiceCollection.TryAdd(
+                new ServiceDescriptor(
+                    typeof(IUnitOfWork), provider=> provider.GetRequiredService<T>(),
+                    serviceLifetime));
+
+            
             wrapperizerBuilder.ServiceCollection.Add(
                 new ServiceDescriptor(
-                    typeof(ITransactionalUnitOfWork), typeof(T),
+                    typeof(ITransactionalUnitOfWork), provider=> provider.GetRequiredService<T>(),
                     serviceLifetime));
 
             return wrapperizerBuilder;
