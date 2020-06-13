@@ -1,6 +1,4 @@
 using System;
-using System.Data.SqlTypes;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -12,9 +10,14 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
+using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
+using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
+using Wrapperizer.Sample.Application;
 using Wrapperizer.Sample.Configurations;
+using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Infra.Persistence;
+using Wrapperizer.Sample.Infra.Persistence.Repositories;
 using static HealthChecks.UI.Client.UIResponseWriter;
 using SqlServerConnection = Wrapperizer.Sample.Configurations.SqlServerConnection;
 
@@ -35,6 +38,8 @@ namespace Wrapperizer.Sample.Api
             services.AddOptionsAndHealthChecks(Configuration);
             
             services.AddControllers();
+            
+            services.AddOpenApiDocument(setting => setting.Title = "Sample Api");
 
             services.AddDbContext<UniversityDbContext>((provider,builder) =>
             {
@@ -61,6 +66,8 @@ namespace Wrapperizer.Sample.Api
                 // })
                 ;
 
+            services.AddScoped<IStudentRepository, StudentRepository>();
+
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -73,6 +80,9 @@ namespace Wrapperizer.Sample.Api
             app.UseWrapperizerApiExceptionHandler();
 
             app.UseHttpsRedirection();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 
