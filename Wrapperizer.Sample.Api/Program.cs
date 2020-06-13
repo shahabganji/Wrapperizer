@@ -1,3 +1,4 @@
+using Grace.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -10,15 +11,9 @@ namespace Wrapperizer.Sample.Api
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                // .ConfigureServices(configureDelegate: ((context, collection) =>
-                // {
-                //     collection.AddWrapperizer()
-                //         .AddHandlers(ServiceLifetime.Scoped)
-                //         .AddCrudRepositories()
-                //         .AddTransactionalUnitOfWork<DomainEventAwareDbContext>();
-                // }))
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .UseGrace();
     }
 }
