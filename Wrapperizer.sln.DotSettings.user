@@ -1,11 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2036225c_002De8ca_002D404e_002D96c0_002Daf84c736b232/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="False" ContinuousTestingMode="0" FrameworkVersion="{x:Null}" IsLocked="False" Name="Domain Tests" PlatformMonoPreference="{x:Null}" PlatformType="{x:Null}" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
-  &lt;Or&gt;
-    &lt;TestAncestor&gt;
-      &lt;TestId&gt;xUnit::ACABAF6B-5AB2-4397-BB2F-49C4F07B155D::.NETCoreApp,Version=v3.1::Wrapperizer.Sample.Domain.Test.Common.NationalCode&lt;/TestId&gt;
-    &lt;/TestAncestor&gt;
-    &lt;TestAncestor&gt;
-      &lt;TestId&gt;xUnit::ACABAF6B-5AB2-4397-BB2F-49C4F07B155D::.NETCoreApp,Version=v3.1::Wrapperizer.Sample.Domain.Test.AggregateRoots.Student_Spec&lt;/TestId&gt;
-    &lt;/TestAncestor&gt;
-  &lt;/Or&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2036225c_002De8ca_002D404e_002D96c0_002Daf84c736b232/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Domain Tests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::ACABAF6B-5AB2-4397-BB2F-49C4F07B155D::.NETCoreApp,Version=v3.1::Wrapperizer.Sample.Domain.Test.Common.NationalCode&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::ACABAF6B-5AB2-4397-BB2F-49C4F07B155D::.NETCoreApp,Version=v3.1::Wrapperizer.Sample.Domain.Test.AggregateRoots.Student_Spec&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
