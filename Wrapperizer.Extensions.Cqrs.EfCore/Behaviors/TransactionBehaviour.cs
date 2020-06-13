@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 using Wrapperizer.Abstraction.Cqrs;
@@ -11,7 +12,7 @@ using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
 {
     public sealed class TransactionBehaviour<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, TResponse> where TResponse : class
+        : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ITransactionalUnitOfWork _transactionalUnitOfWork;
         private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;
