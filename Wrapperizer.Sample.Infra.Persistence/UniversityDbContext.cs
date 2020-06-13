@@ -12,7 +12,7 @@ namespace Wrapperizer.Sample.Infra.Persistence
     {
         private const string DefaultSchema = "uni";
         
-        public Guid Id = Guid.NewGuid();
+        public readonly Guid Id = Guid.NewGuid();
         
         public UniversityDbContext(DbContextOptions options) : base(options)
         {
