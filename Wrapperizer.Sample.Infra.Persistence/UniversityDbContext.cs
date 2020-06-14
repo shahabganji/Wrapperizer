@@ -13,11 +13,11 @@ namespace Wrapperizer.Sample.Infra.Persistence
         
         public readonly Guid Id = Guid.NewGuid();
         
-        public UniversityDbContext(DbContextOptions options) : base(options)
+        public UniversityDbContext(DbContextOptions<UniversityDbContext> options) : base(options)
         {
         }
 
-        public UniversityDbContext(DbContextOptions options, IDomainEventManager domainEventManager,
+        public UniversityDbContext(DbContextOptions<UniversityDbContext> options, IDomainEventManager domainEventManager,
             ILogger<UniversityDbContext> logger) : base(options, domainEventManager, logger)
         {
         }

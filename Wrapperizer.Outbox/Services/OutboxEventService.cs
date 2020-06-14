@@ -16,14 +16,11 @@ namespace Wrapperizer.Outbox.Services
         private readonly OutboxEventContext _outboxEventContext;
         private readonly List<Type> _eventTypes;
 
-        public OutboxEventService(DbConnection dbConnection)
+        public OutboxEventService(OutboxEventContext context)
         {
-            var dbConnection1 = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
-            
-            _outboxEventContext = new OutboxEventContext(
-                new DbContextOptionsBuilder<OutboxEventContext>()
-                    .UseSqlServer(dbConnection1)
-                    .Options);
+            // var dbConnection1 = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
+
+            _outboxEventContext = context;
 
             _eventTypes = Assembly.Load(Assembly.GetEntryAssembly().FullName)
                 .GetTypes()

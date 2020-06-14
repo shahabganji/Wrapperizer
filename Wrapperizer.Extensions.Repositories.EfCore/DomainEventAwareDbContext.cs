@@ -21,7 +21,7 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
         
         public bool TransactionInProgress => _currentTransaction != null;
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
-        public IDbConnection GetDbConnection() => this.Database.GetDbConnection();
+        public DbConnection GetDbConnection() => this.Database.GetDbConnection();
 
         public DomainEventAwareDbContext(DbContextOptions options)
             : base(options)

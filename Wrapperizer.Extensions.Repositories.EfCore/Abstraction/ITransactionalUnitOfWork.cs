@@ -1,5 +1,5 @@
 using System;
-using System.Data;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -12,7 +12,7 @@ namespace Wrapperizer.Extensions.Repositories.EfCore.Abstraction
     {
         bool TransactionInProgress { get; }
         IDbContextTransaction GetCurrentTransaction();
-        IDbConnection GetDbConnection();
+        DbConnection GetDbConnection();
         
         Task ExecuteTransactionAsync(Func<IDbContextTransaction, Task> operation, CancellationToken cancellationToken);
 

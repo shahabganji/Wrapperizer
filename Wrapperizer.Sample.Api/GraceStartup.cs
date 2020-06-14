@@ -35,8 +35,6 @@ namespace Wrapperizer.Sample.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptionsAndHealthChecks(Configuration);
-            
             services.AddControllers();
             
             services.AddOpenApiDocument(setting => setting.Title = "Sample Api");
@@ -110,49 +108,6 @@ namespace Wrapperizer.Sample.Api
                 endpoints.MapControllers();
             });
             
-        }
-    }
-
-    public static class CustomExtensions
-    {
-        public static IServiceCollection AddOptionsAndHealthChecks(this IServiceCollection services, IConfiguration configuration)
-        {
-            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-            
-            var sql = new SqlServerConnection();
-            configuration.Bind("Infra:Connections:Sql", sql);
-            services.Configure<SqlServerConnection>(instance => configuration.Bind("Infra:Connections:Sql", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<SqlServerConnection>>().Value);
-            
-            var mongodb = new MongoDbConnection();
-            configuration.Bind("Infra:Connections:Mongodb", mongodb);
-            services.Configure<MongoDbConnection>(instance => configuration.Bind("Infra:Connections:Mongodb", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<MongoDbConnection>>().Value);
-            
-            var rabbit = new RabbitMqConnection();
-            configuration.Bind("Infra:Connections:RabbitMQ", rabbit);
-            services.Configure<RabbitMqConnection>(instance => configuration.Bind("Infra:Connections:RabbitMQ", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<MongoDbConnection>>().Value);
-            
-            var redis = new RedisCacheOptions();
-            configuration.Bind("Infra:Connections:Redis", redis);
-            services.Configure<RedisCacheOptions>(instance => configuration.Bind("Infra:Connections:Redis", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<RedisCacheOptions>>().Value);
-            
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = "localhost";
-                options.InstanceName = "Wrapperizer.Api";
-            });
-            
-            services.AddHealthChecks()
-                .AddCheck("api", _ => HealthCheckResult.Healthy())
-                .AddRedis(redis.Configuration, "redis")
-                .AddMongoDb(mongodb.ConnectionString , mongodb.Collection,"mongodb")
-                .AddSqlServer(sql.ConnectionString)
-                .AddRabbitMQ(rabbit.ConnectionUri,new SslOption(), "rabbitmq");
-
-            return services;
         }
     }
 }

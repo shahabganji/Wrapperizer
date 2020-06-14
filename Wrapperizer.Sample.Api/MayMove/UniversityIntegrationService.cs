@@ -15,31 +15,41 @@ using Wrapperizer.Sample.Configurations;
 
 namespace Wrapperizer.Sample.Api.MayMove
 {
-
     public static class OutboxExtensions
     {
-        public static IServiceCollection AddOutboxServices(this IServiceCollection services, SqlServerConnection connection)
+        public static IServiceCollection AddOutboxServices(this IServiceCollection services,
+            SqlServerConnection connection)
         {
             services.AddDbContext<OutboxEventContext>(options =>
             {
                 options.UseSqlServer(connection.ConnectionString,
-                    sqlServerOptionsAction: sqlOptions =>
+                    sqlOptions =>
                     {
                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
                         //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
-                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
                     });
             });
 
             services.AddTransient<Func<DbConnection, IOutboxEventService>>(
-                sp => (DbConnection c) => new OutboxEventService(c));
+                sp => dbConnection => // this dbConnection will be passed on
+                    // later on from implementations of integration service 
+                {
+                    var outboxEventContext = new OutboxEventContext(
+                        new DbContextOptionsBuilder<OutboxEventContext>()
+                            .UseSqlServer(dbConnection)
+                            .Options);
+
+                    return new OutboxEventService(outboxEventContext);
+                });
 
             services.AddTransient<IUniversityIntegrationService, UniversityIntegrationService>();
 
             return services;
         }
     }
-    
+
     public interface IUniversityIntegrationService
     {
         Task PublishEventsThroughEventBusAsync(Guid transactionId);
@@ -49,26 +59,45 @@ namespace Wrapperizer.Sample.Api.MayMove
     public sealed class UniversityIntegrationService : IUniversityIntegrationService
     {
         private readonly ITransactionalUnitOfWork _unitOfWork;
-        private readonly OutboxEventContext _outboxEventContext;
+
         private readonly ILogger<UniversityIntegrationService> _logger;
         private readonly IOutboxEventService _outboxEventService;
 
         public UniversityIntegrationService(
             ITransactionalUnitOfWork unitOfWork,
-            OutboxEventContext outboxEventContext,
-            Func<IDbConnection, IOutboxEventService> integrationServiceFactory,
+            Func<DbConnection, IOutboxEventService> integrationServiceFactory,
             ILogger<UniversityIntegrationService> logger
         )
         {
             _unitOfWork = unitOfWork;
-            _outboxEventContext = outboxEventContext;
             _logger = logger;
-            _outboxEventService = integrationServiceFactory(_unitOfWork.GetDbConnection());
+            _outboxEventService = integrationServiceFactory(unitOfWork.GetDbConnection());
         }
 
-        public Task PublishEventsThroughEventBusAsync(Guid transactionId)
+        public async Task PublishEventsThroughEventBusAsync(Guid transactionId)
         {
-            throw new NotImplementedException();
+            var pendingLogEvents = await _outboxEventService.RetrievePendingEventsToPublishAsync(transactionId);
+
+            foreach (var logEvt in pendingLogEvents)
+            {
+                // _logger.LogInformation(
+                //     "----- Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})",
+                //     logEvt.EventId, Program.AppName, logEvt.IntegrationEvent);
+
+                try
+                {
+                    await _outboxEventService.MarkEventAsInProgressAsync(logEvt.EventId);
+                    // _eventBus.Publish(logEvt.IntegrationEvent);
+                    await _outboxEventService.MarkEventAsPublishedAsync(logEvt.EventId);
+                }
+                catch (Exception ex)
+                {
+                    // _logger.LogError(ex, "ERROR publishing integration event: {IntegrationEventId} from {AppName}",
+                    //     logEvt.EventId, Program.AppName);
+
+                    await _outboxEventService.MarkEventAsFailedAsync(logEvt.EventId);
+                }
+            }
         }
 
         public async Task AddAndSaveEventAsync(IntegrationEvent @event)
