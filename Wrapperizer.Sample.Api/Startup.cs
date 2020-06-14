@@ -1,12 +1,13 @@
 using System;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using Wrapperizer.Sample.Api.MayMove;
+using Wrapperizer.Outbox;
 using Wrapperizer.Sample.Configurations;
 
 namespace Wrapperizer.Sample.Api
@@ -65,7 +66,20 @@ namespace Wrapperizer.Sample.Api
                 .AddSqlServer(sql.ConnectionString)
                 .AddRabbitMQ(rabbit.ConnectionUri,new SslOption(), "rabbitmq");
 
-            services.AddOutboxServices(sql);
+            services.AddOutboxServices(options =>
+            {
+                options.UseSqlServer(sql.ConnectionString,
+                    sqlOptions =>
+                    {
+                        // sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+
+                        sqlOptions.MigrationsHistoryTable("__OutboxMigrationHistory", OutboxEventContext.DefaultSchema);
+                        
+                        //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    });
+            });
             
             return services;
         }

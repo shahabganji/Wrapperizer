@@ -5,7 +5,7 @@ namespace Wrapperizer.Outbox
 {
     public class OutboxEventContext : DbContext
     {
-        private const string DefaultSchema = "outbox"; 
+        public const string DefaultSchema = "outbox"; 
         public OutboxEventContext(DbContextOptions<OutboxEventContext> options) : base(options)
         {
         }

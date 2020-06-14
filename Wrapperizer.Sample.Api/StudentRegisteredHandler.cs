@@ -1,10 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
+using Wrapperizer.Outbox.Services;
 using Wrapperizer.Sample.Api.IntegrationEvents;
-using Wrapperizer.Sample.Api.MayMove;
 using Wrapperizer.Sample.Domain.Events;
 
 namespace Wrapperizer.Sample.Api
@@ -12,10 +11,10 @@ namespace Wrapperizer.Sample.Api
     public sealed class StudentRegisteredHandler : IDomainEventHandler<StudentRegistered>
     {
         private readonly ILogger<StudentRegisteredHandler> _logger;
-        private readonly IUniversityIntegrationService _integrationService;
+        private readonly IIntegrationService _integrationService;
 
         public StudentRegisteredHandler(ILogger<StudentRegisteredHandler> logger,
-            IUniversityIntegrationService integrationService)
+            IIntegrationService integrationService)
         {
             _logger = logger;
             _integrationService = integrationService;
