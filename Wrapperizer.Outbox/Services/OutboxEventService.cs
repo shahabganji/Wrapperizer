@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Wrapperizer.Abstraction.Domain;
+using static Wrapperizer.Outbox.EventStateEnum;
 
 namespace Wrapperizer.Outbox.Services
 {
@@ -18,6 +19,7 @@ namespace Wrapperizer.Outbox.Services
         public OutboxEventService(DbConnection dbConnection)
         {
             var dbConnection1 = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
+            
             _outboxEventContext = new OutboxEventContext(
                 new DbContextOptionsBuilder<OutboxEventContext>()
                     .UseSqlServer(dbConnection1)
@@ -25,7 +27,7 @@ namespace Wrapperizer.Outbox.Services
 
             _eventTypes = Assembly.Load(Assembly.GetEntryAssembly().FullName)
                 .GetTypes()
-                .Where(t => t.Name.EndsWith(nameof(IntegrationEvent)))
+                .Where(t => t.Name.EndsWith(nameof(IntegrationEvent)) || typeof(IntegrationEvent).IsAssignableFrom(t))
                 .ToList();
         }
 
@@ -34,7 +36,7 @@ namespace Wrapperizer.Outbox.Services
             var tid = transactionId.ToString();
 
             var result = await _outboxEventContext.Outbox
-                .Where(e => e.TransactionId == tid && e.State == EventStateEnum.NotPublished).ToListAsync();
+                .Where(e => e.TransactionId == tid && e.State == NotPublished).ToListAsync();
 
             if(result != null && result.Any()){
                 return result.OrderBy(o => o.CreationTime)
@@ -58,24 +60,24 @@ namespace Wrapperizer.Outbox.Services
 
         public Task MarkEventAsPublishedAsync(Guid eventId)
         {
-            return UpdateEventStatus(eventId, EventStateEnum.Published);
+            return UpdateEventStatus(eventId, Published);
         }
 
         public Task MarkEventAsInProgressAsync(Guid eventId)
         {
-            return UpdateEventStatus(eventId, EventStateEnum.InProgress);
+            return UpdateEventStatus(eventId, InProgress);
         }
 
         public Task MarkEventAsFailedAsync(Guid eventId)
         {
-            return UpdateEventStatus(eventId, EventStateEnum.PublishedFailed);
+            return UpdateEventStatus(eventId, PublishedFailed);
         }
         private Task UpdateEventStatus(Guid eventId, EventStateEnum status)
         {
             var eventLogEntry = _outboxEventContext.Outbox.Single(ie => ie.EventId == eventId);
             eventLogEntry.State = status;
 
-            if(status == EventStateEnum.InProgress)
+            if(status == InProgress)
                 eventLogEntry.TimesSent++;
 
             _outboxEventContext.Outbox.Update(eventLogEntry);

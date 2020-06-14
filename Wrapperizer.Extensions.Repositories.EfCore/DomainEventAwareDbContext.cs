@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,10 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
         private readonly ILogger<DomainEventAwareDbContext> _logger;
 
         private IDbContextTransaction _currentTransaction;
+        
         public bool TransactionInProgress => _currentTransaction != null;
+        public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
+        public IDbConnection GetDbConnection() => this.Database.GetDbConnection();
 
         public DomainEventAwareDbContext(DbContextOptions options)
             : base(options)
