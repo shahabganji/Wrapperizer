@@ -1,23 +1,15 @@
-using System;
 using Grace.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using RabbitMQ.Client;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Sample.Application.Handlers.Commands;
-using Wrapperizer.Sample.Configurations;
-using Wrapperizer.Sample.Domain.Repositories;
 using Wrapperizer.Sample.Infra.Persistence;
 using Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator;
-using Wrapperizer.Sample.Infra.Persistence.Repositories;
 using static HealthChecks.UI.Client.UIResponseWriter;
 using SqlServerConnection = Wrapperizer.Sample.Configurations.SqlServerConnection;
 

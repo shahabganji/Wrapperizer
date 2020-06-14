@@ -1,11 +1,11 @@
 using System;
-using System.Data;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Wrapperizer.Outbox;
 using Wrapperizer.Outbox.HostedServices;
 using Wrapperizer.Outbox.Services;
+using Wrapperizer.Outbox.Services.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Wrapperizer
@@ -27,7 +27,7 @@ namespace Wrapperizer
                             .UseSqlServer(dbConnection)
                             .Options);
 
-                    return new OutboxEventService(outboxEventContext);
+                    return new DefaultOutboxEventService(outboxEventContext);
                 });
 
             services.AddTransient<IIntegrationService, DefaultIntegrationService>();

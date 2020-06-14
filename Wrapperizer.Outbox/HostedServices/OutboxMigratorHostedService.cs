@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Wrapperizer.Outbox.HostedServices
 {
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public sealed class OutboxMigratorHostedService : IHostedService
+    internal sealed class OutboxMigratorHostedService : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<OutboxMigratorHostedService> _logger;
@@ -22,16 +22,16 @@ namespace Wrapperizer.Outbox.HostedServices
             _logger = logger;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Start migrating database in background for Outbox context");
+            _logger.LogInformation("Executing migrations for Outbox context");
 
             using var scope = _serviceProvider.CreateScope();
             await using var dbContext = scope.ServiceProvider.GetRequiredService<OutboxEventContext>();
 
             try
             {
-                await dbContext.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
+                await dbContext.Database.MigrateAsync(stoppingToken).ConfigureAwait(false);
                 _logger.LogInformation("Migration done for Outbox context");
             }
             catch (Exception ex)
@@ -40,6 +40,5 @@ namespace Wrapperizer.Outbox.HostedServices
             }
         }
 
-        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }

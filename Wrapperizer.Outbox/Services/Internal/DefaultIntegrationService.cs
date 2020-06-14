@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
-using Wrapperizer.Outbox.Services;
 
-namespace Wrapperizer.Outbox.Services
+namespace Wrapperizer.Outbox.Services.Internal
 {
-    public sealed class DefaultIntegrationService : IIntegrationService
+    internal sealed class DefaultIntegrationService : IIntegrationService
     {
         private readonly ITransactionalUnitOfWork _unitOfWork;
 

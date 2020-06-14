@@ -10,8 +10,8 @@ using Wrapperizer.Outbox;
 namespace Wrapperizer.Outbox.Migrations
 {
     [DbContext(typeof(OutboxEventContext))]
-    [Migration("20200614084405_InitilizeOutbox")]
-    partial class InitilizeOutbox
+    [Migration("20200614084405_InitializeOutbox")]
+    partial class InitializeOutbox
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

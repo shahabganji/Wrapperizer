@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Wrapperizer.Outbox.Migrations
 {
-    public partial class InitilizeOutbox : Migration
+    internal partial class InitializeOutbox : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
