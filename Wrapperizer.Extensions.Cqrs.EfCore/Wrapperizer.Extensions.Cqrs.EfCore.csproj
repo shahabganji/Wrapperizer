@@ -7,6 +7,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj" />
     </ItemGroup>
 
     <ItemGroup>

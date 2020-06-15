@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Wrapperizer.Outbox.Utilities
 {
-    internal class ResilientTransaction
+    public class ResilientTransaction
     {
         private DbContext _context;
         private ResilientTransaction(DbContext context) =>

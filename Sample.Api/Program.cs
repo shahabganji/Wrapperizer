@@ -2,7 +2,7 @@ using Grace.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Wrapperizer.Sample.Api
+namespace Sample.Api
 {
     public class Program
     {

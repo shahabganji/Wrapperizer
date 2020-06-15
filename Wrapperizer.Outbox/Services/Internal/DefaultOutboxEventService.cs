@@ -11,6 +11,16 @@ namespace Wrapperizer.Outbox.Services.Internal
 {
     internal class DefaultOutboxEventService : IOutboxEventService
     {
+        private static Assembly[] GetListOfEntryAssemblyWithReferences()
+        {
+            var listOfAssemblies = new List<Assembly>();
+            var mainAsm = Assembly.GetEntryAssembly();
+            listOfAssemblies.Add(mainAsm);
+
+            listOfAssemblies.AddRange(mainAsm.GetReferencedAssemblies().Select(Assembly.Load));
+            return listOfAssemblies.ToArray();
+        }
+        
         private readonly OutboxEventContext _outboxEventContext;
         private readonly List<Type> _eventTypes;
 
@@ -20,11 +30,14 @@ namespace Wrapperizer.Outbox.Services.Internal
 
             _outboxEventContext = context;
 
-            _eventTypes = Assembly.Load(Assembly.GetEntryAssembly().FullName)
-                .GetTypes()
-                .Where(t => // t.Name.EndsWith(nameof(IntegrationEvent)) ||
-                            typeof(IntegrationEvent).IsAssignableFrom(t))
-                .ToList();
+            var referencedAssemblies = GetListOfEntryAssemblyWithReferences();
+
+            _eventTypes = referencedAssemblies.SelectMany(assembly =>
+                assembly.GetTypes().Where(t => // t.Name.EndsWith(nameof(IntegrationEvent)) ||
+                        typeof(IntegrationEvent).IsAssignableFrom(t))
+                    .ToList()
+            ).ToList();
+
         }
 
         public async Task<IEnumerable<IntegrationEventLogEntry>> RetrievePendingEventsToPublishAsync(Guid transactionId)

@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sample.IntegrationEvents;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Outbox.Services;
-using Wrapperizer.Sample.Api.IntegrationEvents;
 using Wrapperizer.Sample.Domain.Events;
 
-namespace Wrapperizer.Sample.Api
+namespace Sample.Api
 {
     public sealed class StudentRegisteredHandler : IDomainEventHandler<StudentRegistered>
     {

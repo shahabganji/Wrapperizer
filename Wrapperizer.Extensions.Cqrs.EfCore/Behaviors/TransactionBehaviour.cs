@@ -2,11 +2,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Extensions.Cqrs.EfCore.Extensions;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
+using Wrapperizer.Outbox.Services;
+using Wrapperizer.Outbox.Utilities;
 
 namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
 {
@@ -14,13 +17,16 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
         : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ITransactionalUnitOfWork _transactionalUnitOfWork;
+        private readonly IIntegrationService _integrationService;
         private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;
 
         public TransactionBehaviour(
-            ITransactionalUnitOfWork transactionalUnitOfWork, 
+            ITransactionalUnitOfWork transactionalUnitOfWork,
+            IIntegrationService integrationService,
             ILogger<TransactionBehaviour<TRequest, TResponse>> logger)
         {
             _transactionalUnitOfWork = transactionalUnitOfWork;
+            _integrationService = integrationService;
             _logger = logger;
         }
 
@@ -34,7 +40,7 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
 
             return await next();
         }
-        
+
         private async Task<TResponse> HandleTransactionalRequest(TRequest request,
             RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
@@ -48,17 +54,30 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
                     return await next();
                 }
 
-                await _transactionalUnitOfWork.ExecuteTransactionAsync(async (transaction) =>
+                var strategy = _transactionalUnitOfWork.CreateExecutionStrategy();
+
+                await strategy.ExecuteAsync(async () =>
                 {
-                    using var disposable = LogContext.PushProperty("TransactionContext", transaction.TransactionId);
-                    _logger.LogInformation("----- Begin transaction {TransactionId} for {CommandName} ({@Command})",
-                        transaction.TransactionId, typeName, request);
+                    Guid transactionId;
+                    await using (var transaction =
+                        await _transactionalUnitOfWork.BeginTransactionAsync(cancellationToken))
+                    using (LogContext.PushProperty("TransactionContext", transaction.TransactionId))
+                    {
+                        _logger.LogInformation("----- Begin transaction {TransactionId} for {CommandName} ({@Command})",
+                            transaction.TransactionId, typeName, request);
 
-                    response = await next();
+                        response = await next();
 
-                    _logger.LogInformation("----- Commit transaction {TransactionId} for {CommandName}",
-                        transaction.TransactionId, typeName);
-                }, cancellationToken);
+                        _logger.LogInformation("----- Commit transaction {TransactionId} for {CommandName}",
+                            transaction.TransactionId, typeName);
+
+                        await _transactionalUnitOfWork.CommitTransactionAsync(transaction, cancellationToken);
+
+                        transactionId = transaction.TransactionId;
+                    }
+                    // this is after the commit, so if it fails we can try them later on in a message relay, for instance.
+                    await _integrationService.PublishEventsThroughEventBusAsync(transactionId);
+                });
 
                 return response;
             }

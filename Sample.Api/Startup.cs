@@ -1,15 +1,20 @@
 using System;
+using System.Threading.Tasks;
+using MassTransit;
+using MassTransit.Definition;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
+using Wrapperizer;
 using Wrapperizer.Outbox;
 using Wrapperizer.Sample.Configurations;
 
-namespace Wrapperizer.Sample.Api
+namespace Sample.Api
 {
     public class Startup : GraceStartup
     {
@@ -18,6 +23,18 @@ namespace Wrapperizer.Sample.Api
             base.ConfigureServices(services);
             
             services.AddOptionsAndHealthChecks(Configuration);
+
+            services.AddMassTransitHostedService();
+            services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+            services.AddMassTransit(cfg =>
+            {
+                cfg.SetKebabCaseEndpointNameFormatter();
+                cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(x =>
+                {
+                    x.Host("localhost", "wrapperizer");
+                    x.ConfigureEndpoints(factory);
+                }));
+            });
         }
 
         public Startup(IConfiguration configuration) : base(configuration)

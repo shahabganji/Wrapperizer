@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Repo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Abstractions", "Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj", "{05589ACA-5D9F-419A-9E53-639373F439F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Api", "Wrapperizer.Sample.Api\Wrapperizer.Sample.Api.csproj", "{9CC8AF7F-069F-43AD-A71F-388D1416E88F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api", "Sample.Api\Sample.Api.csproj", "{9CC8AF7F-069F-43AD-A71F-388D1416E88F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs.Caching", "Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj", "{05EF4EDF-A356-4C59-9886-D6B1E47E1552}"
 EndProject
@@ -20,9 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.AspNetCore.Logging", "Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj", "{928B1CE9-DA3D-475F-BAF1-C54B44936CED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.HealthCheck.UI", "Wrapperizer.HealthCheck.UI\Wrapperizer.HealthCheck.UI.csproj", "{A49A16BC-C578-4A79-BE03-759E491096B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.HealthCheck.UI", "Sample.HealthCheck.UI\Sample.HealthCheck.UI.csproj", "{A49A16BC-C578-4A79-BE03-759E491096B6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{166688D7-B741-4E06-93FE-E396E4F51ADB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{166688D7-B741-4E06-93FE-E396E4F51ADB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{528A2C0E-BAE1-45A3-9FA1-D9B6C922D1B0}"
 EndProject
@@ -45,6 +45,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator", "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.csproj", "{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Outbox", "Wrapperizer.Outbox\Wrapperizer.Outbox.csproj", "{418FC4CF-8004-47DB-9E4C-E1619F188A5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.University.Notification", "Sample.University.Notification\Sample.University.Notification.csproj", "{0902D117-1AC3-49EB-9663-00205AA538FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.IntegrationEvents", "Sample.IntegrationEvents\Sample.IntegrationEvents.csproj", "{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +120,14 @@ Global
 		{418FC4CF-8004-47DB-9E4C-E1619F188A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{418FC4CF-8004-47DB-9E4C-E1619F188A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{418FC4CF-8004-47DB-9E4C-E1619F188A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0902D117-1AC3-49EB-9663-00205AA538FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0902D117-1AC3-49EB-9663-00205AA538FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0902D117-1AC3-49EB-9663-00205AA538FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0902D117-1AC3-49EB-9663-00205AA538FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{582511C3-0D1D-470D-92C9-062F8BAFF654} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
@@ -139,5 +151,7 @@ Global
 		{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD} = {FF6E3F9F-2F92-40EA-BE3D-B93DA36DE422}
 		{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8} = {5ABA8CFF-81A2-4DBC-A568-2A263AB14326}
 		{418FC4CF-8004-47DB-9E4C-E1619F188A5D} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
+		{0902D117-1AC3-49EB-9663-00205AA538FB} = {166688D7-B741-4E06-93FE-E396E4F51ADB}
+		{4AAFD262-61B1-49A5-A2D4-0BFB33984C04} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 	EndGlobalSection
 EndGlobal

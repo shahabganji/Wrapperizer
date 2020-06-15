@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
         private readonly ILogger<DomainEventAwareDbContext> _logger;
 
         private IDbContextTransaction _currentTransaction;
-        
+
         public bool TransactionInProgress => _currentTransaction != null;
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
         public DbConnection GetDbConnection() => this.Database.GetDbConnection();
@@ -36,7 +37,7 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
             _domainEventManager = domainEventManager;
             _logger = logger;
         }
-        
+
         public async Task<bool> CommitAsync(CancellationToken cancellationToken)
         {
             try
@@ -87,12 +88,14 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
         {
             return this.Database.CreateExecutionStrategy();
         }
+
         public async Task<IDbContextTransaction> BeginTransactionAsync(
             CancellationToken cancellationToken = new CancellationToken())
         {
             if (_currentTransaction != null) return null;
 
-            _currentTransaction = await this.Database.BeginTransactionAsync(cancellationToken)
+            _currentTransaction = await this.Database
+                .BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken)
                 .ConfigureAwait(false);
 
             return _currentTransaction;
@@ -117,6 +120,8 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
         public async Task ExecuteTransactionAsync(Func<IDbContextTransaction, Task> operation,
             CancellationToken cancellationToken)
         {
+            //Use of an EF Core resiliency strategy when using multiple DbContexts within an explicit BeginTransaction():
+            //See: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency
             var strategy = this.Database.CreateExecutionStrategy();
 
             // ReSharper disable once HeapView.CanAvoidClosure

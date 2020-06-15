@@ -5,7 +5,7 @@ using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Sample.Domain.Commands;
 using Wrapperizer.Sample.Domain.Queries;
 
-namespace Wrapperizer.Sample.Api.Controllers
+namespace Sample.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

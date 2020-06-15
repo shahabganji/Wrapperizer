@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Wrapperizer.HealthCheck.UI
+namespace Sample.HealthCheck.UI
 {
     public class Program
     {

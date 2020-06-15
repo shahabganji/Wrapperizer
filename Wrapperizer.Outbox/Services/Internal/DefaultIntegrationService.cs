@@ -1,6 +1,10 @@
 using System;
 using System.Data.Common;
+using System.IO;
 using System.Threading.Tasks;
+using GreenPipes.Internals.Extensions;
+using MassTransit;
+using MassTransit.Definition;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
@@ -10,6 +14,8 @@ namespace Wrapperizer.Outbox.Services.Internal
     internal sealed class DefaultIntegrationService : IIntegrationService
     {
         private readonly ITransactionalUnitOfWork _unitOfWork;
+        private readonly IPublishEndpoint _publishEndpoint;
+
 
         private readonly ILogger<DefaultIntegrationService> _logger;
         private readonly IOutboxEventService _outboxEventService;
@@ -17,10 +23,13 @@ namespace Wrapperizer.Outbox.Services.Internal
         public DefaultIntegrationService(
             ITransactionalUnitOfWork unitOfWork,
             Func<DbConnection, IOutboxEventService> integrationServiceFactory,
+            IPublishEndpoint publishEndpoint,
             ILogger<DefaultIntegrationService> logger
         )
         {
             _unitOfWork = unitOfWork;
+            _publishEndpoint = publishEndpoint;
+
             _logger = logger;
             _outboxEventService = integrationServiceFactory(unitOfWork.GetDbConnection());
         }
@@ -38,7 +47,9 @@ namespace Wrapperizer.Outbox.Services.Internal
                 try
                 {
                     await _outboxEventService.MarkEventAsInProgressAsync(logEvt.EventId);
-                    // _eventBus.Publish(logEvt.IntegrationEvent);
+
+                    await _publishEndpoint.Publish(logEvt.IntegrationEvent, logEvt.IntegrationEvent.GetType());
+
                     await _outboxEventService.MarkEventAsPublishedAsync(logEvt.EventId);
                 }
                 catch (Exception ex)

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Wrapperizer;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -13,7 +14,7 @@ using Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator;
 using static HealthChecks.UI.Client.UIResponseWriter;
 using SqlServerConnection = Wrapperizer.Sample.Configurations.SqlServerConnection;
 
-namespace Wrapperizer.Sample.Api
+namespace Sample.Api
 {
     public abstract class GraceStartup
     {

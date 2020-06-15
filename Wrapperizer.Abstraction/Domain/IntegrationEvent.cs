@@ -11,7 +11,6 @@ namespace Wrapperizer.Abstraction.Domain
         {
             this.Id = Guid.NewGuid();
             this.OccuredOn = DateTimeOffset.Now;
-            
         }
     }
 }

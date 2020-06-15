@@ -1,7 +1,7 @@
 using System;
 using Wrapperizer.Abstraction.Domain;
 
-namespace Wrapperizer.Sample.Api.IntegrationEvents
+namespace Sample.IntegrationEvents
 {
     public sealed class StudentRegisteredIntegrationEvent : IntegrationEvent
     {
