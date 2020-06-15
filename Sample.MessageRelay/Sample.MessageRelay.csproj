@@ -2,11 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <UserSecretsId>dotnet-Sample.UniversityMessageRelay.BackgroundTasks-C97F5D1A-42EC-4E5C-9B5B-FEFF5533C799</UserSecretsId>
+        <UserSecretsId>dotnet-Sample.MessageRelay-78782F47-FC4D-4DD2-96D4-565EF78E8003</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-
         <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.1.2" />
         <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.1" />
@@ -21,7 +20,6 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0-dev-00834" />
         <PackageReference Include="Serilog.Sinks.Http" Version="6.0.0" />
         <PackageReference Include="Serilog.Sinks.Seq" Version="4.1.0-dev-00166" />
-
     </ItemGroup>
 
     <ItemGroup>

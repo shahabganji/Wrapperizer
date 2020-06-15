@@ -2,14 +2,14 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Sample.University.Notification.Extensions;
+using Sample.MessageRelay.Extensions;
 using Serilog;
 
-namespace Sample.University.Notification
+namespace Sample.MessageRelay
 {
     public class Program
     {
-        public const string AppName = "University Background Task";
+        public const string AppName = "Sample Message Relay";
         
         public static void Main(string[] args)
         {
@@ -21,7 +21,7 @@ namespace Sample.University.Notification
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("https://localhost:8001");
+                    webBuilder.UseUrls("https://localhost:8002");
                 })
                 .ConfigureAppConfiguration((host, builder) =>
                 {
@@ -35,8 +35,5 @@ namespace Sample.University.Notification
                     builder.UseSerilog(host.Configuration);
                 })
                 .UseSerilog();
-        
-        
-        
     }
 }

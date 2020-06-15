@@ -3,16 +3,17 @@ using MassTransit;
 using MassTransit.Definition;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Sample.University.Notification.BackgroundTasks;
-using Sample.University.Notification.Consumers;
-using Sample.University.Notification.Extensions;
+using Sample.MessageRelay.BackgroundTasks;
+using Sample.MessageRelay.Extensions;
+using Wrapperizer;
+using MassTransitHostedService = Sample.MessageRelay.BackgroundTasks.MassTransitHostedService;
 
-
-namespace Sample.University.Notification
+namespace Sample.MessageRelay
 {
     public sealed class Startup
     {
@@ -29,8 +30,6 @@ namespace Sample.University.Notification
             services.AddMassTransit(cfg =>
             {
                 cfg.SetKebabCaseEndpointNameFormatter();
-                
-                cfg.AddConsumer<StudentRegisteredConsumer>();
 
                 cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(
                     rabbit =>
@@ -42,9 +41,13 @@ namespace Sample.University.Notification
             });
 
             services.AddHostedService<MassTransitHostedService>();
+            services.AddHostedService<MessageRelayWorker>();
 
             services.AddCustomHealthCheck(this.Configuration)
                 .AddOptions();
+
+            services.AddMessageRelayServices(
+                x => { x.UseSqlServer("Server=localhost; UID=sa; PWD=P@assw0rd; Database=WrapperizeR"); });
         }
 
 
