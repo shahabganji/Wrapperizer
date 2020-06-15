@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Funx.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Wrapperizer.Abstraction.Domain;
@@ -15,10 +17,21 @@ namespace Wrapperizer.Outbox.Services.Internal
         private static Assembly[] GetListOfEntryAssemblyWithReferences()
         {
             var listOfAssemblies = new List<Assembly>();
-            var mainAsm = Assembly.GetEntryAssembly();
-            listOfAssemblies.Add(mainAsm);
 
-            listOfAssemblies.AddRange(mainAsm.GetReferencedAssemblies().Select(Assembly.Load));
+            var directory =  Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            var dlls = Directory.EnumerateFiles(directory, "*.dll")
+                .Select(Path.GetFileName)
+                .Where(file => file.StartsWith("Sample") && file != "Sample.MessageRelay.dll"); 
+                
+
+            foreach (var dll in dlls)
+            {
+                var x = Path.Combine(directory!, dll);
+                var ass = Assembly.LoadFrom(x);
+                listOfAssemblies.Add(ass);
+            }
+            
             return listOfAssemblies.ToArray();
         }
         
