@@ -96,7 +96,7 @@ namespace Sample.Api
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
                             errorNumbersToAdd: null);
                     });
-            });
+            }, true);
             
             return services;
         }
