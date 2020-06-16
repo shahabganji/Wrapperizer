@@ -11,6 +11,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using Wrapperizer;
+using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Outbox;
 using Wrapperizer.Sample.Configurations;
 
@@ -82,7 +83,7 @@ namespace Sample.Api
                 .AddSqlServer(sql.ConnectionString)
                 .AddRabbitMQ(rabbit.ConnectionUri,new SslOption(), "rabbitmq");
 
-            services.AddOutboxServices(options =>
+            services.AddWrapperizer().AddOutboxServices(options =>
             {
                 options.UseSqlServer(sql.ConnectionString,
                     sqlOptions =>

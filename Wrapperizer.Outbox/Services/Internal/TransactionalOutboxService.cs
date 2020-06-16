@@ -11,20 +11,20 @@ using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {
-    internal sealed class DefaultIntegrationService : IIntegrationService
+    internal sealed class TransactionalOutboxService : ITransactionalOutboxService
     {
         private readonly ITransactionalUnitOfWork _unitOfWork;
         private readonly IPublishEndpoint _publishEndpoint;
 
 
-        private readonly ILogger<DefaultIntegrationService> _logger;
+        private readonly ILogger<TransactionalOutboxService> _logger;
         private readonly IOutboxEventService _outboxEventService;
 
-        public DefaultIntegrationService(
+        public TransactionalOutboxService(
             ITransactionalUnitOfWork unitOfWork,
             Func<DbConnection, IOutboxEventService> integrationServiceFactory,
             IPublishEndpoint publishEndpoint,
-            ILogger<DefaultIntegrationService> logger
+            ILogger<TransactionalOutboxService> logger
         )
         {
             _unitOfWork = unitOfWork;

@@ -12,7 +12,7 @@ using Wrapperizer.Abstraction.Specifications;
 
 namespace Wrapperizer.Extensions.Repositories.EfCore
 {
-    public class EfCoreCrudRepository<T> : ICrudRepository<T>
+    public abstract class EfCoreCrudRepository<T> : ICrudRepository<T>
         where T : class, IAggregateRoot
     {
         private readonly DbSet<T> _dbSet;

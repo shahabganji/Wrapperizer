@@ -1,56 +1,61 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Abstraction", "Wrapperizer.Abstraction\Wrapperizer.Abstraction.csproj", "{582511C3-0D1D-470D-92C9-062F8BAFF654}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Abstraction", "Wrapperizer.Abstraction\Wrapperizer.Abstraction.csproj", "{582511C3-0D1D-470D-92C9-062F8BAFF654}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{CD851388-2B35-41E2-93A5-FE6ACC665CEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs", "Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj", "{37EA11A3-C2CB-4E3C-A948-CA5BACB98372}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Cqrs", "Wrapperizer.Extensions.Cqrs\Wrapperizer.Extensions.Cqrs.csproj", "{37EA11A3-C2CB-4E3C-A948-CA5BACB98372}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Repositories.EfCore", "Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj", "{1432E1A7-788B-43BB-B16B-48B801236D56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Repositories.EfCore", "Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj", "{1432E1A7-788B-43BB-B16B-48B801236D56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Abstractions", "Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj", "{05589ACA-5D9F-419A-9E53-639373F439F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Abstractions", "Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj", "{05589ACA-5D9F-419A-9E53-639373F439F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api", "Sample.Api\Sample.Api.csproj", "{9CC8AF7F-069F-43AD-A71F-388D1416E88F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api", "Sample.Api\Sample.Api.csproj", "{9CC8AF7F-069F-43AD-A71F-388D1416E88F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs.Caching", "Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj", "{05EF4EDF-A356-4C59-9886-D6B1E47E1552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Cqrs.Caching", "Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj", "{05EF4EDF-A356-4C59-9886-D6B1E47E1552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Cqrs.EfCore", "Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj", "{2C7A01D3-B17F-404E-8B59-9ECC544D413A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Cqrs.EfCore", "Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj", "{2C7A01D3-B17F-404E-8B59-9ECC544D413A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.AspNetCore.Logging", "Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj", "{928B1CE9-DA3D-475F-BAF1-C54B44936CED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.AspNetCore.Logging", "Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj", "{928B1CE9-DA3D-475F-BAF1-C54B44936CED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.HealthCheck.UI", "Sample.HealthCheck.UI\Sample.HealthCheck.UI.csproj", "{A49A16BC-C578-4A79-BE03-759E491096B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.HealthCheck.UI", "Sample.HealthCheck.UI\Sample.HealthCheck.UI.csproj", "{A49A16BC-C578-4A79-BE03-759E491096B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{166688D7-B741-4E06-93FE-E396E4F51ADB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{528A2C0E-BAE1-45A3-9FA1-D9B6C922D1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Domain", "Wrapperizer.Sample.Domain\Wrapperizer.Sample.Domain.csproj", "{7FA06D6F-D5DE-4A25-845A-3D3BF9DD8E43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Sample.Domain", "Wrapperizer.Sample.Domain\Wrapperizer.Sample.Domain.csproj", "{7FA06D6F-D5DE-4A25-845A-3D3BF9DD8E43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Domain.Test", "Wrapperizer.Sample.Domain.Test\Wrapperizer.Sample.Domain.Test.csproj", "{ACABAF6B-5AB2-4397-BB2F-49C4F07B155D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Sample.Domain.Test", "Wrapperizer.Sample.Domain.Test\Wrapperizer.Sample.Domain.Test.csproj", "{ACABAF6B-5AB2-4397-BB2F-49C4F07B155D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{04EA4B03-29DD-4086-ACDB-7039F25BF997}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "persistence", "persistence", "{5ABA8CFF-81A2-4DBC-A568-2A263AB14326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Infra.Persistence", "Wrapperizer.Sample.Infra.Persistence\Wrapperizer.Sample.Infra.Persistence.csproj", "{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Sample.Infra.Persistence", "Wrapperizer.Sample.Infra.Persistence\Wrapperizer.Sample.Infra.Persistence.csproj", "{EFD7C6A0-225D-4FDE-8E8C-67B9B158E3A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Configurations", "Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj", "{06A9AE70-9157-4EEC-BCEF-E8588E836420}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Sample.Configurations", "Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj", "{06A9AE70-9157-4EEC-BCEF-E8588E836420}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application", "{FF6E3F9F-2F92-40EA-BE3D-B93DA36DE422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Application", "Wrapperizer.Sample.Application\Wrapperizer.Sample.Application.csproj", "{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Sample.Application", "Wrapperizer.Sample.Application\Wrapperizer.Sample.Application.csproj", "{86F4FEBF-F46B-4B67-90DD-AF018D16B9FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator", "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.csproj", "{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator", "Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.csproj", "{AFCA4759-60E7-43A7-9AE4-FD857F6EB7C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Outbox", "Wrapperizer.Outbox\Wrapperizer.Outbox.csproj", "{418FC4CF-8004-47DB-9E4C-E1619F188A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Outbox", "Wrapperizer.Outbox\Wrapperizer.Outbox.csproj", "{418FC4CF-8004-47DB-9E4C-E1619F188A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.University.Notification", "Sample.University.Notification\Sample.University.Notification.csproj", "{0902D117-1AC3-49EB-9663-00205AA538FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.University.Notification", "Sample.University.Notification\Sample.University.Notification.csproj", "{0902D117-1AC3-49EB-9663-00205AA538FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.IntegrationEvents", "Sample.IntegrationEvents\Sample.IntegrationEvents.csproj", "{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.IntegrationEvents", "Sample.IntegrationEvents\Sample.IntegrationEvents.csproj", "{4AAFD262-61B1-49A5-A2D4-0BFB33984C04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.MessageRelay", "Sample.MessageRelay\Sample.MessageRelay.csproj", "{6D2ECE0C-3323-4BF9-BED7-5A9A18948694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MessageRelay", "Sample.MessageRelay\Sample.MessageRelay.csproj", "{6D2ECE0C-3323-4BF9-BED7-5A9A18948694}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Common", "Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj", "{D7A228A0-DA43-4EC4-8C04-4AFB7E268113}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -134,18 +139,25 @@ Global
 		{6D2ECE0C-3323-4BF9-BED7-5A9A18948694}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D2ECE0C-3323-4BF9-BED7-5A9A18948694}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D2ECE0C-3323-4BF9-BED7-5A9A18948694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A228A0-DA43-4EC4-8C04-4AFB7E268113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A228A0-DA43-4EC4-8C04-4AFB7E268113}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A228A0-DA43-4EC4-8C04-4AFB7E268113}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A228A0-DA43-4EC4-8C04-4AFB7E268113}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{582511C3-0D1D-470D-92C9-062F8BAFF654} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{37EA11A3-C2CB-4E3C-A948-CA5BACB98372} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{1432E1A7-788B-43BB-B16B-48B801236D56} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{05589ACA-5D9F-419A-9E53-639373F439F9} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
+		{9CC8AF7F-069F-43AD-A71F-388D1416E88F} = {166688D7-B741-4E06-93FE-E396E4F51ADB}
 		{05EF4EDF-A356-4C59-9886-D6B1E47E1552} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{2C7A01D3-B17F-404E-8B59-9ECC544D413A} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{928B1CE9-DA3D-475F-BAF1-C54B44936CED} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
-		{166688D7-B741-4E06-93FE-E396E4F51ADB} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{A49A16BC-C578-4A79-BE03-759E491096B6} = {166688D7-B741-4E06-93FE-E396E4F51ADB}
-		{9CC8AF7F-069F-43AD-A71F-388D1416E88F} = {166688D7-B741-4E06-93FE-E396E4F51ADB}
+		{166688D7-B741-4E06-93FE-E396E4F51ADB} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{528A2C0E-BAE1-45A3-9FA1-D9B6C922D1B0} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{7FA06D6F-D5DE-4A25-845A-3D3BF9DD8E43} = {528A2C0E-BAE1-45A3-9FA1-D9B6C922D1B0}
 		{ACABAF6B-5AB2-4397-BB2F-49C4F07B155D} = {528A2C0E-BAE1-45A3-9FA1-D9B6C922D1B0}
@@ -160,5 +172,9 @@ Global
 		{0902D117-1AC3-49EB-9663-00205AA538FB} = {166688D7-B741-4E06-93FE-E396E4F51ADB}
 		{4AAFD262-61B1-49A5-A2D4-0BFB33984C04} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{6D2ECE0C-3323-4BF9-BED7-5A9A18948694} = {166688D7-B741-4E06-93FE-E396E4F51ADB}
+		{D7A228A0-DA43-4EC4-8C04-4AFB7E268113} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F47524B6-BFE5-4A9F-B137-F0CC0B2FFDE2}
 	EndGlobalSection
 EndGlobal

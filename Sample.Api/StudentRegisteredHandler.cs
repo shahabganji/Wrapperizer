@@ -11,13 +11,13 @@ namespace Sample.Api
     public sealed class StudentRegisteredHandler : IDomainEventHandler<StudentRegistered>
     {
         private readonly ILogger<StudentRegisteredHandler> _logger;
-        private readonly IIntegrationService _integrationService;
+        private readonly ITransactionalOutboxService _transactionalOutboxService;
 
         public StudentRegisteredHandler(ILogger<StudentRegisteredHandler> logger,
-            IIntegrationService integrationService)
+            ITransactionalOutboxService transactionalOutboxService)
         {
             _logger = logger;
-            _integrationService = integrationService;
+            _transactionalOutboxService = transactionalOutboxService;
         }
         
         public async Task Handle(StudentRegistered notification, CancellationToken cancellationToken)
@@ -29,7 +29,7 @@ namespace Sample.Api
             var integrationEvent = new StudentRegisteredIntegrationEvent(notification.Student.Id, 
                 $"{notification.Student.FirstName} {notification.Student.LastName}");
             
-            await _integrationService.AddAndSaveEventAsync(integrationEvent);
+            await _transactionalOutboxService.AddAndSaveEventAsync(integrationEvent);
             
         }
     }

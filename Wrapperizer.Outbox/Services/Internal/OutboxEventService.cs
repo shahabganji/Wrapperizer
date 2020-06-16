@@ -8,50 +8,26 @@ using Funx.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Wrapperizer.Abstraction.Domain;
+using Wrapperizer.Extensions.Common;
 using static Wrapperizer.Outbox.EventStateEnum;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {
-    internal class DefaultOutboxEventService : IOutboxEventService
+    internal class OutboxEventService : IOutboxEventService
     {
-        private static Assembly[] GetListOfEntryAssemblyWithReferences()
-        {
-            var listOfAssemblies = new List<Assembly>();
-
-            var directory =  Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            var dlls = Directory.EnumerateFiles(directory, "*.dll")
-                .Select(Path.GetFileName)
-                .Where(file => file.StartsWith("Sample") && file != "Sample.MessageRelay.dll"); 
-                
-
-            foreach (var dll in dlls)
-            {
-                var x = Path.Combine(directory!, dll);
-                var ass = Assembly.LoadFrom(x);
-                listOfAssemblies.Add(ass);
-            }
-            
-            return listOfAssemblies.ToArray();
-        }
-        
         private readonly OutboxEventContext _outboxEventContext;
         private readonly List<Type> _eventTypes;
 
-        public DefaultOutboxEventService(OutboxEventContext context)
+        public OutboxEventService(OutboxEventContext context)
         {
-            // var dbConnection1 = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
-
             _outboxEventContext = context;
 
-            var referencedAssemblies = GetListOfEntryAssemblyWithReferences();
+            var referencedAssemblies = Assembly.GetExecutingAssembly().WithEntryReferences();
 
             _eventTypes = referencedAssemblies.SelectMany(assembly =>
-                assembly.GetTypes().Where(t => // t.Name.EndsWith(nameof(IntegrationEvent)) ||
-                        typeof(IntegrationEvent).IsAssignableFrom(t))
+                assembly.GetTypes().Where(t => typeof(IntegrationEvent).IsAssignableFrom(t))
                     .ToList()
             ).ToList();
-
         }
 
         public async Task<IEnumerable<IntegrationEventLogEntry>> RetrievePendingEventsToPublishAsync(Guid transactionId)

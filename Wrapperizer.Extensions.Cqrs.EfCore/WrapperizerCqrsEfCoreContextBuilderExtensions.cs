@@ -6,6 +6,7 @@ using Funx.Extensions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Wrapperizer.Abstraction.Repositories;
+using Wrapperizer.Extensions.Common;
 using Wrapperizer.Extensions.Cqrs.EfCore.Behaviors;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 
@@ -43,20 +44,11 @@ namespace Wrapperizer
             return wrapperizerBuilder;
         }
 
-        private static Assembly[] GetListOfEntryAssemblyWithReferences()
-        {
-            var listOfAssemblies = new List<Assembly>();
-            var mainAsm = Assembly.GetEntryAssembly();
-            listOfAssemblies.Add(mainAsm);
-
-            listOfAssemblies.AddRange(mainAsm.GetReferencedAssemblies().Select(Assembly.Load));
-            return listOfAssemblies.ToArray();
-        }
-
+       
         private static IEnumerable<RepositoryDefinitions> GetRepositoryTypes()
         {
             var list = new List<RepositoryDefinitions>();
-            foreach (var s in GetListOfEntryAssemblyWithReferences())
+            foreach (var s in Assembly.GetEntryAssembly().WithReferencedAssemblies())
             foreach (var type in s.GetTypes())
             {
                 if (!type.IsInterface && type.GetInterfaces()

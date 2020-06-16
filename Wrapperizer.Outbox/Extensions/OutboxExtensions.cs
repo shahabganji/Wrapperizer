@@ -2,6 +2,7 @@ using System;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Outbox;
 using Wrapperizer.Outbox.HostedServices;
 using Wrapperizer.Outbox.Services;
@@ -13,13 +14,22 @@ namespace Wrapperizer
 {
     public static class OutboxExtensions
     {
-        public static IServiceCollection AddOutboxServices(
-            this IServiceCollection services,
-            Action<DbContextOptionsBuilder> optionsBuilder , bool enableAutoMigration = true)
-        {
-            services.AddDbContext<OutboxEventContext>(optionsBuilder);
+        private static bool _outboxServicesEnabled = false;
+        private static bool _messageRelayServicesEnabled = false;
 
-            services.AddTransient<Func<DbConnection, IOutboxEventService>>(
+        private const string InvalidOperationExceptionMessage =
+            "You could either enable MessageRelay services or Outbox services";
+
+        public static IServiceCollection AddOutboxServices(
+            this IWrapperizerBuilder builder,
+            Action<DbContextOptionsBuilder> optionsBuilder , bool enableAutoMigration = false)
+        {
+            if( _messageRelayServicesEnabled )
+                throw new InvalidOperationException(InvalidOperationExceptionMessage);
+
+            builder.ServiceCollection.AddDbContext<OutboxEventContext>(optionsBuilder);
+
+            builder.ServiceCollection.AddTransient<Func<DbConnection, IOutboxEventService>>(
                 sp => dbConnection => 
                     // this dbConnection will be passed on
                     // later on from implementations of integration service 
@@ -29,28 +39,31 @@ namespace Wrapperizer
                             .UseSqlServer(dbConnection)
                             .Options);
 
-                    return new DefaultOutboxEventService(outboxEventContext);
+                    return new OutboxEventService(outboxEventContext);
                 });
 
-            services.AddTransient<IIntegrationService, DefaultIntegrationService>();
+            builder.ServiceCollection.AddTransient<ITransactionalOutboxService, TransactionalOutboxService>();
 
-            services.AddScoped<IOutboxMessageRelay, DefaultOutboxMessageRelay>();
+            builder.ServiceCollection.AddScoped<IOutboxMessageRelay, OutboxMessageRelay>();
 
             if (enableAutoMigration)
-                services.AddHostedService<OutboxMigratorHostedService>();
+                builder.ServiceCollection.AddHostedService<OutboxMigratorHostedService>();
 
-            return services;
+            return builder.ServiceCollection;
         }
         
         public static IServiceCollection AddMessageRelayServices(
-            this IServiceCollection services,
+            this IWrapperizerBuilder builder,
             Action<DbContextOptionsBuilder> optionsBuilder)
         {
-            services.AddDbContext<OutboxEventContext>(optionsBuilder,Singleton,Singleton);
-            services.AddSingleton<IOutboxEventService, DefaultOutboxEventService>();
-            services.AddSingleton<IOutboxMessageRelay, DefaultOutboxMessageRelay>();
+            if (_outboxServicesEnabled)
+                throw new InvalidOperationException(InvalidOperationExceptionMessage);
 
-            return services;
+            builder.ServiceCollection.AddDbContext<OutboxEventContext>(optionsBuilder,Singleton,Singleton);
+            builder.ServiceCollection.AddSingleton<IOutboxEventService, OutboxEventService>();
+            builder.ServiceCollection.AddSingleton<IOutboxMessageRelay, OutboxMessageRelay>();
+
+            return builder.ServiceCollection;
         }
     }
 }

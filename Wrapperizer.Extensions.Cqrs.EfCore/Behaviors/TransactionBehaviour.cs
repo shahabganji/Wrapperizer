@@ -17,16 +17,16 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
         : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ITransactionalUnitOfWork _transactionalUnitOfWork;
-        private readonly IIntegrationService _integrationService;
+        private readonly ITransactionalOutboxService _transactionalOutboxService;
         private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;
 
         public TransactionBehaviour(
             ITransactionalUnitOfWork transactionalUnitOfWork,
-            IIntegrationService integrationService,
+            ITransactionalOutboxService transactionalOutboxService,
             ILogger<TransactionBehaviour<TRequest, TResponse>> logger)
         {
             _transactionalUnitOfWork = transactionalUnitOfWork;
-            _integrationService = integrationService;
+            _transactionalOutboxService = transactionalOutboxService;
             _logger = logger;
         }
 
@@ -76,7 +76,7 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
                         transactionId = transaction.TransactionId;
                     }
                     // this is after the commit, so if it fails we can try them later on in a message relay, for instance.
-                    await _integrationService.PublishEventsThroughEventBusAsync(transactionId);
+                    await _transactionalOutboxService.PublishEventsThroughEventBusAsync(transactionId);
                 });
 
                 return response;

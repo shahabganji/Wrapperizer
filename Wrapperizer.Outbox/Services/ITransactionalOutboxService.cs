@@ -4,7 +4,7 @@ using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Outbox.Services
 {
-    public interface IIntegrationService
+    public interface ITransactionalOutboxService
     {
         Task PublishEventsThroughEventBusAsync(Guid transactionId);
         Task AddAndSaveEventAsync(IntegrationEvent @event);

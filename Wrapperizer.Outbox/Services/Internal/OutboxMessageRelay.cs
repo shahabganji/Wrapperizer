@@ -6,15 +6,15 @@ using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {
-    internal sealed class DefaultOutboxMessageRelay : IOutboxMessageRelay
+    internal sealed class OutboxMessageRelay : IOutboxMessageRelay
     {
         private readonly IOutboxEventService _outboxEventService;
         private readonly IBusControl _bus;
-        private readonly ILogger<DefaultOutboxMessageRelay> _logger;
+        private readonly ILogger<OutboxMessageRelay> _logger;
 
-        public DefaultOutboxMessageRelay(
+        public OutboxMessageRelay(
             IOutboxEventService outboxEventService, 
-            ILogger<DefaultOutboxMessageRelay> logger, IBusControl bus)
+            ILogger<OutboxMessageRelay> logger, IBusControl bus)
         {
             _outboxEventService = outboxEventService;
             

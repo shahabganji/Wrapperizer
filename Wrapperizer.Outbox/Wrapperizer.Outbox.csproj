@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wrapperizer.Abstraction\Wrapperizer.Abstraction.csproj" />
+    <ProjectReference Include="..\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj" />
     <ProjectReference Include="..\Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj" />
   </ItemGroup>
   

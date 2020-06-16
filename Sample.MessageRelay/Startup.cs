@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Sample.MessageRelay.BackgroundTasks;
 using Sample.MessageRelay.Extensions;
 using Wrapperizer;
+using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using MassTransitHostedService = Sample.MessageRelay.BackgroundTasks.MassTransitHostedService;
 
 namespace Sample.MessageRelay
@@ -46,8 +47,9 @@ namespace Sample.MessageRelay
             services.AddCustomHealthCheck(this.Configuration)
                 .AddOptions();
 
-            services.AddMessageRelayServices(
-                x => { x.UseSqlServer("Server=localhost; UID=sa; PWD=P@assw0rd; Database=WrapperizeR"); });
+            services.AddWrapperizer()
+                .AddMessageRelayServices(
+                    x => { x.UseSqlServer("Server=localhost; UID=sa; PWD=P@assw0rd; Database=WrapperizeR"); });
         }
 
 
