@@ -7,7 +7,7 @@ using static Wrapperizer.Sample.Domain.StudentAggregateRoot.RegistrationStatus;
 
 namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
 {
-    public class Student : Entity<Guid>, IAggregateRoot
+    public class Student : Entity<Guid>, IAggregateRoot , ICanBeSoftDeleted
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -50,5 +50,7 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
             _registrationStatus  = Confirmed.Id;
             this.AddDomainEvent(new StudentRegistrationConfirmed(this.Id));
         }
+
+        public bool SoftDeleted { get; set; }
     }
 }
