@@ -4,4 +4,9 @@ namespace Wrapperizer.Abstraction.Domain
     {
         bool SoftDeleted { get; set; }
     }
+
+    public interface ICanBeAudited
+    {
+        
+    }
 }

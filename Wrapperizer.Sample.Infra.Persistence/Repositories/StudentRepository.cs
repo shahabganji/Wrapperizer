@@ -21,11 +21,12 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
 
         public async Task<string> GetStudentFullName(Guid studentId)
         {
-            var x =  await _dbContext.Students.SingleOrDefaultAsync(s => s.Id == studentId);
+            var x = await _dbContext.Students.SingleOrDefaultAsync(s => s.Id == studentId);
 
-            await _dbContext.Entry(x).Reference(y => y.RegistrationStatus).LoadAsync(CancellationToken.None);
+            if (x != null)
+                await _dbContext.Entry(x).Reference(y => y.RegistrationStatus).LoadAsync(CancellationToken.None);
 
-            return x.LastName;
+            return x?.LastName;
         }
 
         public async Task<Guid> RegisterStudent(string firstname, string lastname, string nationalCode,
@@ -39,7 +40,7 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
             return student.Id;
         }
 
-        public Task ConfirmRegistration(Guid studentId,CancellationToken cancellationToken)
+        public Task ConfirmRegistration(Guid studentId, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

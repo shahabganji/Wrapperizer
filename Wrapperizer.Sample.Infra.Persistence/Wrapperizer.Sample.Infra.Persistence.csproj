@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Domain\Wrapperizer.Sample.Domain.csproj" />
     </ItemGroup>

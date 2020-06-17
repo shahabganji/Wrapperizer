@@ -7,7 +7,7 @@ using static Wrapperizer.Sample.Domain.StudentAggregateRoot.RegistrationStatus;
 
 namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
 {
-    public class Student : Entity<Guid>, IAggregateRoot , ICanBeSoftDeleted
+    public class Student : Entity<Guid>, IAggregateRoot , ICanBeSoftDeleted, ICanBeAudited
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
