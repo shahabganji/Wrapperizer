@@ -21,7 +21,9 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
 
         public async Task<string> GetStudentFullName(Guid studentId)
         {
-            var x = await _dbContext.Students.SingleOrDefaultAsync(s => s.Id == studentId);
+            var x = await _dbContext.Students.SingleOrDefaultAsync(
+                    s => s.Id == studentId)
+                .ConfigureAwait(false);
 
             if (x != null)
                 await _dbContext.Entry(x).Reference(y => y.RegistrationStatus).LoadAsync(CancellationToken.None);
@@ -40,9 +42,17 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
             return student.Id;
         }
 
-        public Task ConfirmRegistration(Guid studentId, CancellationToken cancellationToken)
+        public async Task ConfirmRegistration(Guid studentId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var student = await _dbContext.Students.SingleOrDefaultAsync(
+                    s => s.Id == studentId && RegistrationStatus.Requested == s.RegistrationStatus,
+                    cancellationToken)
+                .ConfigureAwait(false);
+
+            if (student == null) return;
+
+            student.ConfirmRegistration();
+            await this.UnitOfWork.CommitAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }
