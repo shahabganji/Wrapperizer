@@ -22,7 +22,11 @@ namespace Wrapperizer.Extensions.Repositories.EfCore.Extensions
 
             softDeletedEntityTypes.ForEach(entityType =>
             {
-                modelBuilder.Entity((Type) entityType).HasQueryFilter(GenerateQueryFilterExpression(entityType));
+                modelBuilder.Entity(entityType, builder =>
+                {
+                    builder.Property<bool>("SoftDeleted");
+                    builder.HasQueryFilter(GenerateQueryFilterExpression(entityType));
+                });
             });
         }
 
@@ -49,11 +53,26 @@ namespace Wrapperizer.Extensions.Repositories.EfCore.Extensions
             // var equal = Expression.Equal(property, value);
             // var lambda = Expression.Lambda(equal, parameter);
             
-            // e => !e.SoftDeleted
-            var parameter = Expression.Parameter(entityType, "e");
-            var property = Expression.Property(parameter, $"{nameof(ICanBeSoftDeleted.SoftDeleted)}");
-            var notUnaryExpression = Expression.Not(property);
-            var lambda = Expression.Lambda(notUnaryExpression, parameter);
+            // // e => !e.SoftDeleted
+            // var parameter = Expression.Parameter(entityType, "e");
+            // var property = Expression.Property(parameter, $"SoftDeleted");
+            // var notUnaryExpression = Expression.Not(property);
+            // var lambda = Expression.Lambda(notUnaryExpression, parameter);
+            
+            // e => !EF.Property<bool>(e, "SoftDeleted"));
+            
+            var parameter = Expression.Parameter(entityType, "e"); // e =>
+            
+            var fieldName = Expression.Constant("SoftDeleted", typeof(string)); // "SoftDeleted"
+            
+            // EF.Property<bool>(e, "SoftDeleted")
+            var genericMethodCall = Expression.Call(typeof(EF), "Property", new[] {typeof(bool)}, parameter, fieldName);
+            
+            // !EF.Property<bool>(e, "SoftDeleted"))
+            var not = Expression.Not(genericMethodCall);
+            
+            // e => !EF.Property<bool>(e, "SoftDeleted"));
+            var lambda = Expression.Lambda(not, parameter);
 
             return lambda;
         }

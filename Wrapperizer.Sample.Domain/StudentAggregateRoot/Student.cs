@@ -50,7 +50,5 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
             _registrationStatus  = Confirmed.Id;
             this.AddDomainEvent(new StudentRegistrationConfirmed(this.Id));
         }
-
-        public bool SoftDeleted { get; set; }
     }
 }
