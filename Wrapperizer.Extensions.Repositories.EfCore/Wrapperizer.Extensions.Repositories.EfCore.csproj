@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Wrapperizer.Abstraction\Wrapperizer.Abstraction.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj" />
       <ProjectReference Include="..\Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj" />
     </ItemGroup>
 

@@ -26,7 +26,7 @@ namespace Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.HostedService
             _logger.LogInformation("Start migrating database in background");
             
             using var scope = _serviceProvider.CreateScope();
-            using var dbContext = scope.ServiceProvider.GetRequiredService<UniversityDbContext>();
+            await using var dbContext = scope.ServiceProvider.GetRequiredService<UniversityDbContext>();
 
             try
             {
