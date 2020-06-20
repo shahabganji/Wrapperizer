@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
@@ -23,6 +25,23 @@ namespace Wrapperizer.Sample.Infra.Persistence
         {
         }
 
+        public void Foo()
+        {
+            var entities = from e in ChangeTracker.Entries()
+                where e.State == EntityState.Added
+                      || e.State == EntityState.Modified
+                select e.Entity;
+            foreach (var entity in entities)
+            {
+                var validationContext = new ValidationContext(entity);
+                Validator.ValidateObject(
+                    entity,
+                    validationContext,
+                    validateAllProperties: true);
+            }
+
+        }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(DefaultSchema);
