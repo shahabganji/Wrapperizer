@@ -59,7 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Comm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sd", "sd", "{4DCE47A9-53CA-4D80-996C-611E4E3F994D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.ApiGateway", "Sample.ApiGateway\Sample.ApiGateway.csproj", "{A4B46FFB-8ACC-4748-87D7-4C1D1CF9DFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.ApiGateway", "Sample.ApiGateway\Sample.ApiGateway.csproj", "{A4B46FFB-8ACC-4748-87D7-4C1D1CF9DFBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{2BE6D179-DB4D-459C-8F61-7B7A67DE2F3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
