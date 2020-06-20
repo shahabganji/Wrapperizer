@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,39 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
             _logger = logger;
         }
 
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            this.HandleSoftDelete();
+            this.HandleAuditProperties();
+            return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        private void HandleSoftDelete()
+        {
+            var softDeleteEntities = this.ChangeTracker.Entries().Where(
+                entry => entry.Entity is ICanBeSoftDeleted && entry.State == EntityState.Deleted);
+
+            foreach (var softDeleteEntity in softDeleteEntities)
+            {
+                this.Entry(softDeleteEntity.Entity).Property("SoftDeleted").CurrentValue = true;
+                this.Entry(softDeleteEntity.Entity).State = EntityState.Modified;
+            }
+        }
+
+        private void HandleAuditProperties()
+        {
+            var auditEntities = this.ChangeTracker.Entries().Where(entry=> entry.Entity is ICanBeAudited
+            && ( entry.State == EntityState.Added || entry.State == EntityState.Modified));
+
+            foreach (var auditEntity in auditEntities)
+            {
+                if( auditEntity.State == EntityState.Added )
+                    this.Entry(auditEntity.Entity).Property("CreatedOn").CurrentValue = DateTimeOffset.UtcNow;
+                else if( auditEntity.State == EntityState.Modified )
+                    this.Entry(auditEntity.Entity).Property("UpdatedOn").CurrentValue = DateTimeOffset.UtcNow;
+            }
+        }
+
         public async Task<bool> CommitAsync(CancellationToken cancellationToken)
         {
             try
@@ -46,15 +80,15 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
                     .DispatchDomainEventsAsync(this)
                     .ConfigureAwait(false);
 
-                await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                var result = await this.SaveChangesAsync(cancellationToken).ConfigureAwait(false) >= 0;
 
-                return true;
+                return result;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Something wen wrong commiting entities: {Message}",
+                _logger.LogError(ex, "Something went wrong commiting entities: {Message}",
                     ex.GetInnerMostExceptionMessage());
-                return false;
+                throw;
             }
         }
 
@@ -66,7 +100,7 @@ namespace Wrapperizer.Extensions.Repositories.EfCore
 
             try
             {
-                await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
                 await transaction.CommitAsync(cancellationToken);
             }
             catch

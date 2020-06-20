@@ -14,5 +14,6 @@ namespace Wrapperizer.Sample.Domain.Repositories
             CancellationToken cancellationToken);
 
         Task ConfirmRegistration(Guid studentId, CancellationToken cancellationToken);
+        Task Inactivate(Guid studentId, CancellationToken cancellationToken);
     }
 }

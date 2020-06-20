@@ -30,18 +30,25 @@ namespace Wrapperizer.Extensions.Repositories.EfCore.Extensions
             });
         }
 
-        private static void AddShadowProperties(this ModelBuilder modelBuilder, Assembly migrationAssembly)
+        public static void AddAuditProperties(this ModelBuilder modelBuilder, Assembly migrationAssembly)
         {
-            var auditableTypes = migrationAssembly.WithReferencedAssemblies().SelectMany(assembly =>
+            var auditTypes = migrationAssembly.WithReferencedAssemblies().SelectMany(assembly =>
                 assembly.GetTypes().Where(type =>
                         typeof(ICanBeAudited).IsAssignableFrom(type)
                         && type.IsClass && !type.IsAbstract
                     )
                     .Select(type => type));
 
-            foreach (var auditableType in auditableTypes)
+            foreach (var auditEntity in auditTypes)
             {
-                modelBuilder.Entity(auditableType, builder => { builder.Property<DateTime>("UpdatedOn"); });
+                modelBuilder.Entity(auditEntity, builder =>
+                {
+                    builder.Property<DateTimeOffset>("CreatedOn")
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    builder.Property<DateTimeOffset?>("UpdatedOn").IsRequired(false);
+                });
             }
         }
         private static LambdaExpression GenerateQueryFilterExpression(Type entityType)
