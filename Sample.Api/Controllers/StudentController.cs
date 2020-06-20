@@ -28,5 +28,13 @@ namespace Sample.Api.Controllers
             var studentId = await _manager.Send(command);
             return CreatedAtAction(nameof(GetStudentInfo), new {studentId});
         }
+
+        [HttpDelete("{studentId}")]
+        public async Task<IActionResult> InactiveStudent(Guid studentId)
+        {
+            await _manager.Send(new InactivateStudent {StudentId = studentId});
+            return Ok();
+        }
+
     }
 }

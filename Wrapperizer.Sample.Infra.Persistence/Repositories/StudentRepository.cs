@@ -54,5 +54,15 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
             student.ConfirmRegistration();
             await this.UnitOfWork.CommitAsync(cancellationToken).ConfigureAwait(false);
         }
+
+        public async Task Inactivate(Guid studentId, CancellationToken cancellationToken)
+        {
+            var student = await _dbContext.Students.FindAsync(studentId).ConfigureAwait(false);
+
+            if (student == null) throw new InvalidOperationException("No such student");
+
+            _dbContext.Students.Remove(student);
+            await this.UnitOfWork.CommitAsync(cancellationToken);
+        }
     }
 }

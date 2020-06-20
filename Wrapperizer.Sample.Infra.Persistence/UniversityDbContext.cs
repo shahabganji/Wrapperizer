@@ -30,8 +30,9 @@ namespace Wrapperizer.Sample.Infra.Persistence
             var migrationAssembly = typeof(UniversityDbContext).Assembly;
             modelBuilder.ApplyConfigurationsFromAssembly(migrationAssembly);
 
-            // AddShadowProperties(modelBuilder, migrationAssembly);
+            modelBuilder.AddAuditProperties(migrationAssembly);
             modelBuilder.AddSoftDeleteQueryFilter(migrationAssembly);
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
