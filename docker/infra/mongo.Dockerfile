@@ -1,2 +1,2 @@
-FROM mongo:latest
+FROM mongo:4.0
 EXPOSE 27017

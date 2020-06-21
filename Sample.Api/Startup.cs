@@ -24,18 +24,6 @@ namespace Sample.Api
             base.ConfigureServices(services);
             
             services.AddOptionsAndHealthChecks(Configuration);
-
-            services.AddMassTransitHostedService();
-            services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-            services.AddMassTransit(cfg =>
-            {
-                cfg.SetKebabCaseEndpointNameFormatter();
-                cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(x =>
-                {
-                    x.Host("localhost", "wrapperizer");
-                    x.ConfigureEndpoints(factory);
-                }));
-            });
         }
 
         public Startup(IConfiguration configuration) : base(configuration)
@@ -72,8 +60,22 @@ namespace Sample.Api
             
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = "localhost";
-                options.InstanceName = "Wrapperizer.Api";
+                options.Configuration = redis.Configuration;
+                options.InstanceName = redis.InstanceName;
+            });
+            
+            services.AddMassTransitHostedService();
+            services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+            services.AddMassTransit(cfg =>
+            {
+                cfg.SetKebabCaseEndpointNameFormatter();
+                cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(x =>
+                {
+                    x.UseHealthCheck(factory);
+                    
+                    x.Host(rabbit.Host, rabbit.VirtualHost);
+                    x.ConfigureEndpoints(factory);
+                }));
             });
             
             services.AddHealthChecks()
@@ -83,6 +85,8 @@ namespace Sample.Api
                 .AddSqlServer(sql.ConnectionString)
                 .AddRabbitMQ(rabbit.ConnectionUri,new SslOption(), "rabbitmq");
 
+            
+            
             services.AddWrapperizer().AddOutboxServices(options =>
             {
                 options.UseSqlServer(sql.ConnectionString,

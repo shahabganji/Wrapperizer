@@ -1,0 +1,32 @@
+{
+    "users": [
+        {
+            "name": "admin",
+            "password_hash": "ZZiLrBJwnZi5WvlJdwoOHFEVfHWE4KIqSvtBc5whwcXQCaiL",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        }
+    ],
+    "vhosts": [{
+            "name": "/"
+        },
+        {
+            "name": "wrapperizer"
+        }
+    ],
+    "permissions": [{
+            "user": "admin",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "admin",
+            "vhost": "wrapperizer",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ]
+}

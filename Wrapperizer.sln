@@ -62,6 +62,27 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.ApiGateway", "Sample.ApiGateway\Sample.ApiGateway.csproj", "{A4B46FFB-8ACC-4748-87D7-4C1D1CF9DFBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{2BE6D179-DB4D-459C-8F61-7B7A67DE2F3D}"
+ProjectSection(SolutionItems) = preProject
+	docker-compose.yml = docker-compose.yml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{628D27EE-FCCF-471E-A1FE-06EC17B0B82C}"
+ProjectSection(SolutionItems) = preProject
+	docker\infra\mongo.Dockerfile = docker\infra\mongo.Dockerfile
+	docker\infra\redis.Dockerfile = docker\infra\redis.Dockerfile
+	docker\infra\sql.Dockerfile = docker\infra\sql.Dockerfile
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{704148A0-F054-4102-8448-B0C30983D0FA}"
+ProjectSection(SolutionItems) = preProject
+	docker\services\api.Dockerfile = docker\services\api.Dockerfile
+	docker\services\health.Dockerfile = docker\services\health.Dockerfile
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq", "rabbitmq", "{93CABBB4-B75E-4831-B35B-1CCE7FD724FD}"
+ProjectSection(SolutionItems) = preProject
+	docker\infra\rabbitmq\rabbit.Dockerfile = docker\infra\rabbitmq\rabbit.Dockerfile
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -185,6 +206,9 @@ Global
 		{D7A228A0-DA43-4EC4-8C04-4AFB7E268113} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{4DCE47A9-53CA-4D80-996C-611E4E3F994D} = {CD851388-2B35-41E2-93A5-FE6ACC665CEF}
 		{A4B46FFB-8ACC-4748-87D7-4C1D1CF9DFBF} = {4DCE47A9-53CA-4D80-996C-611E4E3F994D}
+		{628D27EE-FCCF-471E-A1FE-06EC17B0B82C} = {2BE6D179-DB4D-459C-8F61-7B7A67DE2F3D}
+		{704148A0-F054-4102-8448-B0C30983D0FA} = {2BE6D179-DB4D-459C-8F61-7B7A67DE2F3D}
+		{93CABBB4-B75E-4831-B35B-1CCE7FD724FD} = {628D27EE-FCCF-471E-A1FE-06EC17B0B82C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F47524B6-BFE5-4A9F-B137-F0CC0B2FFDE2}

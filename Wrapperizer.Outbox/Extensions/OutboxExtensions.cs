@@ -18,7 +18,7 @@ namespace Wrapperizer
         private static bool _messageRelayServicesEnabled = false;
 
         private const string InvalidOperationExceptionMessage =
-            "You could either enable MessageRelay services or Outbox services";
+            "You should enable either 'MessageRelay' services or 'Outbox' services";
 
         public static IServiceCollection AddOutboxServices(
             this IWrapperizerBuilder builder,
