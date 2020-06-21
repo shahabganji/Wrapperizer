@@ -7,9 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Sample.University.Notification.BackgroundTasks;
 using Sample.University.Notification.Consumers;
 using Sample.University.Notification.Extensions;
+using Wrapperizer.Sample.Configurations;
 
 
 namespace Sample.University.Notification
@@ -25,6 +27,10 @@ namespace Sample.University.Notification
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RabbitMqConnection>(instance => Configuration.Bind("Infra:Connections:RabbitMQ", instance));
+            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<MongoDbConnection>>().Value);
+
+
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
             services.AddMassTransit(cfg =>
             {
@@ -33,10 +39,12 @@ namespace Sample.University.Notification
                 cfg.AddConsumer<StudentRegisteredConsumer>();
 
                 cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(
-                    rabbit =>
+                    host =>
                     {
-                        rabbit.Host("localhost", "wrapperizer");
-                        rabbit.ConfigureEndpoints(factory);
+                        var rabbit = factory.Container.GetRequiredService<RabbitMqConnection>();
+                        host.UseHealthCheck(factory);
+                        host.Host(rabbit.Host, rabbit.VirtualHost);
+                        host.ConfigureEndpoints(factory);
                     })
                 );
             });

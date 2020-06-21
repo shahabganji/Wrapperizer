@@ -21,7 +21,6 @@ namespace Sample.University.Notification
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("https://localhost:8001");
                 })
                 .ConfigureAppConfiguration((host, builder) =>
                 {

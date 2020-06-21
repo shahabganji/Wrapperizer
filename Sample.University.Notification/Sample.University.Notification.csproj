@@ -27,5 +27,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Sample.IntegrationEvents\Sample.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj" />
     </ItemGroup>
 </Project>
