@@ -22,11 +22,17 @@ namespace Wrapperizer
 
         public static IServiceCollection AddOutboxServices(
             this IWrapperizerBuilder builder,
-            Action<DbContextOptionsBuilder> optionsBuilder , bool enableAutoMigration = false)
+            Action<DbContextOptionsBuilder> optionsBuilder , Action<TransactionalOutboxConfiguration> configure = null ,
+            bool enableAutoMigration = true)
         {
             if( _messageRelayServicesEnabled )
                 throw new InvalidOperationException(InvalidOperationExceptionMessage);
 
+            var configuration = new TransactionalOutboxConfiguration {AutoPublish = false};
+            configure?.Invoke(configuration);
+
+            builder.ServiceCollection.AddSingleton(configuration);
+            
             builder.ServiceCollection.AddDbContext<OutboxEventContext>(optionsBuilder);
 
             builder.ServiceCollection.AddTransient<Func<DbConnection, IOutboxEventService>>(

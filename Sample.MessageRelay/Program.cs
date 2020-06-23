@@ -21,7 +21,7 @@ namespace Sample.MessageRelay
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("https://localhost:8002");
+                    // webBuilder.UseUrls("https://localhost:8002");
                 })
                 .ConfigureAppConfiguration((host, builder) =>
                 {

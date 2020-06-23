@@ -79,6 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{70
 		docker\services\health.Dockerfile = docker\services\health.Dockerfile
 		docker\services\message-relay.Dockerfile = docker\services\message-relay.Dockerfile
 		docker\services\notification.Dockerfile = docker\services\notification.Dockerfile
+		docker\services\relay.Dockerfile = docker\services\relay.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq", "rabbitmq", "{93CABBB4-B75E-4831-B35B-1CCE7FD724FD}"

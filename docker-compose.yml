@@ -58,7 +58,20 @@ services:
       - redis
       - rabbitmq
       - sqlserver
-  notificatoin:
+  relay:
+    build:
+      context: .
+      dockerfile: docker/services/relay.Dockerfile
+    networks:
+      - "wrapperizer"
+    environment:
+      ASPNETCORE_URLS: "http://*:80"
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - api
+      - rabbitmq
+      - sqlserver
+  notification:
     build:
       context: .
       dockerfile: docker/services/notification.Dockerfile
@@ -68,11 +81,7 @@ services:
       ASPNETCORE_URLS: "http://*:80"
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - api
-      - mongo
-      - redis
       - rabbitmq
-      - sqlserver
   health:
     build:
       context: .
@@ -86,7 +95,8 @@ services:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
       - api
-      - notificatoin
+      - notification
+      - relay
       - mongo
       - redis
       - rabbitmq

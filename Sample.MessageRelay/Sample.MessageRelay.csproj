@@ -25,5 +25,13 @@
     <ItemGroup>
       <ProjectReference Include="..\Sample.IntegrationEvents\Sample.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="appsettings.Docker.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
     </ItemGroup>
 </Project>

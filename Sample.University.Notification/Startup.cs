@@ -28,7 +28,7 @@ namespace Sample.University.Notification
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<RabbitMqConnection>(instance => Configuration.Bind("Infra:Connections:RabbitMQ", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<MongoDbConnection>>().Value);
+            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<RabbitMqConnection>>().Value);
 
 
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);

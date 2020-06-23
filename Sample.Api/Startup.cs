@@ -51,7 +51,7 @@ namespace Sample.Api
             var rabbit = new RabbitMqConnection();
             configuration.Bind("Infra:Connections:RabbitMQ", rabbit);
             services.Configure<RabbitMqConnection>(instance => configuration.Bind("Infra:Connections:RabbitMQ", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<MongoDbConnection>>().Value);
+            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<RabbitMqConnection>>().Value);
             
             var redis = new RedisCacheOptions();
             configuration.Bind("Infra:Connections:Redis", redis);
@@ -97,10 +97,9 @@ namespace Sample.Api
                         sqlOptions.MigrationsHistoryTable("__OutboxMigrationHistory", OutboxEventContext.DefaultSchema);
                         
                         //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
-                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
-                            errorNumbersToAdd: null);
+                        sqlOptions.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
                     });
-            }, true);
+            });
             
             return services;
         }

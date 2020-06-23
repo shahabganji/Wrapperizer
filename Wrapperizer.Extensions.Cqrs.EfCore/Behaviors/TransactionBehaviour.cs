@@ -8,6 +8,7 @@ using Serilog.Context;
 using Wrapperizer.Abstraction.Cqrs;
 using Wrapperizer.Extensions.Cqrs.EfCore.Extensions;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
+using Wrapperizer.Outbox;
 using Wrapperizer.Outbox.Services;
 using Wrapperizer.Outbox.Utilities;
 
@@ -18,15 +19,18 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
     {
         private readonly ITransactionalUnitOfWork _transactionalUnitOfWork;
         private readonly ITransactionalOutboxService _transactionalOutboxService;
+        private readonly TransactionalOutboxConfiguration _transactionalOutboxConfiguration;
         private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;
 
         public TransactionBehaviour(
             ITransactionalUnitOfWork transactionalUnitOfWork,
             ITransactionalOutboxService transactionalOutboxService,
+            TransactionalOutboxConfiguration transactionalOutboxConfiguration,
             ILogger<TransactionBehaviour<TRequest, TResponse>> logger)
         {
             _transactionalUnitOfWork = transactionalUnitOfWork;
             _transactionalOutboxService = transactionalOutboxService;
+            _transactionalOutboxConfiguration = transactionalOutboxConfiguration;
             _logger = logger;
         }
 
@@ -59,8 +63,8 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
                 await strategy.ExecuteAsync(async () =>
                 {
                     Guid transactionId;
-                    await using (var transaction =
-                        await _transactionalUnitOfWork.BeginTransactionAsync(cancellationToken))
+                    await using var transaction =
+                        await _transactionalUnitOfWork.BeginTransactionAsync(cancellationToken);
                     using (LogContext.PushProperty("TransactionContext", transaction.TransactionId))
                     {
                         _logger.LogInformation("----- Begin transaction {TransactionId} for {CommandName} ({@Command})",
@@ -75,8 +79,10 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
 
                         transactionId = transaction.TransactionId;
                     }
+
                     // this is after the commit, so if it fails we can try them later on in a message relay, for instance.
-                    await _transactionalOutboxService.PublishEventsThroughEventBusAsync(transactionId);
+                    if (_transactionalOutboxConfiguration.AutoPublish)
+                        await _transactionalOutboxService.PublishEventsThroughEventBusAsync(transactionId);
                 });
 
                 return response;
