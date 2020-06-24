@@ -1,3 +1,4 @@
+using System;
 using Grace.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -6,7 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Wrapperizer;
+using Wrapperizer.AspNetCore.ServiceDiscovery.Consul;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -40,6 +44,8 @@ namespace Sample.Api
                 {
                     options.EnableRetryOnFailure(3);
                 });
+
+                builder.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
             });
 
             var requestHandlersAssembly = typeof(RegisterStudentHandler).Assembly;
@@ -60,7 +66,11 @@ namespace Sample.Api
                 //     options.UseInMemoryDatabase("WeatherForecast");
                 //     options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                 // })
-                ;
+                .AddConsul(consulConfig =>
+                {
+                    var address = this.Configuration["Infra:ServiceDiscovery:Address"];
+                    consulConfig.Address = new Uri(address);                    
+                });
 
             services.AddUniversityMigrator();
 
@@ -72,7 +82,7 @@ namespace Sample.Api
         {
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -101,6 +111,10 @@ namespace Sample.Api
                 endpoints.MapControllers();
             });
             
+            app.RegisterWithConsul(lifetime , (configuration, provider) =>
+            {
+                this.Configuration.Bind("Infra:ServiceDiscovery:Consul", configuration);
+            });
         }
     }
 }
