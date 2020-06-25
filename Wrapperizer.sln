@@ -62,22 +62,23 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.ApiGateway", "Sample.ApiGateway\Sample.ApiGateway.csproj", "{A4B46FFB-8ACC-4748-87D7-4C1D1CF9DFBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{2BE6D179-DB4D-459C-8F61-7B7A67DE2F3D}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
+ProjectSection(SolutionItems) = preProject
+	docker-compose-infra.yml = docker-compose-infra.yml
+	docker-compose-services.yml = docker-compose-services.yml
+EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{628D27EE-FCCF-471E-A1FE-06EC17B0B82C}"
 	ProjectSection(SolutionItems) = preProject
 		docker\infra\mongo.Dockerfile = docker\infra\mongo.Dockerfile
 		docker\infra\redis.Dockerfile = docker\infra\redis.Dockerfile
 		docker\infra\sql.Dockerfile = docker\infra\sql.Dockerfile
+		docker\infra\consul.Dockerfile = docker\infra\consul.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{704148A0-F054-4102-8448-B0C30983D0FA}"
 	ProjectSection(SolutionItems) = preProject
 		docker\services\api.Dockerfile = docker\services\api.Dockerfile
 		docker\services\health.Dockerfile = docker\services\health.Dockerfile
-		docker\services\message-relay.Dockerfile = docker\services\message-relay.Dockerfile
 		docker\services\notification.Dockerfile = docker\services\notification.Dockerfile
 		docker\services\relay.Dockerfile = docker\services\relay.Dockerfile
 	EndProjectSection

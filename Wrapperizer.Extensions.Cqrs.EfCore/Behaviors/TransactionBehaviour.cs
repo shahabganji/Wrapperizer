@@ -10,7 +10,6 @@ using Wrapperizer.Extensions.Cqrs.EfCore.Extensions;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
 using Wrapperizer.Outbox;
 using Wrapperizer.Outbox.Services;
-using Wrapperizer.Outbox.Utilities;
 
 namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
 {

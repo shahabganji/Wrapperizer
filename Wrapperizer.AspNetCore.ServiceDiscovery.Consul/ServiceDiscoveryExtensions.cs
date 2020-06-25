@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Wrapperizer.AspNetCore.ServiceDiscovery.Consul;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
-using static System.String;
 
 namespace Wrapperizer
 {
@@ -27,30 +26,32 @@ namespace Wrapperizer
         public static IApplicationBuilder RegisterWithConsul(
             this IApplicationBuilder app,
             IHostApplicationLifetime lifetime,
-            Action<ServiceRegistrationConfiguration,IServiceProvider> configurator = null
+            Action<ServiceRegistrationConfiguration, IServiceProvider> configurator = null
         )
         {
             if (lifetime == null) throw new ArgumentNullException(nameof(lifetime));
 
             // Retrieve Consul client from DI
             var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
-            
+
             // Setup logger
             var loggingFactory = app.ApplicationServices
                 .GetRequiredService<ILoggerFactory>();
             var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
 
             // Get server IP address
-            var features = app.Properties["server.Features"] as FeatureCollection;
-            var addresses = features.Get<IServerAddressesFeature>();
+            var addresses = app.ServerFeatures.Get<IServerAddressesFeature>();
             var address = addresses.Addresses.First();
 
+            Console.WriteLine($"The api address is :{address}");
+            logger.LogWarning($"The api address is :{address}");
             // Register service with consul
             var uri = new Uri(address);
 
-            var serviceRegistration = app.ApplicationServices.GetService<ServiceRegistrationConfiguration>();
+            var serviceRegistration =
+                app.ApplicationServices.GetService<IOptions<ServiceRegistrationConfiguration>>().Value;
             configurator?.Invoke(serviceRegistration, app.ApplicationServices);
-            
+
             var health = new AgentCheckRegistration
             {
                 HTTP = $"{uri.Scheme}://{uri.Host}:{uri.Port}{serviceRegistration.HealthCheckEndpoint}",

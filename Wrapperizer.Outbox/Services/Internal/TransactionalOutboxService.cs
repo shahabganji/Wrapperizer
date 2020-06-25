@@ -1,10 +1,7 @@
 using System;
 using System.Data.Common;
-using System.IO;
 using System.Threading.Tasks;
-using GreenPipes.Internals.Extensions;
 using MassTransit;
-using MassTransit.Definition;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;

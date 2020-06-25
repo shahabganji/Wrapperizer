@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
-using Wrapperizer.Abstraction.Domain;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {

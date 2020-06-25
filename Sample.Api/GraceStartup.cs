@@ -8,9 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Wrapperizer;
-using Wrapperizer.AspNetCore.ServiceDiscovery.Consul;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -113,6 +111,7 @@ namespace Sample.Api
             
             app.RegisterWithConsul(lifetime , (configuration, provider) =>
             {
+                Console.WriteLine(this.Configuration["Infra:ServiceDiscovery:Address"]);
                 this.Configuration.Bind("Infra:ServiceDiscovery:Consul", configuration);
             });
         }

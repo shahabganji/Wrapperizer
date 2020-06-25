@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  redis: 
+    build:
+      context: .
+      dockerfile: docker/infra/redis.Dockerfile
+    networks:
+      - "wrapperizer"
+  rabbitmq: 
+    build: 
+      context: .
+      dockerfile: docker/infra/rabbitmq/rabbit.Dockerfile
+    networks:
+      - "wrapperizer"
+    ports: 
+      - 15675:15672
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 10
+      test: 
+        - "CMD"
+        - "rabbitmqctl"
+        - "status"
+  sqlserver:
+    build:
+      context: .
+      dockerfile: docker/infra/sql.Dockerfile
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@assw0rd
+    ports:
+      - 1444:1433
+    networks:
+      - "wrapperizer"
+  mongo:
+    build: 
+      context: .
+      dockerfile: docker/infra/mongo.Dockerfile
+    ports:
+      - 27027:27017
+    networks:
+      - "wrapperizer"
+  consul:
+    build:
+      context: .
+      dockerfile: docker/infra/consul.Dockerfile
+    ports:
+      - 8600:8500
+    networks:
+      - "wrapperizer"
+
+networks:
+  wrapperizer:

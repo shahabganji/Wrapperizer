@@ -1,9 +1,7 @@
 using System;
-using Consul;
 using MassTransit;
 using MassTransit.Definition;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +10,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using Wrapperizer;
-using Wrapperizer.AspNetCore.ServiceDiscovery.Consul;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Outbox;
 using Wrapperizer.Sample.Configurations;
