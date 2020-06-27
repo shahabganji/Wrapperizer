@@ -111,8 +111,8 @@ namespace Sample.Api
             
             app.RegisterWithConsul(lifetime , (configuration, provider) =>
             {
-                Console.WriteLine(this.Configuration["Infra:ServiceDiscovery:Address"]);
                 this.Configuration.Bind("Infra:ServiceDiscovery:Consul", configuration);
+                configuration.ServiceId = Guid.NewGuid().ToString();
             });
         }
     }
