@@ -4,13 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Sample.MessageRelay.Extensions;
 using Serilog;
+using Wrapperizer;
 
 namespace Sample.MessageRelay
 {
     public class Program
     {
         public const string AppName = "Sample Message Relay";
-        
+        private static IConfiguration Configuration { get; set; }
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -21,19 +22,25 @@ namespace Sample.MessageRelay
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    // webBuilder.UseUrls("https://localhost:8002");
+                    webBuilder.UseUrls("https://localhost:8002");
                 })
                 .ConfigureAppConfiguration((host, builder) =>
                 {
-                    builder.SetBasePath(Directory.GetCurrentDirectory());
-                    builder.AddJsonFile("appsettings.json", optional: true);
-                    builder.AddJsonFile($"appsettings.{host.HostingEnvironment.EnvironmentName}.json", optional: true);
-                    builder.AddEnvironmentVariables();
-                    builder.AddCommandLine(args);
-                }).ConfigureLogging((host, builder) =>
-                {
-                    builder.UseSerilog(host.Configuration);
+                    Configuration = builder
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{host.HostingEnvironment.EnvironmentName}.json", optional: true,
+                            reloadOnChange: true)
+                        .AddEnvironmentVariables()
+                        .AddCommandLine(args)
+                        .Build();
                 })
-                .UseSerilog();
+                .UseSerilog((context, configuration) =>
+                {
+                    configuration.WithWrapperizerConfiguration(Configuration, loggingConfiguration =>
+                    {
+                        loggingConfiguration.ApplicationName = AppName;
+                    });
+                });
     }
 }

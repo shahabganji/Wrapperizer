@@ -10,13 +10,13 @@ namespace Wrapperizer.AspNetCore.Logging
         static LogMessages()
         {
             RoutePerformance = LoggerMessage.Define<string, string, long>(LogLevel.Information, 0,
-                "{RouteName} {Method} code took {ElapsedMilliseconds}.");            
+                "{RouteName} {Method} code took {ElapsedInMilliseconds}.");            
         }
 
         public static void LogRoutePerformance(this ILogger logger, string pageName, string method, 
-            long elapsedMilliseconds)
+            long elapsedInMilliseconds)
         {
-            RoutePerformance(logger, pageName, method, elapsedMilliseconds, null);
+            RoutePerformance(logger, pageName, method, elapsedInMilliseconds, null);
         }
     }
 }

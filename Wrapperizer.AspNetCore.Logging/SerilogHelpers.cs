@@ -4,13 +4,17 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Enrichers.AspnetcoreHttpcontext;
 using Serilog.Filters;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.MSSqlServer;
+using Serilog.Sinks.MSSqlServer.Sinks.MSSqlServer.Options;
+using Wrapperizer.AspNetCore.Logging.Configuration;
 using Wrapperizer.AspNetCore.Logging.Formatters;
 using Wrapperizer.AspNetCore.Logging.Models;
 
@@ -23,63 +27,69 @@ namespace Wrapperizer
         /// Provides standardized, centralized Serilog wire-up for a suite of applications.
         /// </summary>
         /// <param name="loggerConfig">Provide this value from the UseSerilog method param</param>
-        /// <param name="provider">Provide this value from the UseSerilog method param as well</param>
-        /// <param name="applicationName">Represents the name of YOUR APPLICATION and will be used to segregate your app
-        /// from others in the logging sink(s).</param>
         /// <param name="config">IConfiguration settings -- generally read this from appsettings.json</param>
-        public static void WithSimpleConfiguration(this LoggerConfiguration loggerConfig, 
-            IServiceProvider provider, string applicationName, IConfiguration config)
+        /// <param name="setupAction">Action to configure connections for logging</param>
+        public static void WithWrapperizerConfiguration(this LoggerConfiguration loggerConfig,
+            IConfiguration config, Action<WrapperizerLoggingConfiguration> setupAction)
         {
-            var name = Assembly.GetEntryAssembly()?.GetName();
+            var configuration = new WrapperizerLoggingConfiguration();
+            setupAction?.Invoke(configuration);
+
+            var assemblyName = Assembly.GetEntryAssembly()?.GetName();
 
             loggerConfig
                 .ReadFrom.Configuration(config) // minimum levels defined per project in json files 
-                .Enrich.WithAspnetcoreHttpcontext(provider, AddCustomContextDetails)
+                // .Enrich.WithAspnetcoreHttpcontext( AddCustomHttpContextDetails)
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
-                .Enrich.WithProperty("Assembly", $"{name.Name}")
-                .Enrich.WithProperty("Version", $"{name.Version}")
-                //.WriteTo.File(new CompactJsonFormatter(),
-                //    $@"C:\temp\Logs\{applicationName}.json");
-                .WriteTo.Logger(lc => lc
-                    .Filter.ByIncludingOnly(Matching.WithProperty("ElapsedMilliseconds"))
-                    .WriteTo.MSSqlServer(
-                        connectionString: @"Server=.\sqlexpress;Database=Logging;Trusted_Connection=True;",
-                        tableName: "PerfLogNew",
-                        autoCreateSqlTable: true,
-                        columnOptions: GetSqlColumnOptions()))
+                .Enrich.WithProperty("Assembly", $"{assemblyName?.Name}")
+                .Enrich.WithProperty("Version", $"{assemblyName?.Version}")
+                .Enrich.WithProperty("ApplicationName", configuration.ApplicationName);
+
+            if (configuration.SqlConnectionString != null)
+            {
+                loggerConfig.WriteTo.Logger(lc => lc
+                    .Filter.ByIncludingOnly(Matching.WithProperty("ElapsedInMilliseconds"))
+                    .WriteTo.MSSqlServer(configuration.SqlConnectionString, new SinkOptions
+                    {
+                        AutoCreateSqlTable = true, TableName = "PerfLog",
+                        SchemaName = "log"
+                    }, columnOptions: GetSqlColumnOptions()));
+            }
+
+            loggerConfig
                 .WriteTo.Logger(lc => lc
                     .Filter.ByIncludingOnly(Matching.WithProperty("UsageName"))
-                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(configuration.ElasticSearchUri)
                         {
                             AutoRegisterTemplate = true,
                             AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
-                            IndexFormat = "usagenew-{0:yyyy.MM.dd}",
+                            IndexFormat = configuration.UsageIndexFormat,
                             InlineFields = true,
                             CustomFormatter = new CustomElasticsearchJsonFormatter(inlineFields: true,
                                 renderMessageTemplate: false)
-                    }
+                        }
                     ))
                 .WriteTo.Logger(lc => lc
                     .Filter.ByExcluding(Matching.WithProperty("ElapsedMilliseconds"))
                     .Filter.ByExcluding(Matching.WithProperty("UsageName"))
-                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(configuration.ElasticSearchUri)
                         {
                             AutoRegisterTemplate = true,
                             AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
-                            IndexFormat = "errornew2-{0:yyyy.MM.dd}",
+                            IndexFormat = configuration.ErrorIndexFormat,
                             InlineFields = true,
-                            CustomFormatter = new CustomElasticsearchJsonFormatter(inlineFields:true, 
-                                renderMessageTemplate:false)
+                            CustomFormatter = new CustomElasticsearchJsonFormatter(inlineFields: true,
+                                renderMessageTemplate: false)
                         }
-                    )
-                    .WriteTo.File(new CustomLogEntryFormatter(), $@"c:\temp\logs\{applicationName}-error.json"));
+                    ))
+                ;
         }
 
         private static ColumnOptions GetSqlColumnOptions()
         {
             var options = new ColumnOptions();
-            options.Store.Remove(StandardColumn.Message);
+            // options.Store.Remove(StandardColumn.Message);
             options.Store.Remove(StandardColumn.MessageTemplate);
             options.Store.Remove(StandardColumn.Level);
             options.Store.Remove(StandardColumn.Exception);
@@ -92,12 +102,14 @@ namespace Wrapperizer
             options.AdditionalColumns = new Collection<SqlColumn>
             {
                 new SqlColumn
-                { ColumnName = "PerfItem", AllowNull = false,
+                {
+                    ColumnName = "PerfItem", AllowNull = true,
                     DataType = SqlDbType.NVarChar, DataLength = 100,
-                    NonClusteredIndex = true },
+                    // NonClusteredIndex = true
+                },
                 new SqlColumn
                 {
-                    ColumnName = "ElapsedMilliseconds", AllowNull = false,
+                    ColumnName = "ElapsedInMilliseconds", AllowNull = false,
                     DataType = SqlDbType.Int
                 },
                 new SqlColumn
@@ -107,13 +119,17 @@ namespace Wrapperizer
                 new SqlColumn
                 {
                     ColumnName = "MachineName", AllowNull = false
+                },
+                new SqlColumn
+                {
+                    ColumnName = "ApplicationName", AllowNull = false, NonClusteredIndex = true
                 }
-            };            
+            };
 
             return options;
         }
 
-        private static UserInfo AddCustomContextDetails(IHttpContextAccessor ctx)
+        public static UserInfo AddCustomHttpContextDetails(IHttpContextAccessor ctx)
         {
             var excluded = new List<string> {"nbf", "exp", "auth_time", "amr", "sub"};
             const string userIdClaimType = "sub";
@@ -121,7 +137,7 @@ namespace Wrapperizer
             var context = ctx.HttpContext;
             var user = context?.User.Identity;
             if (user == null || !user.IsAuthenticated) return null;
-            
+
             var userId = context.User.Claims.FirstOrDefault(a => a.Type == userIdClaimType)?.Value;
             var userInfo = new UserInfo
             {
@@ -139,7 +155,7 @@ namespace Wrapperizer
                     .Select(c => c.Value)
                     .ToList();
             }
-                
+
             return userInfo;
         }
     }

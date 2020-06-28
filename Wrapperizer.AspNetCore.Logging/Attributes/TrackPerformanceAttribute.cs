@@ -1,15 +1,21 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Wrapperizer.AspNetCore.Logging.Attributes
 {
-    public class TrackPerformance : ActionFilterAttribute
+    public class TrackPerformanceAttribute : ActionFilterAttribute , IFilterFactory
     {
-        private readonly ILogger<TrackPerformance> _logger;
+        private readonly ILogger<TrackPerformanceAttribute> _logger;
         private readonly Stopwatch _timer;
 
-        public TrackPerformance(ILogger<TrackPerformance> logger)
+        public TrackPerformanceAttribute()
+        {
+        }
+        
+        public TrackPerformanceAttribute(ILogger<TrackPerformanceAttribute> logger)
         {
             _logger = logger;
             _timer = new Stopwatch();
@@ -30,5 +36,13 @@ namespace Wrapperizer.AspNetCore.Logging.Attributes
                     _timer.ElapsedMilliseconds);
             }
         }
+
+        public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
+        {
+            var logger = serviceProvider.GetRequiredService<ILogger<TrackPerformanceAttribute>>();
+            return new TrackPerformanceAttribute(logger);
+        }
+
+        public bool IsReusable { get; }
     }
 }

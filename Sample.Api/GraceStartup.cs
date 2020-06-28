@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Wrapperizer;
+using Wrapperizer.AspNetCore.Logging.Filters;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
 using Wrapperizer.Sample.Application.Handlers.Commands;
 using Wrapperizer.Sample.Infra.Persistence;
@@ -30,7 +31,10 @@ namespace Sample.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddMvcOptions(options =>
+            {
+                // options.Filters.Add<TrackActionPerformanceFilter>();
+            });
             
             services.AddOpenApiDocument(setting => setting.Title = "Sample Api");
 
