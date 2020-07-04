@@ -48,7 +48,6 @@ namespace Sample.Api
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://*:0");
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseGrace();
