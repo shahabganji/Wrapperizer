@@ -46,7 +46,11 @@ namespace Sample.Api
                         });
                     // Serilog.Debugging.SelfLog.Enable(Console.Out);
                 })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseUrls("http://*:0");
+                    webBuilder.UseStartup<Startup>();
+                })
                 .UseGrace();
     }
 }
