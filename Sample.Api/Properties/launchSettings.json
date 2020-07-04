@@ -12,6 +12,7 @@
     "Wrapperizer.Sample.Api": {
       "commandName": "Project",
       "launchBrowser": false,
+      "launchUrl": "https://localhost:9001; http://localhost:9000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

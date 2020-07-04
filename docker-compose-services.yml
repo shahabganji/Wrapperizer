@@ -1,17 +1,31 @@
 version: '3.7'
 
 services:
+  sd:
+    build:
+      context: .
+      dockerfile: docker/services/sd.Dockerfile
+    networks:
+      - "wrapperizer"
+    ports:
+      - 3090:80
+    environment:
+      ASPNETCORE_URLS: "http://*:80" # this should be named for service discover registration
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    restart: unless-stopped
+    depends_on:
+      - consul
   api: 
     build:
       context: .
       dockerfile: docker/services/api.Dockerfile
     networks:
       - "wrapperizer"
-    ports:
-      - 3080:80
     environment:
       ASPNETCORE_URLS: "http://api:80" # this should be named for service discover registration
       ASPNETCORE_ENVIRONMENT: "Docker"
+    ports:
+    - 3080:80
     restart: unless-stopped
 #    deploy:
 #      restart_policy:
