@@ -73,6 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{628D27EE
 		docker\infra\redis.Dockerfile = docker\infra\redis.Dockerfile
 		docker\infra\sql.Dockerfile = docker\infra\sql.Dockerfile
 		docker\infra\consul.Dockerfile = docker\infra\consul.Dockerfile
+		docker\infra\seq.Dockerfile = docker\infra\seq.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{704148A0-F054-4102-8448-B0C30983D0FA}"

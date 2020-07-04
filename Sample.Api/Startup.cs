@@ -79,7 +79,7 @@ namespace Sample.Api
             services.AddHealthChecks()
                 .AddCheck("api", _ => HealthCheckResult.Healthy())
                 .AddRedis(redis.Configuration, "redis")
-                .AddMongoDb(mongodb.ConnectionString , mongodb.Collection,"mongodb")
+                // .AddMongoDb(mongodb.ConnectionString , mongodb.Collection,"mongodb")
                 .AddSqlServer(sql.ConnectionString)
                 .AddRabbitMQ(rabbit.ConnectionUri,new SslOption(), "rabbitmq");
 

@@ -1,6 +1,16 @@
 version: '3.7'
 
 services:
+  seq:
+    build:
+      context: .
+      dockerfile: docker/infra/seq.Dockerfile
+    ports:
+      - 4321:80 
+    environment:
+      ACCEPT_EULA: Y
+    networks:
+      - "wrapperizer"
   redis: 
     build:
       context: .

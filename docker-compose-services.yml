@@ -10,15 +10,17 @@ services:
     ports:
       - 3080:80
     environment:
-      ASPNETCORE_URLS: "http://api:80"
+      ASPNETCORE_URLS: "http://api:80" # this should be named for service discover registration
       ASPNETCORE_ENVIRONMENT: "Docker"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 2s
-        max_attempts: 3
-        window: 120s
+    restart: unless-stopped
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#        delay: 2s
+#        max_attempts: 3
+#        window: 120s
     depends_on:
+      - seq
       - consul
       - mongo
       - redis
@@ -35,6 +37,7 @@ services:
       DOTNET_URLS: "http://*:80"
       DOTNET_ENVIRONMENT: "Docker"
     depends_on:
+      - seq
       - api
       - rabbitmq
       - sqlserver
@@ -49,6 +52,7 @@ services:
       DOTNET_URLS: "http://*:80"
       DOTNET_ENVIRONMENT: "Docker"
     depends_on:
+      - seq
       - rabbitmq
   health:
     build:
