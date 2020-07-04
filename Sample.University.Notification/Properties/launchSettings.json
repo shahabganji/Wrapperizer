@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "Sample.UniversityMessageRelay.BackgroundTasks": {
+    "Sample.University.Notification": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"

@@ -6,7 +6,7 @@ EXPOSE 80
 
 WORKDIR /api/
 COPY ./ .
-RUN dotnet build
+RUN dotnet build Sample.MessageRelay/Sample.MessageRelay.csproj -c Release
 RUN dotnet publish Sample.MessageRelay/Sample.MessageRelay.csproj -c Release -o /api/publish/
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1

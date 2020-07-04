@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using Grace.AspNetCore.Hosting;
@@ -32,6 +33,7 @@ namespace Sample.Api
                         .AddJsonFile($"appsettings.{host.HostingEnvironment.EnvironmentName}.json", optional: true,
                             reloadOnChange: true)
                         .AddEnvironmentVariables()
+                        .AddCommandLine(args)
                         .Build();
                 })
                 .UseSerilog((context, configuration) =>
@@ -46,7 +48,10 @@ namespace Sample.Api
                         });
                     // Serilog.Debugging.SelfLog.Enable(Console.Out);
                 })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .ConfigureWebHostDefaults((webBuilder) =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
                 .UseGrace();
     }
 }

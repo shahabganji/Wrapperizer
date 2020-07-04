@@ -8,7 +8,7 @@ EXPOSE 443
 
 WORKDIR /api/
 COPY ./ .
-RUN dotnet build
+RUN dotnet build Sample.HealthCheck.UI/Sample.HealthCheck.UI.csproj -c Release
 RUN dotnet publish Sample.HealthCheck.UI/Sample.HealthCheck.UI.csproj -c Release -o /api/publish/
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
