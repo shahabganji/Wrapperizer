@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Sample.IntegrationEvents\Sample.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj" />
       <ProjectReference Include="..\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj" />
       <ProjectReference Include="..\Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj" />
     </ItemGroup>

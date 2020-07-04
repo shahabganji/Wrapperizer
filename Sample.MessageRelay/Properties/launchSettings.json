@@ -3,7 +3,8 @@
     "Sample.MessageRelay": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "DOTNET_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://127.0.0.1:8002"
       }
     }
   }

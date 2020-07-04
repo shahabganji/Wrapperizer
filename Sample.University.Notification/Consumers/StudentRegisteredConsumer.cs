@@ -19,8 +19,8 @@ namespace Sample.University.Notification.Consumers
 
         public Task Consume(ConsumeContext<StudentRegisteredIntegrationEvent> context)
         {
-            _logger.LogWarning("========== Message Received +==========================");
-            _logger.LogInformation($"Sending notification to {context.Message.FullName}");
+            _logger.LogWarning("========== Message Received {@Message} +==========================" , context.Message);
+            _logger.LogInformation("Sending notification to Student {FullName}", context.Message.FullName);
             _logger.LogWarning("========== Message Received +==========================");
             return Task.CompletedTask;
         }

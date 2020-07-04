@@ -12,16 +12,17 @@ namespace Wrapperizer.AspNetCore.Logging.Filters
     {
         private Stopwatch _timer;
         private readonly ILogger<TrackActionPerformanceFilter> _logger;
-        private readonly IScopeInformation _scopeInfo;
-        private IDisposable _userScope;
-        private IDisposable _hostScope;
+        // private readonly IScopeInformation _scopeInfo;
+        // private IDisposable _userScope;
+        // private IDisposable _hostScope;
 
         public TrackActionPerformanceFilter(
-            ILogger<TrackActionPerformanceFilter> logger,
-            IScopeInformation scopeInfo)
+            ILogger<TrackActionPerformanceFilter> logger
+            //, IScopeInformation scopeInfo
+            )
         {
             _logger = logger;
-            _scopeInfo = scopeInfo;
+            // _scopeInfo = scopeInfo;
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
@@ -36,8 +37,8 @@ namespace Wrapperizer.AspNetCore.Logging.Filters
                         context.HttpContext.User.Claims.Where(c => c.Type == "scope")?.Select(c => c.Value))
                 }
             };
-            _userScope = _logger.BeginScope(userDict);
-            _hostScope = _logger.BeginScope(_scopeInfo.HostScopeInfo);
+            // _userScope = _logger.BeginScope(userDict);
+            // _hostScope = _logger.BeginScope(_scopeInfo.HostScopeInfo);
 
             _timer.Start();
         }
@@ -52,8 +53,8 @@ namespace Wrapperizer.AspNetCore.Logging.Filters
                     _timer.ElapsedMilliseconds);
             }
 
-            _userScope?.Dispose();
-            _hostScope?.Dispose();
+            // _userScope?.Dispose();
+            // _hostScope?.Dispose();
         }
     }
 }

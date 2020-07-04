@@ -63,7 +63,7 @@ namespace Wrapperizer
 
             var registration = new AgentServiceRegistration
             {
-                Checks = new AgentServiceCheck[] {health},
+                // Checks = new AgentServiceCheck[] {health},
 
                 ID = $"{serviceRegistration.ServiceId}-{uri.Port}",
                 Name = serviceRegistration.ServiceName,

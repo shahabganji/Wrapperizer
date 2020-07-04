@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as build
 
+ENV ASPNETCORE_ENVIRONMENT Docker
+
 EXPOSE 80
 
 WORKDIR /api/

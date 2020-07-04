@@ -19,6 +19,7 @@ namespace Sample.MessageRelay.BackgroundTasks
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation("Started Publishing Outbox events");
             while (!stoppingToken.IsCancellationRequested)
             {
                 await _outboxMessageRelay.PublishEventsThroughEventBusAsync();
