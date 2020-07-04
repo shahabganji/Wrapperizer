@@ -34,8 +34,19 @@ namespace Sample.MessageRelay
             services.Configure<SqlServerConnection>(instance => Configuration.Bind("Infra:Connections:Sql", instance));
             services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<SqlServerConnection>>().Value);
             
-            services.Configure<RabbitMqConnection>(instance => Configuration.Bind("Infra:Connections:RabbitMQ", instance));
-            services.AddScoped(x => x.GetRequiredService<IOptionsSnapshot<RabbitMqConnection>>().Value);
+            // var rabbit = new RabbitMqConnection();
+            // Configuration.Bind("Infra:Connections:RabbitMQ", rabbit);
+            services.Configure<RabbitMqConnection>(instance =>
+            {
+                
+                Configuration.Bind("Infra:Connections:RabbitMQ", instance);
+                
+            });
+            services.AddScoped(x =>
+            {
+                var z = x.GetRequiredService<IOptionsSnapshot<RabbitMqConnection>>().Value;
+                return z;
+            });
             
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
             services.AddMassTransit(cfg =>
