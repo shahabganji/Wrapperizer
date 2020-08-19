@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Wrapperizer.Abstraction.Repositories;
@@ -15,5 +16,8 @@ namespace Wrapperizer.Sample.Domain.Repositories
 
         Task ConfirmRegistration(Guid studentId, CancellationToken cancellationToken);
         Task Inactivate(Guid studentId, CancellationToken cancellationToken);
+
+        Task<IEnumerable<Student>> FilterPendingStudents();
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Wrapperizer.Abstraction.Domain;
 using Wrapperizer.Sample.Domain.Common;
 using Wrapperizer.Sample.Domain.Events;
@@ -50,5 +51,6 @@ namespace Wrapperizer.Sample.Domain.StudentAggregateRoot
             _registrationStatus  = Confirmed.Id;
             this.AddDomainEvent(new StudentRegistrationConfirmed(this.Id));
         }
+
     }
 }
