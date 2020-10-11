@@ -73,7 +73,9 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
 
                         _logger.LogInformation("----- Commit transaction {TransactionId} for {CommandName}",
                             transaction.TransactionId, typeName);
-
+                        
+                        // this is always a matter to discuss inside the team, do you prefer to commit before 
+                        // publishing integration events or after them ???
                         await _transactionalUnitOfWork.CommitTransactionAsync(transaction, cancellationToken);
 
                         transactionId = transaction.TransactionId;
@@ -82,6 +84,10 @@ namespace Wrapperizer.Extensions.Cqrs.EfCore.Behaviors
                     // this is after the commit, so if it fails we can try them later on in a message relay, for instance.
                     if (_transactionalOutboxConfiguration.AutoPublish)
                         await _transactionalOutboxService.PublishEventsThroughEventBusAsync(transactionId);
+                    
+                    // // this is always a matter to discuss inside the team, do you prefer to commit before 
+                    // // publishing integration events or after them ???
+                    // await _transactionalUnitOfWork.CommitTransactionAsync(transaction, cancellationToken);
                 });
 
                 return response;
