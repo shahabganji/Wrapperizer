@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Wrapperizer.Abstraction.Repositories;
 using Wrapperizer.Sample.Domain.Repositories;
+using Wrapperizer.Sample.Domain.Specifications;
 using Wrapperizer.Sample.Domain.StudentAggregateRoot;
 
 namespace Wrapperizer.Sample.Infra.Persistence.Repositories
@@ -63,6 +66,22 @@ namespace Wrapperizer.Sample.Infra.Persistence.Repositories
 
             _dbContext.Students.Remove(student);
             await this.UnitOfWork.CommitAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Student>> FilterPendingStudents()
+        {
+            var pendingSpec = new PendingStudentSpecification().ToExpression();
+            var students = await _dbContext.Students.Where(pendingSpec).ToListAsync();
+
+            return students;
+        }
+        
+        public async Task<IEnumerable<Student>> FilterPendingStudentsWithDoubleZero()
+        {
+            var composite = new MyCompositeSpecification();
+            var students = await _dbContext.Students.Where(composite).ToListAsync();
+
+            return students;
         }
     }
 }

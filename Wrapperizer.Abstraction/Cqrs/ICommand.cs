@@ -9,9 +9,4 @@ namespace Wrapperizer.Abstraction.Cqrs
     public interface ICommand<out TResult> : IRequest<TResult>
     {
     }
-
-
-    public interface IQuery<out TResult> : IRequest<TResult>
-    {
-    }
 }
