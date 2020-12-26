@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wrapperizer.Domain.Abstractions\Wrapperizer.Domain.Abstractions.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Repository.EntityFrameworkCore\Wrapperizer.Repository.EntityFrameworkCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    </ItemGroup>
+
+</Project>

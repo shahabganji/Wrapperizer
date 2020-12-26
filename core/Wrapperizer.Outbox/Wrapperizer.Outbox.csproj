@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Wrapperizer.Outbox</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wrapperizer.Domain.Abstraction\Wrapperizer.Domain.Abstraction.csproj" />
+    <ProjectReference Include="..\Wrapperizer.Domain.Abstractions\Wrapperizer.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj" />
-    <ProjectReference Include="..\Wrapperizer.Extensions.Repositories.EfCore\Wrapperizer.Extensions.Repositories.EfCore.csproj" />
+    <ProjectReference Include="..\Wrapperizer.Repository.EntityFrameworkCore\Wrapperizer.Repository.EntityFrameworkCore.csproj" />
   </ItemGroup>
   
 </Project>

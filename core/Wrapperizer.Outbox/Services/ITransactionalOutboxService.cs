@@ -1,6 +1,7 @@
+
 using System;
 using System.Threading.Tasks;
-using Wrapperizer.Domain.Abstraction.Domain;
+using Wrapperizer.Domain.Abstractions;
 
 namespace Wrapperizer.Outbox.Services
 {
