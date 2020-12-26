@@ -5,13 +5,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Wrapperizer.Domain.Abstraction.Domain;
+using Wrapperizer.Domain.Abstractions;
 using Wrapperizer.Extensions.Common;
 using static Wrapperizer.Outbox.EventStateEnum;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {
-    internal class OutboxEventService : IOutboxEventService
+    public class OutboxEventService : IOutboxEventService
     {
         private readonly OutboxEventContext _outboxEventContext;
         private readonly List<Type> _eventTypes;

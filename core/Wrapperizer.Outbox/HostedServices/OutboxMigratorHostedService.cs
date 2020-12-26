@@ -9,8 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Wrapperizer.Outbox.HostedServices
 {
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    internal sealed class OutboxMigratorHostedService : BackgroundService
+    public sealed class OutboxMigratorHostedService : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<OutboxMigratorHostedService> _logger;

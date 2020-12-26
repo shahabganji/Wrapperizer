@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
-using Wrapperizer.Domain.Abstraction.Domain;
+using Wrapperizer.Domain.Abstractions;
 
 namespace Wrapperizer.Outbox
 {

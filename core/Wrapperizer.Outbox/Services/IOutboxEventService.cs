@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
-using Wrapperizer.Domain.Abstraction.Domain;
+using Wrapperizer.Domain.Abstractions;
 
 namespace Wrapperizer.Outbox.Services
 {

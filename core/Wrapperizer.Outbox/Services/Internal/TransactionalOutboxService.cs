@@ -3,12 +3,12 @@ using System.Data.Common;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
-using Wrapperizer.Domain.Abstraction.Domain;
-using Wrapperizer.Extensions.Repositories.EfCore.Abstraction;
+using Wrapperizer.Domain.Abstractions;
+using Wrapperizer.Repository.EntityFrameworkCore.Abstraction;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {
-    internal sealed class TransactionalOutboxService : ITransactionalOutboxService
+    public sealed class TransactionalOutboxService : ITransactionalOutboxService
     {
         private readonly ITransactionalUnitOfWork _unitOfWork;
         private readonly IPublishEndpoint _publishEndpoint;

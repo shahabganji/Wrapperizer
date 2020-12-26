@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Wrapperizer.Outbox.Services.Internal
 {
-    internal sealed class OutboxMessageRelay : IOutboxMessageRelay
+    public sealed class OutboxMessageRelay : IOutboxMessageRelay
     {
         private readonly IOutboxEventService _outboxEventService;
         private readonly IBusControl _bus;
