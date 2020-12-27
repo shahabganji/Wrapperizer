@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Domain.Abstractions;
+using static Wrapperizer.Domain.Abstractions.Result;
 
 namespace Wrapperizer.Cqrs.Behaviours.ErrorHandler
 {
     public sealed class ErrorHandlerBehaviour<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, ViewResult<TResponse>>
+        : IPipelineBehavior<TRequest, Result<TResponse>>
     {
         // private readonly IViewContext _viewContext;
         private readonly ILogger<ErrorHandlerBehaviour<TRequest, TResponse>> _logger;
@@ -19,25 +20,20 @@ namespace Wrapperizer.Cqrs.Behaviours.ErrorHandler
             _logger = logger;
         }
 
-        public async Task<ViewResult<TResponse>> Handle(TRequest request, CancellationToken cancellationToken,
-            RequestHandlerDelegate<ViewResult<TResponse>> next)
+        public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken,
+            RequestHandlerDelegate<Result<TResponse>> next)
         {
             if (next is null) throw new ArgumentNullException(nameof(next));
-        
-            var failedResult = ViewResult.Fail();
-        
+
             try
             {
-                var result = await next();
-        
-                return result;
-            } catch (Exception exception)
+                return await next();
+            }
+            catch (Exception exception)
             {
                 LogInnerException(exception);
-                failedResult.Fail(exception.Message);
+                return Fail(exception.Message);
             }
-        
-            return failedResult;
         }
 
         private void LogInnerException(Exception exception)

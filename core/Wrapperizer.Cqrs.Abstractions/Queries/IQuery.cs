@@ -4,7 +4,7 @@ using Wrapperizer.Domain.Abstractions;
 
 namespace Wrapperizer.Cqrs.Abstractions.Queries
 {
-    public interface IQuery<TResult> : IRequest<ViewResult<TResult>>
+    public interface IQuery<TResult> : IRequest<Result<TResult>>
     {
     }
 }

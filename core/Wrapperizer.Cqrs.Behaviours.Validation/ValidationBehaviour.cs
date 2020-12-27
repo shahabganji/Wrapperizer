@@ -11,7 +11,7 @@ using Wrapperizer.Domain.Abstractions;
 namespace Wrapperizer.Cqrs.Behaviours.Validation
 {
     public sealed class ValidationBehaviour<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, ViewResult<TResponse>>
+        : IPipelineBehavior<TRequest, Result<TResponse>>
     {
         private readonly ILogger<ValidationBehaviour<TRequest, TResponse>> _logger;
 
@@ -20,7 +20,7 @@ namespace Wrapperizer.Cqrs.Behaviours.Validation
             _logger = logger;
         }
 
-        public async Task<ViewResult<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<ViewResult<TResponse>> next)
+        public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result<TResponse>> next)
         {
             if (next == null)
                 throw new ArgumentNullException(nameof(next));
@@ -40,12 +40,8 @@ namespace Wrapperizer.Cqrs.Behaviours.Validation
             // var validationErrorHappened = new ValidationErrorHappened<TRequest>(validationResults);
             // _domainEventManager.Publish(validationErrorHappened);
 
-            var viewResult = ViewResult.Fail();
-            validationResults.ForEach(v =>
-            {
-                viewResult.Fail(v.ErrorMessage);
-            });
-
+            var viewResult = Result.Fail(validationResults.Select(v=>v.ErrorMessage));
+            
             return viewResult;
         }
     }

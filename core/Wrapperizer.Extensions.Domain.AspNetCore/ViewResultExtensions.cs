@@ -7,16 +7,16 @@ namespace Wrapperizer.Extensions.Domain.AspNetCore
 {
     public static class ViewResultExtensions
     {
-        public static IActionResult AsActionResult(this IViewResult viewResult)
+        public static IActionResult AsActionResult(this IResult result)
         {
-            if (viewResult is null)
-                throw new ArgumentNullException(nameof(viewResult));
+            if (result is null)
+                throw new ArgumentNullException(nameof(result));
 
-            var statusCode = viewResult.Success
+            var statusCode = result.Success
                 ? StatusCodes.Status200OK
                 : StatusCodes.Status500InternalServerError;
 
-            return new OkObjectResult(viewResult) {StatusCode = statusCode};
+            return new OkObjectResult(result) {StatusCode = statusCode};
         }
     }
 }

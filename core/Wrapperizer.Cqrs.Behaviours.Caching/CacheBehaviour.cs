@@ -11,7 +11,7 @@ using Wrapperizer.Domain.Abstractions;
 namespace Wrapperizer.Cqrs.Behaviours.Caching
 {
     public sealed class CacheBehaviour<TRequest, TResponse>
-        : IPipelineBehavior<TRequest, ViewResult<TResponse>>
+        : IPipelineBehavior<TRequest, Result<TResponse>>
     {
         private readonly IDistributedCache _distributedCache;
 
@@ -22,8 +22,8 @@ namespace Wrapperizer.Cqrs.Behaviours.Caching
                                     "Please configure distributed cache in DI container of the application.");
         }
 
-        public async Task<ViewResult<TResponse>> Handle(TRequest request, CancellationToken cancellationToken,
-            RequestHandlerDelegate<ViewResult<TResponse>> next)
+        public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken,
+            RequestHandlerDelegate<Result<TResponse>> next)
         {
             if (next is null) throw new ArgumentNullException(nameof(next));
 
@@ -39,7 +39,7 @@ namespace Wrapperizer.Cqrs.Behaviours.Caching
                 : await CallAndCache(key, next, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<ViewResult<TResponse>> CallAndCache(string key, RequestHandlerDelegate<ViewResult<TResponse>> next,
+        private async Task<Result<TResponse>> CallAndCache(string key, RequestHandlerDelegate<Result<TResponse>> next,
             CancellationToken cancellationToken)
         {
             var response = await next().ConfigureAwait(false);

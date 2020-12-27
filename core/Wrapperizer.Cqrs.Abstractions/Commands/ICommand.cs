@@ -4,12 +4,12 @@ using Wrapperizer.Domain.Abstractions;
 namespace Wrapperizer.Cqrs.Abstractions.Commands
 {
     /// <inheritdoc />
-    public interface ICommand<TResult> : IRequest<ViewResult<TResult>>
+    public interface ICommand<TResult> : IRequest<Result<TResult>>
     {
     }
     
     /// <inheritdoc />
-    public interface ICommand : IRequest<ViewResult>
+    public interface ICommand : IRequest<Result>
     {
     }
 }

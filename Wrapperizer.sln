@@ -74,8 +74,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Depe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Outbox", "core\Wrapperizer.Extensions.DependencyInjection.Outbox\Wrapperizer.Extensions.DependencyInjection.Outbox.csproj", "{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Domain", "core\Wrapperizer.Extensions.Domain\Wrapperizer.Extensions.Domain.csproj", "{5F7A0CEB-143E-4FB1-9314-3D457A69E327}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Domain.AspNetCore", "core\Wrapperizer.Extensions.Domain.AspNetCore\Wrapperizer.Extensions.Domain.AspNetCore.csproj", "{7EDCB232-47D8-4134-A451-27EB8F7E88C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul", "core\Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul\Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul.csproj", "{4E791008-019C-4284-BD76-D3C2919BD381}"
@@ -162,10 +160,6 @@ Global
 		{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F7A0CEB-143E-4FB1-9314-3D457A69E327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F7A0CEB-143E-4FB1-9314-3D457A69E327}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F7A0CEB-143E-4FB1-9314-3D457A69E327}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F7A0CEB-143E-4FB1-9314-3D457A69E327}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7EDCB232-47D8-4134-A451-27EB8F7E88C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EDCB232-47D8-4134-A451-27EB8F7E88C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EDCB232-47D8-4134-A451-27EB8F7E88C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -201,7 +195,6 @@ Global
 		{7EF6EA8B-5E11-40F1-9F6C-8CB49E82EC7B} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{BFA4AB95-6A3A-4DE0-896E-FE6EA7863CCE} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
-		{5F7A0CEB-143E-4FB1-9314-3D457A69E327} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{7EDCB232-47D8-4134-A451-27EB8F7E88C5} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{4E791008-019C-4284-BD76-D3C2919BD381} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 	EndGlobalSection
