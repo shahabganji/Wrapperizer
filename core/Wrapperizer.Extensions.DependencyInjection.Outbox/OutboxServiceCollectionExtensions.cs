@@ -1,5 +1,4 @@
 using System;
-using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Wrapperizer.Extensions.DependencyInjection.Abstractions;
@@ -13,13 +12,22 @@ namespace Wrapperizer.Extensions.DependencyInjection.Outbox
 {
     public static class OutboxServiceCollectionExtensions
     {
-        private static readonly bool _outboxServicesEnabled = false;
-        private static readonly bool _messageRelayServicesEnabled = false;
+        private static bool _outboxServicesEnabled;
+        private static bool _messageRelayServicesEnabled;
 
         private static readonly string InvalidOperationExceptionMessage =
             $"You should enable either 'MessageRelay' services or 'Outbox' services; respectively using " +
             $"{nameof(AddMessageRelayServices)} or {nameof(AddOutboxServices)}";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="optionsBuilder">This should point to the same database as the one for UnitOfWork</param>
+        /// <param name="configure"></param>
+        /// <param name="enableAutoMigration"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public static WrapperizerContext AddOutboxServices(
             this WrapperizerContext builder,
             Action<DbContextOptionsBuilder> optionsBuilder, Action<TransactionalOutboxConfiguration> configure = null,
@@ -35,15 +43,16 @@ namespace Wrapperizer.Extensions.DependencyInjection.Outbox
 
             builder.Services.AddDbContext<OutboxEventContext>(optionsBuilder);
 
-            builder.Services.AddTransient<Func<DbConnection, IOutboxEventService>>(
-                _ => dbConnection =>
-                    // this dbConnection will be passed on
-                    // later on from implementations of integration service 
+            // ToDo: Change this to accept db from outside services not only the connection
+            // and bear in mind that this one is a factory method
+            builder.Services.AddTransient<Func<IOutboxEventService>>(
+                services => () =>
                 {
-                    var outboxEventContext = new OutboxEventContext(
-                        new DbContextOptionsBuilder<OutboxEventContext>()
-                            .UseSqlServer(dbConnection)
-                            .Options);
+                    var outboxEventContext = services.GetRequiredService<OutboxEventContext>();
+                    // new OutboxEventContext(
+                    // new DbContextOptionsBuilder<OutboxEventContext>()
+                    //     .UseSqlServer(dbConnection)
+                    //     .Options);
 
                     return new OutboxEventService(outboxEventContext);
                 });
@@ -55,6 +64,7 @@ namespace Wrapperizer.Extensions.DependencyInjection.Outbox
             if (enableAutoMigration)
                 builder.Services.AddHostedService<OutboxMigratorHostedService>();
 
+            _outboxServicesEnabled = true;
             return builder; //.Services;
         }
 
@@ -69,6 +79,7 @@ namespace Wrapperizer.Extensions.DependencyInjection.Outbox
             builder.Services.AddSingleton<IOutboxEventService, OutboxEventService>();
             builder.Services.AddSingleton<IOutboxMessageRelay, OutboxMessageRelay>();
 
+            _messageRelayServicesEnabled = true;
             return builder; //.Services;
         }
     }

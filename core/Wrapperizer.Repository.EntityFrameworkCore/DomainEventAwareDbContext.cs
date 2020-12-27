@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Wrapperizer.Repository.EntityFrameworkCore.Extensions;

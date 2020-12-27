@@ -19,7 +19,7 @@ namespace Wrapperizer.Outbox.Services.Internal
 
         public TransactionalOutboxService(
             ITransactionalUnitOfWork unitOfWork,
-            Func<DbConnection, IOutboxEventService> integrationServiceFactory,
+            IOutboxEventService outboxEventService,
             IPublishEndpoint publishEndpoint,
             ILogger<TransactionalOutboxService> logger
         )
@@ -28,7 +28,11 @@ namespace Wrapperizer.Outbox.Services.Internal
             _publishEndpoint = publishEndpoint;
 
             _logger = logger;
-            _outboxEventService = integrationServiceFactory(unitOfWork.GetDbConnection());
+            
+            // Todo: passing only the connection might be problematic, since in this version
+            //       we are only using SqlServer, what if we want to have Postgres for instance?
+            // _outboxEventService = integrationServiceFactory(unitOfWork.GetDbConnection());
+            _outboxEventService = outboxEventService;
         }
 
         public async Task PublishEventsThroughEventBusAsync(Guid transactionId)
