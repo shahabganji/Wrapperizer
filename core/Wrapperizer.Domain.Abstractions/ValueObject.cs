@@ -6,7 +6,8 @@ namespace Wrapperizer.Domain.Abstractions
     /// <summary>
     /// <see cref="https://enterprisecraftsmanship.com/posts/value-object-better-implementation/"/>
     /// </summary>
-    public abstract class ValueObject
+    public abstract class ValueObject<T> 
+        where T : ValueObject<T>
     {
         protected abstract IEnumerable<object> GetEqualityComponents();
 
@@ -18,7 +19,7 @@ namespace Wrapperizer.Domain.Abstractions
             if (GetType() != obj.GetType())
                 return false;
 
-            var valueObject = (ValueObject)obj;
+            var valueObject = (ValueObject<T>)obj;
 
             return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
         }
@@ -35,7 +36,7 @@ namespace Wrapperizer.Domain.Abstractions
                 });
         }
 
-        public static bool operator ==(ValueObject a, ValueObject b)
+        public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
@@ -46,7 +47,7 @@ namespace Wrapperizer.Domain.Abstractions
             return a.Equals(b);
         }
 
-        public static bool operator !=(ValueObject a, ValueObject b)
+        public static bool operator !=(ValueObject<T> a, ValueObject<T> b)
         {
             return !(a == b);
         }
