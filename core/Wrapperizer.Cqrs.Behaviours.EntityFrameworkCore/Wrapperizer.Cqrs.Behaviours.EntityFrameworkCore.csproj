@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wrapperizer.Cqrs.Abstractions\Wrapperizer.Cqrs.Abstractions.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Repository.EntityFrameworkCore\Wrapperizer.Repository.EntityFrameworkCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="2.10.0" />
+    </ItemGroup>
+
+</Project>

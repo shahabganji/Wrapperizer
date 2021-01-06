@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Sample.IntegrationEvents\Sample.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\Wrapperizer.AspNetCore.Logging\Wrapperizer.AspNetCore.Logging.csproj" />
+      <ProjectReference Include="..\Wrapperizer.AspNetCore.ServiceDiscovery.Consul\Wrapperizer.AspNetCore.ServiceDiscovery.Consul.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.Caching\Wrapperizer.Extensions.Cqrs.Caching.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Extensions.Cqrs.EfCore\Wrapperizer.Extensions.Cqrs.EfCore.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Application\Wrapperizer.Sample.Application.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Configurations\Wrapperizer.Sample.Configurations.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator\Wrapperizer.Sample.Infra.Persistence.AspNetCore.Migrator.csproj" />
+      <ProjectReference Include="..\Wrapperizer.Sample.Infra.Persistence\Wrapperizer.Sample.Infra.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="3.1.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.1.2" />
+      <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="3.1.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.1" />
+      <PackageReference Include="Grace.AspNetCore.Hosting" Version="7.0.1" />
+      <PackageReference Include="Grace.DependencyInjection.Extensions" Version="7.0.1" />
+      <PackageReference Include="MassTransit.AspNetCore" Version="6.3.2" />
+      <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.3.2" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="6.3.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.5" />
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.5" />
+      <PackageReference Include="NSwag.AspNetCore" Version="13.6.1" />
+      <PackageReference Include="Serilog.Extensions.Hosting" Version="3.0.0" />
+    </ItemGroup>
+    
+
+</Project>

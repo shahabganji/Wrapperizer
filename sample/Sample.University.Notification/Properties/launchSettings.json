@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "Sample.University.Notification": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
