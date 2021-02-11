@@ -8,18 +8,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{CD851388-2B35-41E2-93A5-FE6ACC665CEF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{2BE6D179-DB4D-459C-8F61-7B7A67DE2F3D}"
-ProjectSection(SolutionItems) = preProject
-	docker-compose-infra.yml = docker-compose-infra.yml
-	docker-compose-services.yml = docker-compose-services.yml
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-infra.yml = docker-compose-infra.yml
+		docker-compose-services.yml = docker-compose-services.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{628D27EE-FCCF-471E-A1FE-06EC17B0B82C}"
 	ProjectSection(SolutionItems) = preProject
+		docker\infra\consul.Dockerfile = docker\infra\consul.Dockerfile
 		docker\infra\mongo.Dockerfile = docker\infra\mongo.Dockerfile
 		docker\infra\redis.Dockerfile = docker\infra\redis.Dockerfile
-		docker\infra\sql.Dockerfile = docker\infra\sql.Dockerfile
-		docker\infra\consul.Dockerfile = docker\infra\consul.Dockerfile
 		docker\infra\seq.Dockerfile = docker\infra\seq.Dockerfile
+		docker\infra\sql.Dockerfile = docker\infra\sql.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{704148A0-F054-4102-8448-B0C30983D0FA}"
@@ -36,47 +36,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq", "rabbitmq", "{93
 		docker\infra\rabbitmq\rabbit.Dockerfile = docker\infra\rabbitmq\rabbit.Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.AspNetCore.Logging", "core\Wrapperizer.Extensions.AspNetCore.Logging\Wrapperizer.Extensions.AspNetCore.Logging.csproj", "{8DFDC5E8-771F-4B45-9F33-01FB37C5B2E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.AspNetCore.Logging", "core\Wrapperizer.Extensions.AspNetCore.Logging\Wrapperizer.Extensions.AspNetCore.Logging.csproj", "{8DFDC5E8-771F-4B45-9F33-01FB37C5B2E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Domain.Abstractions", "core\Wrapperizer.Domain.Abstractions\Wrapperizer.Domain.Abstractions.csproj", "{10A4E6F9-DB4C-4D69-948B-C547F21CD175}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Domain.Abstractions", "core\Wrapperizer.Domain.Abstractions\Wrapperizer.Domain.Abstractions.csproj", "{10A4E6F9-DB4C-4D69-948B-C547F21CD175}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Domain.Specifications", "core\Wrapperizer.Domain.Specifications\Wrapperizer.Domain.Specifications.csproj", "{05F34507-32E2-490A-95EE-13BED01051E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Domain.Specifications", "core\Wrapperizer.Domain.Specifications\Wrapperizer.Domain.Specifications.csproj", "{05F34507-32E2-490A-95EE-13BED01051E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Common", "core\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj", "{8DAD83E1-2E82-4BD8-867F-40E1130F0973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Common", "core\Wrapperizer.Extensions.Common\Wrapperizer.Extensions.Common.csproj", "{8DAD83E1-2E82-4BD8-867F-40E1130F0973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Cqrs.Behaviours.EntityFrameworkCore", "core\Wrapperizer.Cqrs.Behaviours.EntityFrameworkCore\Wrapperizer.Cqrs.Behaviours.EntityFrameworkCore.csproj", "{D12F207E-C484-4BF5-BC87-766AF0B2066B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Cqrs.Behaviours.EntityFrameworkCore", "core\Wrapperizer.Cqrs.Behaviours.EntityFrameworkCore\Wrapperizer.Cqrs.Behaviours.EntityFrameworkCore.csproj", "{D12F207E-C484-4BF5-BC87-766AF0B2066B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Abstractions", "core\Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj", "{FE4A2E37-DBB7-40EF-9FE3-76238B32FC56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Abstractions", "core\Wrapperizer.Extensions.DependencyInjection.Abstractions\Wrapperizer.Extensions.DependencyInjection.Abstractions.csproj", "{FE4A2E37-DBB7-40EF-9FE3-76238B32FC56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Repository.EntityFrameworkCore", "core\Wrapperizer.Repository.EntityFrameworkCore\Wrapperizer.Repository.EntityFrameworkCore.csproj", "{F5BFC98D-DF82-4306-9AA1-9DF663668B6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Repository.EntityFrameworkCore", "core\Wrapperizer.Repository.EntityFrameworkCore\Wrapperizer.Repository.EntityFrameworkCore.csproj", "{F5BFC98D-DF82-4306-9AA1-9DF663668B6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Outbox", "core\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj", "{4596F72B-AA11-4161-8788-04F51046F3C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Outbox", "core\Wrapperizer.Outbox\Wrapperizer.Outbox.csproj", "{4596F72B-AA11-4161-8788-04F51046F3C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Cqrs.Abstractions", "core\Wrapperizer.Cqrs.Abstractions\Wrapperizer.Cqrs.Abstractions.csproj", "{3CE6CEEE-27FB-4BD7-8CF7-0F54698055BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Cqrs.Abstractions", "core\Wrapperizer.Cqrs.Abstractions\Wrapperizer.Cqrs.Abstractions.csproj", "{3CE6CEEE-27FB-4BD7-8CF7-0F54698055BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Cqrs.Behaviours.Caching", "core\Wrapperizer.Cqrs.Behaviours.Caching\Wrapperizer.Cqrs.Behaviours.Caching.csproj", "{DDF89CC7-31C0-44B0-BC81-62A8552C530B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Cqrs.Behaviours.Caching", "core\Wrapperizer.Cqrs.Behaviours.Caching\Wrapperizer.Cqrs.Behaviours.Caching.csproj", "{DDF89CC7-31C0-44B0-BC81-62A8552C530B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Cqrs.Behaviours.ErrorHandler", "core\Wrapperizer.Cqrs.Behaviours.ErrorHandler\Wrapperizer.Cqrs.Behaviours.ErrorHandler.csproj", "{6264BC4D-F84A-4AC1-B085-FF2809BE31FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Cqrs.Behaviours.ErrorHandler", "core\Wrapperizer.Cqrs.Behaviours.ErrorHandler\Wrapperizer.Cqrs.Behaviours.ErrorHandler.csproj", "{6264BC4D-F84A-4AC1-B085-FF2809BE31FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Cqrs.Behaviours.Validation", "core\Wrapperizer.Cqrs.Behaviours.Validation\Wrapperizer.Cqrs.Behaviours.Validation.csproj", "{1630504F-26F5-4924-81FE-101AEF9BF387}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Cqrs.Behaviours.Validation", "core\Wrapperizer.Cqrs.Behaviours.Validation\Wrapperizer.Cqrs.Behaviours.Validation.csproj", "{1630504F-26F5-4924-81FE-101AEF9BF387}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Abstractions", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Abstractions\Wrapperizer.Extensions.DependencyInjection.Cqrs.Abstractions.csproj", "{9B47B9EC-C76B-4DD4-8DA3-431714C12E5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Abstractions", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Abstractions\Wrapperizer.Extensions.DependencyInjection.Cqrs.Abstractions.csproj", "{9B47B9EC-C76B-4DD4-8DA3-431714C12E5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Caching", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Caching\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Caching.csproj", "{F9269DBD-02D3-4EFE-80EB-C97518CCC0A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Caching", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Caching\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Caching.csproj", "{F9269DBD-02D3-4EFE-80EB-C97518CCC0A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.ErrorHandler", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.ErrorHandler\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.ErrorHandler.csproj", "{3297ED16-2EAE-4DC2-87CA-E6803F6788DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.ErrorHandler", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.ErrorHandler\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.ErrorHandler.csproj", "{3297ED16-2EAE-4DC2-87CA-E6803F6788DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Validation", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Validation\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Validation.csproj", "{3B40DF42-67F3-49F5-95B2-911993B552F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Validation", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Validation\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.Validation.csproj", "{3B40DF42-67F3-49F5-95B2-911993B552F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Repository.EntityFrameworkCore", "core\Wrapperizer.Extensions.DependencyInjection.Repository.EntityFrameworkCore\Wrapperizer.Extensions.DependencyInjection.Repository.EntityFrameworkCore.csproj", "{7EF6EA8B-5E11-40F1-9F6C-8CB49E82EC7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Repository.EntityFrameworkCore", "core\Wrapperizer.Extensions.DependencyInjection.Repository.EntityFrameworkCore\Wrapperizer.Extensions.DependencyInjection.Repository.EntityFrameworkCore.csproj", "{7EF6EA8B-5E11-40F1-9F6C-8CB49E82EC7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.EntityFrameworkCore", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.EntityFrameworkCore\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.EntityFrameworkCore.csproj", "{BFA4AB95-6A3A-4DE0-896E-FE6EA7863CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.EntityFrameworkCore", "core\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.EntityFrameworkCore\Wrapperizer.Extensions.DependencyInjection.Cqrs.Behaviours.EntityFrameworkCore.csproj", "{BFA4AB95-6A3A-4DE0-896E-FE6EA7863CCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.DependencyInjection.Outbox", "core\Wrapperizer.Extensions.DependencyInjection.Outbox\Wrapperizer.Extensions.DependencyInjection.Outbox.csproj", "{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.DependencyInjection.Outbox", "core\Wrapperizer.Extensions.DependencyInjection.Outbox\Wrapperizer.Extensions.DependencyInjection.Outbox.csproj", "{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.Domain.AspNetCore", "core\Wrapperizer.Extensions.Domain.AspNetCore\Wrapperizer.Extensions.Domain.AspNetCore.csproj", "{7EDCB232-47D8-4134-A451-27EB8F7E88C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.Domain.AspNetCore", "core\Wrapperizer.Extensions.Domain.AspNetCore\Wrapperizer.Extensions.Domain.AspNetCore.csproj", "{7EDCB232-47D8-4134-A451-27EB8F7E88C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul", "core\Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul\Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul.csproj", "{4E791008-019C-4284-BD76-D3C2919BD381}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul", "core\Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul\Wrapperizer.Extensions.AspNetCore.ServiceDiscovery.Consul.csproj", "{4E791008-019C-4284-BD76-D3C2919BD381}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{31F22536-531A-48D0-8967-DF90C4AC1A49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapperizer.Domain.Abstractions.Test", "test\Wrapperizer.Domain.Abstractions.Test\Wrapperizer.Domain.Abstractions.Test.csproj", "{F9BD9887-154A-4288-A107-B3FC2711EF0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -168,6 +172,10 @@ Global
 		{4E791008-019C-4284-BD76-D3C2919BD381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E791008-019C-4284-BD76-D3C2919BD381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E791008-019C-4284-BD76-D3C2919BD381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9BD9887-154A-4288-A107-B3FC2711EF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9BD9887-154A-4288-A107-B3FC2711EF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9BD9887-154A-4288-A107-B3FC2711EF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9BD9887-154A-4288-A107-B3FC2711EF0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,6 +205,7 @@ Global
 		{10FC5FBC-46E8-4582-9E38-7D8ACC0230EB} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{7EDCB232-47D8-4134-A451-27EB8F7E88C5} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
 		{4E791008-019C-4284-BD76-D3C2919BD381} = {F506041B-B3D7-4CEF-BD18-8EF02D1B44A7}
+		{F9BD9887-154A-4288-A107-B3FC2711EF0A} = {31F22536-531A-48D0-8967-DF90C4AC1A49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F47524B6-BFE5-4A9F-B137-F0CC0B2FFDE2}

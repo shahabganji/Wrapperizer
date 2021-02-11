@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace Wrapperizer.Domain.Abstractions
 {
@@ -10,10 +9,21 @@ namespace Wrapperizer.Domain.Abstractions
         private readonly List<T> _list;
         public int Count => _list.Count;
         public IReadOnlyCollection<T> Items => _list.AsReadOnly();
+
+        public T this[int index]
+        {
+            get { return _list[index]; }
+        }
+
         public FirstClassCollection()
         {
             _list = new List<T>();
         }
+        public FirstClassCollection(IEnumerable<T> list) : this()
+        {
+            _list.AddRange(list);
+        }
+
         public void Add(T item)
         {
             _list.Add(item);
@@ -22,19 +32,16 @@ namespace Wrapperizer.Domain.Abstractions
         {
             _list.AddRange(list);
         }
-        public IEnumerable<T> Filter(Expression<Func<T, bool>> predicate)
+        public FirstClassCollection<T> Where(Func<T, bool> predicate)
         {
-            return _list.AsQueryable().Where(predicate);
+            return new FirstClassCollection<T>(_list.Where(predicate));
         }
-        public T Get(int itemIndex)
-        {
-            return _list[itemIndex];
-        }
-        public IEnumerable<T> Merge(params IEnumerable<T>[] lists)
+
+        public FirstClassCollection<T> Merge(params IEnumerable<T>[] lists)
         {
             var all = lists.SelectMany(x => x).ToList();
-            AddRange(all);
-            return _list;
+            var merged = _list.Concat(all);
+            return new FirstClassCollection<T>(merged);
         }
         public void Remove(T item)
         {
@@ -44,10 +51,6 @@ namespace Wrapperizer.Domain.Abstractions
         {
             foreach (var item in list)
                 Remove(item);
-        }
-        public void Set(int itemIndex, T item)
-        {
-            _list[itemIndex] = item;
         }
     }
 }
