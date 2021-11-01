@@ -1,15 +1,29 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Security.Principal;
 
 namespace Wrapperizer.Domain.Abstractions
 {
+
+
     /// <summary>
     /// <see cref="https://enterprisecraftsmanship.com/posts/value-object-better-implementation/"/>
     /// </summary>
-    public abstract class ValueObject<T> 
+    public abstract class ValueObject<T>
         where T : ValueObject<T>
     {
-        protected abstract IEnumerable<object> GetEqualityComponents();
+        protected virtual IEnumerable<object> GetEqualityComponents()
+        {
+            var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(prop => !Attribute.IsDefined(prop, typeof(IgnoreMemberForValueObjectAttribute)));
+
+            foreach (var prop in props)
+            {
+                yield return prop.GetValue(this, null);
+            }
+        }
 
         public override bool Equals(object obj)
         {
